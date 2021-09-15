@@ -1,0 +1,346 @@
+JWasm v2.11, Oct 20 2013
+VioGetAnsi.asm
+                                ;/*!
+                                ;   @file
+                                ;
+                                ;   @ingroup fapi
+                                ;
+                                ;   @brief VioGetAnsi DOS wrapper
+                                ;
+                                ;   (c) osFree Project 2021, <http://www.osFree.org>
+                                ;   for licence see licence.txt in root directory, or project website
+                                ;
+                                ;   This is Family API implementation for DOS, used with BIND tools
+                                ;   to link required API
+                                ;
+                                ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
+                                ;
+                                ;   Documentation: http://osfree.org/doku/en:docs:fapi:viogetansi
+                                ;
+                                ;*/
+
+                                .8086
+                                		; Helpers
+                                		INCLUDE	HELPERS.INC
+                              C ;/*!
+                              C ;   @file
+                              C ;
+                              C ;   @ingroup fapi
+                              C ;
+                              C ;   @brief Family API implementation helpers
+                              C ;
+                              C ;   (c) osFree Project 2018, <http://www.osFree.org>
+                              C ;   for licence see licence.txt in root directory, or project website
+                              C ;
+                              C ;   This is Family API implementation for DOS, used with BIND tools
+                              C ;   to link required API
+                              C ;
+                              C ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
+                              C ;
+                              C ;*/
+                              C 
+                              C 
+                              C ;------------------------------------------------------------
+                              C @VIOPROLOG	MACRO	NAME
+ >                            C 
+ >                            C ;		INCLUDE	GLOBALSHARED.INC
+ >                            C 
+ >                            C 		PUBLIC	NAME
+ >                            C 
+ >                            C VIOARGS		STRUC
+ >                            C 		ENDM
+                              C 
+                              C ;----------------------------------------------------------------------
+                              C 
+                              C @VIOSTART	MACRO	NAME
+ >                            C VIOARGS		ENDS
+ >                            C 
+ >                            C VIO_ARG_SIZE	EQU	(SIZE VIOARGS)
+ >                            C 
+ >                            C NAME		PROC	FAR
+ >                            C ;		CALL	GLOBALINIT
+ >                            C 
+ >                            C 		ENDM
+                              C 
+                              C ;------------------------------------------------------------
+                              C 
+                              C @VIOEPILOG		MACRO	NAME
+ >                            C 		RET	VIO_ARG_SIZE
+ >                            C NAME		ENDP
+ >                            C 		ENDM
+                                		INCLUDE VIO.INC
+                              C ;/*!
+                              C ;   @file
+                              C ;
+                              C ;   @ingroup fapi
+                              C ;
+                              C ;   @brief Family API implementation
+                              C ;
+                              C ;   (c) osFree Project 2018, <http://www.osFree.org>
+                              C ;   for licence see licence.txt in root directory, or project website
+                              C ;
+                              C ;   This is Family API implementation for DOS, used with BIND tools
+                              C ;   to link required API
+                              C ;
+                              C ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
+                              C ;
+                              C ;*/
+                              C 
+ = 1                          C VR_VIOGETCURPOS		EQU	000000001H
+ = 2                          C VR_VIOGETCURTYPE	EQU	000000002H
+ = 4                          C VR_VIOGETMODE		EQU	000000004H
+ = 8                          C VR_VIOGETBUF		EQU	000000008H
+ = 10                         C VR_VIOGETPHYSBUF	EQU	000000010H
+ = 20                         C VR_VIOSETCURPOS		EQU	000000020H
+ = 40                         C VR_VIOSETCURTYPE	EQU	000000040H
+ = 80                         C VR_VIOSETMODE		EQU	000000080H
+ = 100                        C VR_VIOSHOWBUF		EQU	000000100H
+ = 200                        C VR_VIOREADCHARSTR	EQU	000000200H
+ = 400                        C VR_VIOREADCELLSTR	EQU	000000400H
+ = 800                        C VR_VIOWRTNCHAR		EQU	000000800H
+ = 1000                       C VR_VIOWRTNATTR		EQU	000001000H
+ = 2000                       C VR_VIOWRTNCELL		EQU	000002000H
+ = 4000                       C VR_VIOWRTTTY		EQU	000004000H
+ = 8000                       C VR_VIOWRTCHARSTR	EQU	000008000H
+                              C 
+ = 10000                      C VR_VIOWRTCHARSTRATT	EQU	000010000H
+ = 20000                      C VR_VIOWRTCELLSTR	EQU	000020000H
+ = 40000                      C VR_VIOSCROLLUP		EQU	000040000H
+ = 80000                      C VR_VIOSCROLLDN		EQU	000080000H
+ = 100000                     C VR_VIOSCROLLLF		EQU	000100000H
+ = 200000                     C VR_VIOSCROLLRT		EQU	000200000H
+ = 400000                     C VR_VIOSETANSI		EQU	000400000H
+ = 800000                     C VR_VIOGETANSI		EQU	000800000H
+ = 1000000                    C VR_VIOPRTSC		EQU	001000000H
+ = 2000000                    C VR_VIOSCRLOCK		EQU	002000000H
+ = 4000000                    C VR_VIOSCRUNLOCK		EQU	004000000H
+ = 8000000                    C VR_VIOSAVREDRAWWAIT	EQU	008000000H
+ = 10000000                   C VR_VIOSAVREDRAWUNDO	EQU	010000000H
+ = 20000000                   C VR_VIOPOPUP		EQU	020000000H
+ = 40000000                   C VR_VIOENDPOPUP		EQU	040000000H
+ = 80000000                   C VR_VIOPRTSCTOGGLE	EQU	080000000H
+                              C 
+ = 1                          C VR_VIOMODEWAIT		EQU	000000001H
+ = 2                          C VR_VIOMODEUNDO		EQU	000000002H
+ = 4                          C VR_VIOGETFONT		EQU	000000004H
+ = 8                          C VR_VIOGETCONFIG		EQU	000000008H
+ = 10                         C VR_VIOSETCP		EQU	000000010H
+ = 20                         C VR_VIOGETCP		EQU	000000020H
+ = 40                         C VR_VIOSETFONT		EQU	000000040H
+ = 80                         C VR_VIOGETSTATE		EQU	000000080H
+ = 100                        C VR_VIOSETSTATE		EQU	000000100H
+                              C 
+                              C 
+                              C 
+ = 0                          C VI_VIOGETPHYSBUF	EQU	0
+ = 1                          C VI_VIOGETBUF		EQU	1
+ = 2                          C VI_VIOSHOWBUF		EQU	2
+ = 3                          C VI_VIOGETCURPOS		EQU	3
+ = 4                          C VI_VIOGETCURTYPE	EQU	4
+ = 5                          C VI_VIOGETMODE		EQU	5
+ = 6                          C VI_VIOSETCURPOS		EQU	6
+ = 7                          C VI_VIOSETCURTYPE	EQU	7
+ = 8                          C VI_VIOSETMODE		EQU	8
+ = 9                          C VI_VIOREADCHARSTR	EQU	9
+ = A                          C VI_VIOREADCELLSTR	EQU	10
+ = B                          C VI_VIOWRTNCHAR		EQU	11
+ = C                          C VI_VIOWRTNATTR		EQU	12
+ = D                          C VI_VIOWRTNCELL		EQU	13
+ = E                          C VI_VIOWRTCHARSTR	EQU	14
+ = F                          C VI_VIOWRTCHARSTRATT	EQU	15
+ = 10                         C VI_VIOWRTCELLSTR	EQU	16
+ = 11                         C VI_VIOWRTTTY		EQU	17
+ = 12                         C VI_VIOSCROLLUP		EQU	18
+ = 13                         C VI_VIOSCROLLDN		EQU	19
+ = 14                         C VI_VIOSCROLLLF		EQU	20
+ = 15                         C VI_VIOSCROLLRT		EQU	21
+ = 16                         C VI_VIOSETANSI		EQU	22
+ = 17                         C VI_VIOGETANSI		EQU	23
+ = 18                         C VI_VIOPRTSC		EQU	24
+ = 19                         C VI_VIOSCRLOCK		EQU	25
+ = 1A                         C VI_VIOSCRUNLOCK		EQU	26
+ = 1B                         C VI_VIOSAVREDRAWWAIT	EQU	27
+ = 1C                         C VI_VIOSAVREDRAWUNDO	EQU	28
+ = 1D                         C VI_VIOPOPUP		EQU	29
+ = 1E                         C VI_VIOENDPOPUP		EQU	30
+ = 1F                         C VI_VIOPRTSCTOGGLE	EQU	31
+ = 20                         C VI_VIOMODEWAIT		EQU	32
+ = 21                         C VI_VIOMODEUNDO		EQU	33
+ = 22                         C VI_VIOGETFONT		EQU	34
+ = 23                         C VI_VIOGETCONFIG		EQU	35
+ = 24                         C VI_VIOSETCP		EQU	36
+ = 25                         C VI_VIOGETCP		EQU	37
+ = 26                         C VI_VIOSETFONT		EQU	38
+ = 27                         C VI_VIOGETSTATE		EQU	39
+ = 28                         C VI_VIOSETSTATE		EQU	40
+                              C 
+                              C EXTERN	VIOFUNCTIONMASK1: DWORD
+                              C EXTERN	VIOFUNCTIONMASK2: DWORD
+                              C EXTERN	AVSHANDLE: WORD
+                              C EXTERN	AVSMAIN: DWORD
+                              C EXTERN	VIOROUTE: PROC
+
+00000000                        _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
+
+
+                                		@VIOPROLOG	VIOGETANSI
+
+
+
+                             1  		PUBLIC	VIOGETANSI
+
+00000000                     1  VIOARGS		STRUC
+00000000                        VIOHANDLE	DW	?		;Video handle
+00000002                        INDICATOR	DD	?		;
+                                		@VIOSTART	VIOGETANSI
+00000006                     1  VIOARGS		ENDS
+
+ = 6                         1  VIO_ARG_SIZE	EQU	(SIZE VIOARGS)
+
+00000000                     1  VIOGETANSI		PROC	FAR
+
+
+00000000  B81700                	        MOV	AX, VI_VIOGETANSI
+00000003  50                    		PUSH	AX
+00000004  A10200                		MOV	AX, WORD PTR VIOFUNCTIONMASK1+2
+00000007  258000                		AND	AX, HIGHWORD VR_VIOGETANSI
+0000000A  3D8000                		CMP	AX, HIGHWORD VR_VIOGETANSI
+0000000D  E80000                	        CALL    VIOROUTE
+                                		@VIOEPILOG	VIOGETANSI
+00000010                     1  		RET	VIO_ARG_SIZE
+00000013                     1  VIOGETANSI		ENDP
+00000013                        _TEXT		ENDS
+                                		END
+
+
+Macros:
+
+                N a m e                 Type
+
+@CatStr  . . . . . . . . . . . .        Func
+@Environ . . . . . . . . . . . .        Func
+@InStr . . . . . . . . . . . . .        Func
+@SizeStr . . . . . . . . . . . .        Func
+@SubStr  . . . . . . . . . . . .        Func
+@VIOEPILOG . . . . . . . . . . .        Proc
+@VIOPROLOG . . . . . . . . . . .        Proc
+@VIOSTART  . . . . . . . . . . .        Proc
+
+
+Structures and Unions:
+
+                N a m e                 Size/Ofs   Type
+
+VIOARGS  . . . . . . . . . . . .               6
+  VIOHANDLE  . . . . . . . . . .               0   Word
+  INDICATOR  . . . . . . . . . .               2   DWord
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+_TEXT  . . . . . . . . . . . . .        16 Bit   0013     Byte    Public  'CODE'
+
+
+Procedures, parameters and locals:
+
+                N a m e                 Type     Value    Segment  Length
+
+VIOGETANSI . . . . . . . . . . .        P Far    0000     _TEXT    0013 Public   
+
+
+Symbols:
+
+                N a m e                 Type       Value     Attr
+
+AVSHANDLE  . . . . . . . . . . .        Word               0h External 
+AVSMAIN  . . . . . . . . . . . .        DWord              0h External 
+VIOFUNCTIONMASK1 . . . . . . . .        DWord              0h External 
+VIOFUNCTIONMASK2 . . . . . . . .        DWord              0h External 
+VIOROUTE . . . . . . . . . . . .        L Near16           0h External 
+VIO_ARG_SIZE . . . . . . . . . .        Number             6h 
+VI_VIOENDPOPUP . . . . . . . . .        Number            1Eh 
+VI_VIOGETANSI  . . . . . . . . .        Number            17h 
+VI_VIOGETBUF . . . . . . . . . .        Number             1h 
+VI_VIOGETCONFIG  . . . . . . . .        Number            23h 
+VI_VIOGETCP  . . . . . . . . . .        Number            25h 
+VI_VIOGETCURPOS  . . . . . . . .        Number             3h 
+VI_VIOGETCURTYPE . . . . . . . .        Number             4h 
+VI_VIOGETFONT  . . . . . . . . .        Number            22h 
+VI_VIOGETMODE  . . . . . . . . .        Number             5h 
+VI_VIOGETPHYSBUF . . . . . . . .        Number             0h 
+VI_VIOGETSTATE . . . . . . . . .        Number            27h 
+VI_VIOMODEUNDO . . . . . . . . .        Number            21h 
+VI_VIOMODEWAIT . . . . . . . . .        Number            20h 
+VI_VIOPOPUP  . . . . . . . . . .        Number            1Dh 
+VI_VIOPRTSC  . . . . . . . . . .        Number            18h 
+VI_VIOPRTSCTOGGLE  . . . . . . .        Number            1Fh 
+VI_VIOREADCELLSTR  . . . . . . .        Number             Ah 
+VI_VIOREADCHARSTR  . . . . . . .        Number             9h 
+VI_VIOSAVREDRAWUNDO  . . . . . .        Number            1Ch 
+VI_VIOSAVREDRAWWAIT  . . . . . .        Number            1Bh 
+VI_VIOSCRLOCK  . . . . . . . . .        Number            19h 
+VI_VIOSCROLLDN . . . . . . . . .        Number            13h 
+VI_VIOSCROLLLF . . . . . . . . .        Number            14h 
+VI_VIOSCROLLRT . . . . . . . . .        Number            15h 
+VI_VIOSCROLLUP . . . . . . . . .        Number            12h 
+VI_VIOSCRUNLOCK  . . . . . . . .        Number            1Ah 
+VI_VIOSETANSI  . . . . . . . . .        Number            16h 
+VI_VIOSETCP  . . . . . . . . . .        Number            24h 
+VI_VIOSETCURPOS  . . . . . . . .        Number             6h 
+VI_VIOSETCURTYPE . . . . . . . .        Number             7h 
+VI_VIOSETFONT  . . . . . . . . .        Number            26h 
+VI_VIOSETMODE  . . . . . . . . .        Number             8h 
+VI_VIOSETSTATE . . . . . . . . .        Number            28h 
+VI_VIOSHOWBUF  . . . . . . . . .        Number             2h 
+VI_VIOWRTCELLSTR . . . . . . . .        Number            10h 
+VI_VIOWRTCHARSTR . . . . . . . .        Number             Eh 
+VI_VIOWRTCHARSTRATT  . . . . . .        Number             Fh 
+VI_VIOWRTNATTR . . . . . . . . .        Number             Ch 
+VI_VIOWRTNCELL . . . . . . . . .        Number             Dh 
+VI_VIOWRTNCHAR . . . . . . . . .        Number             Bh 
+VI_VIOWRTTTY . . . . . . . . . .        Number            11h 
+VR_VIOENDPOPUP . . . . . . . . .        Number      40000000h 
+VR_VIOGETANSI  . . . . . . . . .        Number        800000h 
+VR_VIOGETBUF . . . . . . . . . .        Number             8h 
+VR_VIOGETCONFIG  . . . . . . . .        Number             8h 
+VR_VIOGETCP  . . . . . . . . . .        Number            20h 
+VR_VIOGETCURPOS  . . . . . . . .        Number             1h 
+VR_VIOGETCURTYPE . . . . . . . .        Number             2h 
+VR_VIOGETFONT  . . . . . . . . .        Number             4h 
+VR_VIOGETMODE  . . . . . . . . .        Number             4h 
+VR_VIOGETPHYSBUF . . . . . . . .        Number            10h 
+VR_VIOGETSTATE . . . . . . . . .        Number            80h 
+VR_VIOMODEUNDO . . . . . . . . .        Number             2h 
+VR_VIOMODEWAIT . . . . . . . . .        Number             1h 
+VR_VIOPOPUP  . . . . . . . . . .        Number      20000000h 
+VR_VIOPRTSC  . . . . . . . . . .        Number       1000000h 
+VR_VIOPRTSCTOGGLE  . . . . . . .        Number      80000000h 
+VR_VIOREADCELLSTR  . . . . . . .        Number           400h 
+VR_VIOREADCHARSTR  . . . . . . .        Number           200h 
+VR_VIOSAVREDRAWUNDO  . . . . . .        Number      10000000h 
+VR_VIOSAVREDRAWWAIT  . . . . . .        Number       8000000h 
+VR_VIOSCRLOCK  . . . . . . . . .        Number       2000000h 
+VR_VIOSCROLLDN . . . . . . . . .        Number         80000h 
+VR_VIOSCROLLLF . . . . . . . . .        Number        100000h 
+VR_VIOSCROLLRT . . . . . . . . .        Number        200000h 
+VR_VIOSCROLLUP . . . . . . . . .        Number         40000h 
+VR_VIOSCRUNLOCK  . . . . . . . .        Number       4000000h 
+VR_VIOSETANSI  . . . . . . . . .        Number        400000h 
+VR_VIOSETCP  . . . . . . . . . .        Number            10h 
+VR_VIOSETCURPOS  . . . . . . . .        Number            20h 
+VR_VIOSETCURTYPE . . . . . . . .        Number            40h 
+VR_VIOSETFONT  . . . . . . . . .        Number            40h 
+VR_VIOSETMODE  . . . . . . . . .        Number            80h 
+VR_VIOSETSTATE . . . . . . . . .        Number           100h 
+VR_VIOSHOWBUF  . . . . . . . . .        Number           100h 
+VR_VIOWRTCELLSTR . . . . . . . .        Number         20000h 
+VR_VIOWRTCHARSTR . . . . . . . .        Number          8000h 
+VR_VIOWRTCHARSTRATT  . . . . . .        Number         10000h 
+VR_VIOWRTNATTR . . . . . . . . .        Number          1000h 
+VR_VIOWRTNCELL . . . . . . . . .        Number          2000h 
+VR_VIOWRTNCHAR . . . . . . . . .        Number           800h 
+VR_VIOWRTTTY . . . . . . . . . .        Number          4000h 
+
+VioGetAnsi.asm: 40 lines, 2 passes, 16 ms, 0 warnings, 0 errors
