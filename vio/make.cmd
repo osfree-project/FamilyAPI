@@ -3,6 +3,7 @@ del vio.lib
 del *.obj
 del *.lst
 del *.err
+del *.bak
 rem Video subsystem
 jwasm -q vioroute.asm
 jwasm -q vioscrlock.asm

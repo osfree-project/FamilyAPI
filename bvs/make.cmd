@@ -3,6 +3,7 @@ del bvs.lib
 del *.obj
 del *.lst
 del *.err
+del *.bak
 rem Base video subsystem
 jwasm -q bvsshared.asm
 jwasm -q bvsvars.asm

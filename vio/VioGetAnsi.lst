@@ -343,4 +343,4 @@ VR_VIOWRTNCELL . . . . . . . . .        Number          2000h
 VR_VIOWRTNCHAR . . . . . . . . .        Number           800h 
 VR_VIOWRTTTY . . . . . . . . . .        Number          4000h 
 
-VioGetAnsi.asm: 40 lines, 2 passes, 16 ms, 0 warnings, 0 errors
+VioGetAnsi.asm: 40 lines, 2 passes, 0 ms, 0 warnings, 0 errors
