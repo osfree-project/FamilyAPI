@@ -6,7 +6,7 @@
 	public	DOSFINDNEXT
 	public	DOSFINDCLOSE
 
-_DATA 	segment word public 'DATA'
+_DATA 	segment byte public 'DATA'
 FindBuffer 	db 43 dup (0)
 _DATA 	ends
 

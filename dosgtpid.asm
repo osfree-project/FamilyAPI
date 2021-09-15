@@ -3,7 +3,7 @@
 
 		public	DOSGETPID
         
-_TEXT	segment word public 'CODE'
+_TEXT	segment byte public 'CODE'
 
 DOSGETPID:
 		push	BP

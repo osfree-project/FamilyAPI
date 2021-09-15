@@ -5,7 +5,7 @@
 
         public  DOSEXITLIST
 
-_DATA   segment word public 'DATA'
+_DATA   segment byte public 'DATA'
 
 procad  dd 0                  ;address of exit proc
 rc      dw 0                  ;RC

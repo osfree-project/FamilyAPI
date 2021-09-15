@@ -3,7 +3,7 @@
 
 	public	DOSREAD
 
-_DATA	segment word public 'DATA'
+_DATA	segment byte public 'DATA'
 
 linebuff label byte
 	db	0ffh
@@ -12,7 +12,7 @@ bCnt db  0h
 wOfs dw  0
 _DATA	ends
 
-_TEXT	segment para public 'CODE'
+_TEXT	segment byte public 'CODE'
 
 DOSREAD:
 		push	BP

@@ -7,7 +7,7 @@ if 0
         public  FREESELECT
 endif        
 
-_data   segment word public 'DATA'
+_data   segment byte public 'DATA'
 shrseg dw 0
 _data   ends
 
