@@ -325,13 +325,22 @@ TEST tst_dosallochuge(void) {
     #define ALLOC_FLAG 0
  
     SEL    Selector;
+    ULONG     MemAvailSize;  /* Size available (returned) */
     USHORT rc;
+
     rc = DosAllocHuge(NUMBER_OF_SEGMENTS,   /* # of 65536-byte segments */
                     BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
                     &Selector,              /* The 1st selector allocated */
                     MAXIMUM_SEG_SIZE,       /* Max number of segments */
                     ALLOC_FLAG);            /* Allocation flags */
     ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosMemAvail(&MemAvailSize);
+    rc = DosAllocHuge((MemAvailSize/65536)+10,   /* # of 65536-byte segments */
+                    BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    MAXIMUM_SEG_SIZE,       /* Max number of segments */
+                    ALLOC_FLAG);            /* Allocation flags */
+    ASSERT_EQ_FMT(ERROR_NOT_ENOUGH_MEMORY, rc, "%d");
     PASS();
 }
 
