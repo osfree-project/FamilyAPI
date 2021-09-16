@@ -13,6 +13,11 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
+;   Documentation: http://osfree.org/doku/en:docs:fapi:dosbeep
+;
+;0 NO_ERROR
+;395 ERROR_INVALID_FREQUENCY
+;
 ;*/
 
 .8086
@@ -26,9 +31,8 @@
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@PROLOG		DOSBEEP
-FREQUENCY	DW	?
 DURATION	DW	?
-
+FREQUENCY	DW	?
 		@START		DOSBEEP
 		MOV		AX, ERROR_INVALID_FREQUENCY
 		MOV		CX,[DS:BP].ARGS.FREQUENCY
