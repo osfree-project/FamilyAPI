@@ -13,6 +13,8 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
+;   Documentation: http://osfree.org/doku/en:docs:fapi:dosallochuge
+;
 ;0 NO_ERROR
 ;8 ERROR_NOT_ENOUGH_MEMORY
 ;87 ERROR_INVALID_PARAMETER

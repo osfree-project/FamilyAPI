@@ -276,31 +276,6 @@ TEST tst_viowrtcellstr(void) {
 	PASS();
 }
 
-/* Suites can group multiple tests with common setup. */
-SUITE(vio) {
-    RUN_TEST(tst_viogetansi);
-    RUN_TEST(tst_viowrttty);
-    RUN_TEST(tst_viowrtnchar);
-    RUN_TEST(tst_viowrtncell);
-    RUN_TEST(tst_viosetcurpos);
-    RUN_TEST(tst_viosetmode);
-    RUN_TEST(tst_viowrtcharstr);
-    RUN_TEST(tst_viowrtcharstratt);
-    RUN_TEST(tst_viowrtcellstr);
-    RUN_TEST(tst_vioscrlock);
-    RUN_TEST(tst_vioscrunlock);
-    RUN_TEST(tst_viosetansi);
-    RUN_TEST(tst_viogetmode);
-    RUN_TEST(tst_viogetconfig);
-    RUN_TEST(tst_viosetcurtype);
-    RUN_TEST(tst_viogetcurtype);
-    RUN_TEST(tst_viogetcurpos);
-//    RUN_TEST(tst_vioderegister);
-//    RUN_TEST(tst_vioregister);
-    RUN_TEST(tst_vioscrollup);
-    RUN_TEST(tst_vioscrolldn);
-}
-
 
 /* A test runs various assertions, then calls PASS(), FAIL(), or SKIP(). */
 TEST beep(void) {
@@ -406,7 +381,6 @@ TEST tst_dosallochuge(void) {
 /* DosAllocSeg tests */
 TEST tst_dosallocseg(void) {
     #define BYTES_IN_LAST_SEGMENT 1040
-    #define ALLOC_FLAG 0
  
     SEL    Selector;
     ULONG     MemAvailSize;  /* Size available (returned) */
@@ -517,6 +491,31 @@ SUITE(mou) {
 /* Suites can group multiple tests with common setup. */
 SUITE(nls) {
     RUN_TEST(beep);
+}
+
+/* Suites can group multiple tests with common setup. */
+SUITE(vio) {
+    RUN_TEST(tst_viogetansi);
+    RUN_TEST(tst_viowrttty);
+    RUN_TEST(tst_viowrtnchar);
+    RUN_TEST(tst_viowrtncell);
+    RUN_TEST(tst_viosetcurpos);
+    RUN_TEST(tst_viosetmode);
+    RUN_TEST(tst_viowrtcharstr);
+    RUN_TEST(tst_viowrtcharstratt);
+    RUN_TEST(tst_viowrtcellstr);
+    RUN_TEST(tst_vioscrlock);
+    RUN_TEST(tst_vioscrunlock);
+    RUN_TEST(tst_viosetansi);
+    RUN_TEST(tst_viogetmode);
+    RUN_TEST(tst_viogetconfig);
+    RUN_TEST(tst_viosetcurtype);
+    RUN_TEST(tst_viogetcurtype);
+    RUN_TEST(tst_viogetcurpos);
+//    RUN_TEST(tst_vioderegister);
+//    RUN_TEST(tst_vioregister);
+    RUN_TEST(tst_vioscrollup);
+    RUN_TEST(tst_vioscrolldn);
 }
 
 /* Add definitions that need to be in the test runner's main file. */

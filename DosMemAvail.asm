@@ -13,6 +13,8 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
+;   Documentation: http://osfree.org/doku/en:docs:fapi:dosmemavail
+;
 ;INT 21 - AH = 48h DOS 2+ - ALLOCATE MEMORY
 ;BX = number of 16-byte paragraphs desired
 ;Return: CF set on error

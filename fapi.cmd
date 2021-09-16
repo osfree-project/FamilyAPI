@@ -44,7 +44,8 @@ jwasm -q dosgetmessage.asm
 jwasm -q doscreatecsalias.asm
 jwasm -q dossetctrycode.asm
 jwasm -q dosallocseg.ASM
-jwasm -q dosalssg.ASM
+jwasm -q dosallocshrseg.ASM
+jwasm -q dosgetshrseg.ASM
 jwasm -q dosqsysinfo.ASM
 jwasm -q doscliaccess.ASM
 jwasm -q dosportaccess.ASM
@@ -142,8 +143,8 @@ rem dos*module
 
 :+csalias.obj
 
-wlib -q -fo fapi.lib +globalshared.obj +helpers.obj +baddynlink.obj  +dosallocseg.obj +dosalssg.obj +dosbeep.obj
-wlib -q -fo fapi.lib +dosbufreset.obj +doscreatecsalias.obj +dosgetmessage.obj +dosqsysinfo.obj
+wlib -q -fo fapi.lib +globalshared.obj +helpers.obj +baddynlink.obj  +dosallocseg.obj +dosallocshrseg.obj +dosbeep.obj
+wlib -q -fo fapi.lib +dosbufreset.obj +doscreatecsalias.obj +dosgetmessage.obj +dosqsysinfo.obj +dosgetshrseg.obj
 wlib -q -fo fapi.lib +doscasemap.obj +dosmemavail.obj
 wlib -q -fo fapi.lib +dossetctrycode.obj
 wlib -q -fo fapi.lib +doschdir.obj
