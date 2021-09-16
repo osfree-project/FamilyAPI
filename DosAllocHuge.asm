@@ -18,6 +18,7 @@
 ;87 ERROR_INVALID_PARAMETER
 ;212 ERROR_LOCKED
 ;
+;@todo more allocation flags check. 
 ;*/
 
 .8086
@@ -41,10 +42,11 @@ NUMSEG		DW	?
 		TEST	BX,0FFF0H
 		JNZ	ERROREXIT		; Maximun number of 64kb segments is 16 (1024kb memory in real mode)
 
-		MOV	AX, ERROR_INVALID_PARAMETER
-		AND     [DS:BP].ARGS.ALLOCFLAGS, 07FFFH
-		CMP	[DS:BP].ARGS.ALLOCFLAGS, 0
-		JNE     EXIT			; Only Movable flag is accepted. No shareable memory supported.
+		MOV	AX, 0FFF0H
+		AND     AX, [DS:BP].ARGS.ALLOCFLAGS ; bit 0,1,2,3 allowed only
+		CMP	AX, 0
+		MOV	AX, ERROR_INVALID_PARAMETER 
+		JNE     EXIT			; 
 
 		; Move numseg to high
 		ROR	BX,1

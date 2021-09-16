@@ -334,13 +334,132 @@ TEST tst_dosallochuge(void) {
                     MAXIMUM_SEG_SIZE,       /* Max number of segments */
                     ALLOC_FLAG);            /* Allocation flags */
     ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
     rc = DosMemAvail(&MemAvailSize);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
     rc = DosAllocHuge((MemAvailSize/65536)+10,   /* # of 65536-byte segments */
                     BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
                     &Selector,              /* The 1st selector allocated */
                     MAXIMUM_SEG_SIZE,       /* Max number of segments */
                     ALLOC_FLAG);            /* Allocation flags */
     ASSERT_EQ_FMT(ERROR_NOT_ENOUGH_MEMORY, rc, "%d");
+    rc = DosAllocHuge(NUMBER_OF_SEGMENTS,   /* # of 65536-byte segments */
+                    BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    MAXIMUM_SEG_SIZE,       /* Max number of segments */
+                    SEG_GIVEABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocHuge(NUMBER_OF_SEGMENTS,   /* # of 65536-byte segments */
+                    BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    MAXIMUM_SEG_SIZE,       /* Max number of segments */
+                    SEG_GETTABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocHuge(NUMBER_OF_SEGMENTS,   /* # of 65536-byte segments */
+                    BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    MAXIMUM_SEG_SIZE,       /* Max number of segments */
+                    SEG_DISCARDABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocHuge(NUMBER_OF_SEGMENTS,   /* # of 65536-byte segments */
+                    BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    MAXIMUM_SEG_SIZE,       /* Max number of segments */
+                    SEG_GIVEABLE|SEG_DISCARDABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocHuge(NUMBER_OF_SEGMENTS,   /* # of 65536-byte segments */
+                    BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    MAXIMUM_SEG_SIZE,       /* Max number of segments */
+                    SEG_GETTABLE|SEG_DISCARDABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocHuge(NUMBER_OF_SEGMENTS,   /* # of 65536-byte segments */
+                    BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    MAXIMUM_SEG_SIZE,       /* Max number of segments */
+                    SEG_GIVEABLE|SEG_GETTABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocHuge(NUMBER_OF_SEGMENTS,   /* # of 65536-byte segments */
+                    BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    MAXIMUM_SEG_SIZE,       /* Max number of segments */
+                    SEG_GETTABLE|SEG_GETTABLE|SEG_DISCARDABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    PASS();
+}
+
+/* DosAllocSeg tests */
+TEST tst_dosallocseg(void) {
+    #define BYTES_IN_LAST_SEGMENT 1040
+    #define ALLOC_FLAG 0
+ 
+    SEL    Selector;
+    ULONG     MemAvailSize;  /* Size available (returned) */
+    USHORT rc;
+
+    rc = DosAllocSeg(BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    0);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocSeg(BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    SEG_GIVEABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocSeg(BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    SEG_GETTABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocSeg(BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    SEG_DISCARDABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocSeg(BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    SEG_GIVEABLE|SEG_DISCARDABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocSeg(BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    SEG_GETTABLE|SEG_DISCARDABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocSeg(BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    SEG_GIVEABLE|SEG_GETTABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosAllocSeg(BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
+                    &Selector,              /* The 1st selector allocated */
+                    SEG_GETTABLE|SEG_GETTABLE|SEG_DISCARDABLE);            /* Allocation flags */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc=DosFreeSeg(Selector);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
     PASS();
 }
 
@@ -382,6 +501,7 @@ SUITE(dos) {
     RUN_TEST(tst_dosqsysinfo);
     RUN_TEST(tst_dosmemavail);
     RUN_TEST(tst_dosallochuge);
+    RUN_TEST(tst_dosallocseg);
 }
 
 /* Suites can group multiple tests with common setup. */
