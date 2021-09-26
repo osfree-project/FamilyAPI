@@ -11,8 +11,6 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-;   Documentation: http://osfree.org/doku/en:docs:fapi:vioprtsctoggle
-;
 ;* 0   NO_ERROR
 ;* 355 ERROR_VIO_MODE
 ;* 402 ERROR_VIO_SMG_ONLY

@@ -476,6 +476,8 @@ SUITE(dos) {
     RUN_TEST(tst_dosmemavail);
     RUN_TEST(tst_dosallochuge);
     RUN_TEST(tst_dosallocseg);
+    RUN_TEST(tst_dosallocshrseg);
+    RUN_TEST(tst_dosgetshrseg);
 }
 
 /* Suites can group multiple tests with common setup. */

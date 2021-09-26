@@ -28,14 +28,14 @@
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@PROLOG	DOSOPEN
-FILENAME	DD 	?		;File path name string
-FILEHANDLE	DD 	?		;File handle (returned)
-ACTIONTAKEN	DD 	?		;Action taken (returned)
-FILESIZE	DD	?		;File primary allocation
-FILEATTRIBUTE	DW	?		;File Attribute
-OPENFLAG	DW	?		;Open function type
-OPENMODE	DW	?		;Open mode of the file
 RESERVED	DD	?		;Reserved (must be zero)
+OPENMODE	DW	?		;Open mode of the file
+OPENFLAG	DW	?		;Open function type
+FILEATTRIBUTE	DW	?		;File Attribute
+FILESIZE	DD	?		;File primary allocation
+ACTIONTAKEN	DD 	?		;Action taken (returned)
+FILEHANDLE	DD 	?		;File handle (returned)
+FILENAME	DD 	?		;File path name string
 		@START DOSOPEN
 
 		LDS	DX,[DS:BP].ARGS.FILENAME
