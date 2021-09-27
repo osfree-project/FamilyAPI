@@ -1,6 +1,11 @@
 #define INCL_BASE
 #include <os2.h>
 #include "newexe.h"
+
+struct EXE_RELOC {
+  unsigned short offset;
+  unsigned short segment;
+};
  
 BOOL is_extended_exe(struct exe_hdr hdr)
 {
@@ -33,21 +38,19 @@ for (i = sizeof(ptr) - 1; i >= 0; i--) {
 }
 }
 
-struct EXE_RELOC {
-  unsigned short offset;
-  unsigned short segment;
-};
 
-void DumpMZReloc(USHORT lfarlc, USHORT crlc)
+void DumpMZReloc(struct EXE_RELOC far *r, USHORT crlc)
 {
   int i;
-  EXE_RELOC r;
 
-    rc = DosRead(FileHandle, &r, sizeof(ne_hdr), &BytesRead);
+  char relocationTable[]    ="\n\rRelocation table:";
 
-  for (i = 0; i <= crlc; i++) {
-    VioWrtTTY(" ", 1, 0);
-    printHex(hdr.e_res2[i]);
+  VioWrtTTY(relocationTable, sizeof(relocationTable), 0);
+  for (i = 0; i < crlc; i++) {
+    VioWrtTTY("\n\r", 2, 0);
+    printHex(r[i].segment);
+    VioWrtTTY(":", 1, 0);
+    printHex(r[i].offset);
   }
   
 }
@@ -145,6 +148,7 @@ struct exe_hdr {
 void DumpNE(struct new_exe hdr)
 {
   char magicNumber[]            ="\n\rMagic number:             ";
+  char version[]                ="\n\rVersion:                  ";
 /*
 struct new_exe {
     unsigned short  ne_magic;
@@ -178,6 +182,10 @@ struct new_exe {
 */
   VioWrtTTY(magicNumber, sizeof(magicNumber), 0);
   printHex(hdr.ne_magic);
+  VioWrtTTY(version, sizeof(version), 0);
+  printHex(hdr.ne_ver);
+  VioWrtTTY(".", 1, 0);
+  printHex(hdr.ne_rev);
   return;
 }
  
@@ -189,6 +197,9 @@ void main(void)
   USHORT rc;
   USHORT Action;
   USHORT BytesRead;     /* Bytes read (returned) */
+  ULONG Local;
+  struct EXE_RELOC *r;
+  PSEL sel;
 
   rc = DosOpen("exehdr.exe",            /* File path name */
                &FileHandle,             /* File handle */
@@ -200,7 +211,13 @@ void main(void)
                0);                      /* Reserved (must be zero) */
   rc = DosRead(FileHandle, &mz_hdr, sizeof(mz_hdr), &BytesRead);
   DumpMZ(mz_hdr);
-  DumpMZReloc(mz_hdr.e_lfarlc, mz_hdr.e_crlc);
+  rc = DosAllocSeg(sizeof(struct EXE_RELOC)*mz_hdr.e_crlc, sel, 0);
+  rc = DosChgFilePtr(FileHandle,  /* File handle */
+                          mz_hdr.e_lfarlc,   /* Distance to move in bytes */
+                          FILE_BEGIN,    /* Method of moving */
+                          &Local);     /* New pointer location */
+  rc = DosRead(FileHandle, MAKEP(sel,0), sizeof(struct EXE_RELOC)*mz_hdr.e_crlc, &BytesRead);
+  DumpMZReloc(MAKEP(sel,0), mz_hdr.e_crlc);
   if (is_extended_exe(mz_hdr))
   {
     rc = DosRead(FileHandle, &ne_hdr, sizeof(ne_hdr), &BytesRead);
