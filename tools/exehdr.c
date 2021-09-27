@@ -6,6 +6,24 @@ struct EXE_RELOC {
   unsigned short offset;
   unsigned short segment;
 };
+
+char hello[]                  ="\n\rosFree Segmented-EXE Header Utility Version 1.0\n\rCopyright (C) osFree contributors 2021.";
+char fileInfo[]               ="\n\r    File Information     (in Hex)";
+char magicNumber[]            ="\n\rMagic number:             ";
+char bytesInLastPage[]        ="\n\rBytes in last page:       ";
+char pagesInFile[]            ="\n\rPages in file:            ";
+char relocations[]            ="\n\rRelocations:              ";
+char paragraphsInHeader[]     ="\n\rParagraphs in header:     ";
+char extraParagraphsNeeded[]  ="\n\rExtra paragraphs needed:  ";
+char extraParagraphsWanted[]  ="\n\rExtra paragraphs wanted:  ";
+char initialStackLocation[]   ="\n\rInitial stack location:   ";
+char wordChecksum[]           ="\n\rWord checksum:            ";
+char entryPoint[]             ="\n\rEntry point:              ";
+char relocationTableAddress[] ="\n\rRelocation table address: ";
+char overlayNumber[]          ="\n\rOverlay number:           ";
+char reservedWords[]          ="\n\rReserved words:\n\r";
+char newEXEHeaderAddress[]    ="\n\rNew .EXE header address:  ";
+//  char memoryNeeded[]           ="\n\rMemory needed:            ";
  
 BOOL is_extended_exe(struct exe_hdr hdr)
 {
@@ -58,91 +76,52 @@ void DumpMZReloc(struct EXE_RELOC far *r, USHORT crlc)
 void DumpMZ(struct exe_hdr hdr)
 {
     int i;
-/*
-struct exe_hdr {
-    unsigned short  e_magic;
-    unsigned short  e_cblp;
-    unsigned short  e_cp;
-    unsigned short  e_crlc;
-    unsigned short  e_cparhdr;
-    unsigned short  e_minalloc;
-    unsigned short  e_maxalloc;
-    unsigned short  e_ss;
-    unsigned short  e_sp;
-    unsigned short  e_csum;
-    unsigned short  e_ip;
-    unsigned short  e_cs;
-    unsigned short  e_lfarlc;
-    unsigned short  e_ovno;
-    unsigned short  e_res[ERES1WDS];
-    unsigned short  e_oemid;
-    unsigned short  e_oeminfo;
-    unsigned short  e_res2[ERES2WDS];
-    long            e_lfanew;
-};*/
-  char hello[]                  ="\n\rosFree Segmented-EXE Header Utility Version 1.0\n\rCopyright (C) osFree contributors 2021.";
-  char fileInfo[]               ="\n\r    File Information     (in Hex)";
-  char magicNumber[]            ="\n\rMagic number:             ";
-  char bytesInLastPage[]        ="\n\rBytes in last page:       ";
-  char pagesInFile[]            ="\n\rPages in file:            ";
-  char relocations[]            ="\n\rRelocations:              ";
-  char paragraphsInHeader[]     ="\n\rParagraphs in header:     ";
-  char extraParagraphsNeeded[]  ="\n\rExtra paragraphs needed:  ";
-  char extraParagraphsWanted[]  ="\n\rExtra paragraphs wanted:  ";
-  char initialStackLocation[]   ="\n\rInitial stack location:   ";
-  char wordChecksum[]           ="\n\rWord checksum:            ";
-  char entryPoint[]             ="\n\rEntry point:              ";
-  char relocationTableAddress[] ="\n\rRelocation table address: ";
-  char reservedWords[]          ="\n\rReserved words:\n\r";
-  char newEXEHeaderAddress[]    ="\n\rNew .EXE header address:  ";
-//  char memoryNeeded[]           ="\n\rMemory needed:            ";
 
-  VioWrtTTY(hello, sizeof(hello), 0);
-  VioWrtTTY(fileInfo, sizeof(fileInfo), 0);
-  VioWrtTTY(magicNumber, sizeof(magicNumber), 0);
-  printHex(hdr.e_magic);
-  VioWrtTTY(bytesInLastPage, sizeof(bytesInLastPage), 0);
-  printHex(hdr.e_cblp);
-  VioWrtTTY(pagesInFile, sizeof(pagesInFile), 0);
-  printHex(hdr.e_cp);
-  VioWrtTTY(relocations, sizeof(relocations), 0);
-  printHex(hdr.e_crlc);
-  VioWrtTTY(paragraphsInHeader, sizeof(paragraphsInHeader), 0);
-  printHex(hdr.e_cparhdr);
-  VioWrtTTY(extraParagraphsNeeded, sizeof(extraParagraphsNeeded), 0);
-  printHex(hdr.e_minalloc);
-  VioWrtTTY(extraParagraphsWanted, sizeof(extraParagraphsWanted), 0);
-  printHex(hdr.e_maxalloc);
-  VioWrtTTY(initialStackLocation, sizeof(initialStackLocation), 0);
-  printHex(hdr.e_ss);
-  VioWrtTTY(":", 1, 0);
-  printHex(hdr.e_sp);
-  VioWrtTTY(wordChecksum, sizeof(wordChecksum), 0);
-  printHex(hdr.e_csum);
-  VioWrtTTY(entryPoint, sizeof(entryPoint), 0);
-  printHex(hdr.e_cs);
-  VioWrtTTY(":", 1, 0);
-  printHex(hdr.e_ip);
-  VioWrtTTY(relocationTableAddress, sizeof(relocationTableAddress), 0);
-  printHex(hdr.e_lfarlc);
-  VioWrtTTY(reservedWords, sizeof(reservedWords), 0);
-  for (i = 0; i <= ERES1WDS; i++) {
-    VioWrtTTY(" ", 1, 0);
-    printHex(hdr.e_res[i]);
-  }
-  for (i = 0; i <= ERES2WDS; i++) {
-    VioWrtTTY(" ", 1, 0);
-    printHex(hdr.e_res2[i]);
-  }
-//  printHex(hdr.e_lfarlc);
-  VioWrtTTY(newEXEHeaderAddress, sizeof(newEXEHeaderAddress), 0);
-  printHex(hdr.e_lfanew & 0xFFFF);
-  printHex(hdr.e_lfanew>>16 & 0xFFFF);
-//  VioWrtTTY(memoryNeeded, sizeof(memoryNeeded), 0);
-//  printHex(hdr.e_lfarlc);
-
-
-  return;
+    VioWrtTTY(hello, sizeof(hello), 0);
+    VioWrtTTY(fileInfo, sizeof(fileInfo), 0);
+    VioWrtTTY(magicNumber, sizeof(magicNumber), 0);
+    printHex(hdr.e_magic);
+    VioWrtTTY(bytesInLastPage, sizeof(bytesInLastPage), 0);
+    printHex(hdr.e_cblp);
+    VioWrtTTY(pagesInFile, sizeof(pagesInFile), 0);
+    printHex(hdr.e_cp);
+    VioWrtTTY(relocations, sizeof(relocations), 0);
+    printHex(hdr.e_crlc);
+    VioWrtTTY(paragraphsInHeader, sizeof(paragraphsInHeader), 0);
+    printHex(hdr.e_cparhdr);
+    VioWrtTTY(extraParagraphsNeeded, sizeof(extraParagraphsNeeded), 0);
+    printHex(hdr.e_minalloc);
+    VioWrtTTY(extraParagraphsWanted, sizeof(extraParagraphsWanted), 0);
+    printHex(hdr.e_maxalloc);
+    VioWrtTTY(initialStackLocation, sizeof(initialStackLocation), 0);
+    printHex(hdr.e_ss);
+    VioWrtTTY(":", 1, 0);
+    printHex(hdr.e_sp);
+    VioWrtTTY(wordChecksum, sizeof(wordChecksum), 0);
+    printHex(hdr.e_csum);
+    VioWrtTTY(entryPoint, sizeof(entryPoint), 0);
+    printHex(hdr.e_cs);
+    VioWrtTTY(":", 1, 0);
+    printHex(hdr.e_ip);
+    VioWrtTTY(relocationTableAddress, sizeof(relocationTableAddress), 0);
+    printHex(hdr.e_lfarlc);
+    VioWrtTTY(overlayNumber, sizeof(overlayNumber), 0);
+    printHex(hdr.e_ovno);
+    VioWrtTTY(reservedWords, sizeof(reservedWords), 0);
+    for (i = 0; i <= ERES1WDS; i++) {
+      VioWrtTTY(" ", 1, 0);
+      printHex(hdr.e_res[i]);
+    }
+    for (i = 0; i <= ERES2WDS; i++) {
+      VioWrtTTY(" ", 1, 0);
+      printHex(hdr.e_res2[i]);
+    }
+    VioWrtTTY(newEXEHeaderAddress, sizeof(newEXEHeaderAddress), 0);
+    printHex(hdr.e_lfanew & 0xFFFF);
+    printHex(hdr.e_lfanew>>16 & 0xFFFF);
+  //  VioWrtTTY(memoryNeeded, sizeof(memoryNeeded), 0);
+  //  printHex(hdr.e_lfarlc);
+    return;
 }
 
 void DumpNE(struct new_exe hdr)
