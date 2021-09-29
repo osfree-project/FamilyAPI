@@ -13,6 +13,19 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
+;INT 21 - Windows95 - LONG FILENAME - GET FILE INFO BY HANDLE
+;
+;	AX = 71A6h
+;	BX = file handle
+;	DS:DX -> buffer for file information (see #01784)
+;	CF set
+;Return: CF clear if successful
+;	    file information record filled
+;	CF set on error
+;	    AX = error code
+;		7100h if function not supported
+;SeeAlso: AX=71A7h/BL=00h
+;
 ;*/
 
 .8086
@@ -35,24 +48,24 @@ GLOBALINIT	PROC NEAR
 		MOV	[DOS_VERSION],AX
 		MOV	BX, AX
 		MOV	AX, 0FFFFH
-		CMP	BX, 0A14H
+		CMP	BX, 0A14H	; >=10.20 OS/2 1.2+
 		JAE	DOS10
-		CMP	BX, 0A00H
+		CMP	BX, 0A00H	; >=10.00 OS/2 1.0+
 		JAE	DOS10
-		CMP	BX, 0700H
+		CMP	BX, 0700H	; >=07.00 Windows 95+
 		JAE	DOS7
-		CMP	BX, 0303H
+		CMP	BX, 0303H	; >=03.03 MS-DOS 3.3+
 		JAE	DOS33
-		CMP	BX, 0300H
+		CMP	BX, 0300H	; >=03.00 MS-DOS 3.0+
 		JAE	DOS3
-		CMP	BX, 0200H
+		CMP	BX, 0200H	; >=02.00 MS-DOS 2.0+
 		JAE	DOS2
 		JMP	LFNCHECK
 ; TODO ERROR AND EXIT
 
 DOS1020:	MOV	[DOS1020API], AX
 DOS10:		MOV	[DOS10API], AX
-		JMP	DOS3
+		JMP	DOS33
 DOS7:
 		MOV	[DOS7API], AX
 DOS33:
@@ -61,53 +74,42 @@ DOS3:
 		MOV	[DOS3API], AX
 DOS2:
 		MOV	[DOS2API], AX
+		; Because LFN API can be supported by side drivers check it
 LFNCHECK:
+		MOV     BX, -1
+		MOV     DX, OFFSET MAIN_BUFFER
 
-;INT 21 - Windows95 - LONG FILENAME - GET FILE INFO BY HANDLE
-;
-;	AX = 71A6h
-;	BX = file handle
-;	DS:DX -> buffer for file information (see #01784)
-;	CF set
-;Return: CF clear if successful
-;	    file information record filled
-;	CF set on error
-;	    AX = error code
-;		7100h if function not supported
-;SeeAlso: AX=71A7h/BL=00h
-
-	        mov     bx, -1
-	        mov     dx, OFFSET main_buffer
-
-	        STC
-	        MOV	AX, 71A6h
+		STC
+		MOV	AX, 71A6H
 		INT	21H
-	        JNC     LFNOK
-	        cmp     ax, 7100h
+		JNC     LFNOK
+		CMP     AX, 7100H
 		JZ	DPMICHECK
 LFNOK:
 		MOV	LFNAPI, 0FFFFH
-DPMICHECK:		
-if 0
-		MOV	AX, 1687H
-		INT	2FH
-		CMP	AX, 0
-		JNZ	SHARECHECK		; No DPMI found
-DPMIOK:
-		MOV	AX, 0400H
-		INT	31H
-		TEST	BX, 1
-		JNZ	SHARECHECK		; We need only 16-bit DPMI host for now (sure??? May be 32-bit host also ok?)
 
-		MOV	DPMI, 0FFFFH
-
-; SHARE.EXE test
+		; SHARE.EXE test; @todo Because Lock API can be without SHARE - need another detection method
 SHARECHECK:
 		MOV	AX, 1000H
 		INT	21H
 		CMP	AL, 0FFH
-		JNZ	EXIT	
+		JNZ	DPMICHECK
 		MOV	SHARE, 0FFFFH
+
+DPMICHECK:
+if 0
+		MOV	AX, 1687H
+		INT	2FH
+		CMP	AX, 0
+		JNZ	EXIT		; No DPMI found
+DPMIOK:
+		MOV	AX, 0400H
+		INT	31H
+		TEST	BX, 1
+		JNZ	EXIT		; We need only 16-bit DPMI host for now (sure??? May be 32-bit host also ok?)
+
+		MOV	DPMI, 0FFFFH
+
 
 ;
 ;       Note:  This assumes that the program has
