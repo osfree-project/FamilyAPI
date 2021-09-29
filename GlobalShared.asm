@@ -92,15 +92,22 @@ if 0
 		MOV	AX, 1687H
 		INT	2FH
 		CMP	AX, 0
-		JNZ	EXIT		; No DPMI found
+		JNZ	SHARECHECK		; No DPMI found
 DPMIOK:
 		MOV	AX, 0400H
 		INT	31H
 		TEST	BX, 1
-		JNZ	EXIT		; We need only 16-bit DPMI host for now (sure??? May be 32-bit host also ok?)
+		JNZ	SHARECHECK		; We need only 16-bit DPMI host for now (sure??? May be 32-bit host also ok?)
 
 		MOV	DPMI, 0FFFFH
 
+; SHARE.EXE test
+SHARECHECK:
+		MOV	AX, 1000H
+		INT	21H
+		CMP	AL, 0FFH
+		JNZ	EXIT	
+		MOV	SHARE, 0FFFFH
 
 ;
 ;       Note:  This assumes that the program has

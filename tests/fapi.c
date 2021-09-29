@@ -292,6 +292,46 @@ TEST beep(void) {
     PASS();
 }
 
+TEST tst_dosbeep(void) {
+    USHORT  rc;
+ 
+    rc = DosBeep(1380, 1000);
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    rc = DosBeep(33380, 1000);
+    ASSERT_EQ_FMT(ERROR_INVALID_FREQUENCY, rc, "%d");
+    rc = DosBeep(3, 1000);
+    ASSERT_EQ_FMT(ERROR_INVALID_FREQUENCY, rc, "%d");
+    PASS();
+}
+
+TEST tst_dosopen(void) {
+    USHORT  rc;
+    HFILE   FileHandle;
+    USHORT  Action;
+    USHORT  Wrote;
+    CHAR    FileData[] ="test write";
+
+    rc = DosOpen("test.txt",            /* File path name */
+               &FileHandle,             /* File handle */
+               &Action,                 /* Action taken */
+               0,                       /* File primary allocation */
+               FILE_ARCHIVED,           /* File attribute */
+               FILE_CREATE,             /* Open Function type */
+               0,                       /* Open mode of the file */
+               0);                      /* Reserved (must be zero) */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+
+    rc=DosWrite(FileHandle,           /* File handle */
+             FileData,     /* User buffer */
+             sizeof(FileData),     /* Buffer length */
+             &Wrote);              /* Bytes written */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+
+    rc=DosClose(FileHandle);           /* File handle */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    PASS();
+}
+
 /* DosAllocHuge tests */
 TEST tst_dosallochuge(void) {
     #define NUMBER_OF_SEGMENTS 2
@@ -471,13 +511,15 @@ TEST tst_dosmemavail(void) {
 
 /* Suites can group multiple tests with common setup. */
 SUITE(dos) {
+    RUN_TEST(tst_dosbeep);
+    RUN_TEST(tst_dosopen);
     RUN_TEST(tst_dosgetversion);
     RUN_TEST(tst_dosqsysinfo);
     RUN_TEST(tst_dosmemavail);
     RUN_TEST(tst_dosallochuge);
     RUN_TEST(tst_dosallocseg);
-    RUN_TEST(tst_dosallocshrseg);
-    RUN_TEST(tst_dosgetshrseg);
+//    RUN_TEST(tst_dosallocshrseg);
+//    RUN_TEST(tst_dosgetshrseg);
 }
 
 /* Suites can group multiple tests with common setup. */
@@ -532,7 +574,7 @@ int main(int argc, char **argv) {
 
     /* Tests can also be gathered into test suites. */
     VioSetCurPos(24, 0, 0);
-    RUN_SUITE(vio);
+//    RUN_SUITE(vio);
     VioSetCurPos(24, 0, 0);
     RUN_SUITE(dos);
     RUN_SUITE(kbd);

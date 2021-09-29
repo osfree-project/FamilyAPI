@@ -28,6 +28,7 @@ char newEXEHeaderAddress[]    ="\n\rNew .EXE header address:  ";
 BOOL is_extended_exe(struct exe_hdr hdr)
 {
   if (hdr.e_lfanew!=0) return TRUE;
+// todo: add check for NE, PE, LX, LE, P3, P4... Surf for more format signatures
   return FALSE;
 }
 
