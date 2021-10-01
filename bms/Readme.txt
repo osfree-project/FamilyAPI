@@ -1,10 +1,10 @@
-OS/2 Base Keyboard Subsystem
+OS/2 Base Mouse Subsystem
 ============================
 
-This is open-source OS/2 Base Keyboard Subsystem replacement. It is binary compatible with original OS/2 BKS.
+This is open-source OS/2 Base Mouse Subsystem replacement. It is binary compatible with original OS/2 BMS.
 
 Files
 -----
 
-BKS.LIB 16-bit small memory model library.
+BMS.LIB 16-bit small memory model library.
 
