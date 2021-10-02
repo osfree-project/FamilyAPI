@@ -5,6 +5,18 @@ cd ..
 cd bvs
 call make
 cd ..
+cd mou
+call make
+cd ..
+cd bms
+call make
+cd ..
+cd kbd
+call make
+cd ..
+cd bks
+call make
+cd ..
 
 rem dosloadmodule
 :jwasm -q checkpathname.asm
@@ -103,12 +115,6 @@ jwasm -q dosstvec.ASM
 jwasm -q doswrite.ASM
 jwasm -q dosqverify.asm
 
-rem keyboard sybsystem
-:jwasm -q kbdgstat.ASM
-:jwasm -q kbdchrin.ASM 
-:jwasm -q kbdpeek.ASM
-:jwasm -q kbdflushbuffer.ASM
-
 :jwasm -q csalias.ASM
 :jwasm -q gblreal.ASM
 
@@ -200,13 +206,7 @@ wlib -q -fo fapi.lib +dosstvec.obj
 wlib -q -fo fapi.lib +doswrite.obj
 :wlib -q -fo fapi.lib +gblreal.obj
 
-rem keyboard subsystem
-:wlib -q -fo fapi.lib +kbdchrin.obj
-:wlib -q -fo fapi.lib +kbdgstat.obj
-:wlib -q -fo fapi.lib +kbdpeek.obj
-:wlib -q -fo fapi.lib +kbdflushbuffer.obj
-
 wlib -q -fo fapi.lib +globalvars.obj
 
 rem Fapi Subsystem
-wlib -q -fo fapi.lib +vio/vio.lib +bvs/bvs.lib
+wlib -q -fo fapi.lib +vio/vio.lib +bvs/bvs.lib +kbd/kbd.lib +bks/bks.lib +mou/mou.lib +bms/bms.lib

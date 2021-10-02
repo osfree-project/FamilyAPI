@@ -15,7 +15,6 @@
 ;
 ;   Documentation: http://osfree.org/doku/en:docs:fapi:moudrawptr
 ;
-;
 ;*/
 
 .8086
