@@ -18,53 +18,45 @@
 .8086
 
 		; Helpers
-		INCLUDE	helpers.inc
-		INCLUDE	..\bseerr.inc
+		INCLUDE	HELPERS.INC
+		INCLUDE	..\BSEERR.INC
+		INCLUDE	KBD.INC
 
-_TEXT	segment byte public 'CODE'
-
-KBDKEYINFO struc
-  kbci_chChar    db  ? ;ASCII character code
-  kbci_chScan    db  ? ;Scan Code
-  kbci_fbStatus  db  ? ;State of the character
-  kbci_bNlsShift db  ? ;Reserved (set to zero)
-  kbci_fsState   dw  ? ;state of the shift keys
-  kbci_time      dd  ? ;time stamp of keystroke (ms since ipl)
-KBDKEYINFO ends
+_TEXT		SEGMENT BYTE PUBLIC 'CODE'
 
 		@BKSPROLOG	BKSCHARIN
 KBDHANDLE	DW	?		;KEYBOARD HANDLE
 IOWAIT		DW	?		;
 CHARDATA	DD	?		;
 		@BKSSTART	BKSCHARIN
-		mov	CX,[DS:BP].ARGS.IOWAIT
-		jcxz @F
-		mov	AH,11h
-		int	016h
-		jne	@F
-		xor	BX,BX
-		jmp store
+		MOV	CX,[DS:BP].ARGS.IOWAIT
+		JCXZ	@F
+		MOV	AH,11H
+		INT	016H
+		JNE	@F
+		XOR	BX,BX
+		JMP	STORE
 @@:
-		mov	AH,10h
-		int	16h
-		mov	BX,40h
-store:	
-		push DS
-		lds	SI,[DS:BP].ARGS.CHARDATA
-		mov	[SI].KBDKEYINFO.kbci_chChar,AL
-		mov	[SI].KBDKEYINFO.kbci_chScan,AH
-		mov	[SI].KBDKEYINFO.kbci_fbStatus,BL
-		mov	AH,12h		;get shift key state
-		int	16h
-		mov	[SI].KBDKEYINFO.kbci_fsState,AX
-		mov	AH,2Ch		;get time (possibly better to get it with int 1A)
-		int	21h
-		mov	WORD PTR [SI].KBDKEYINFO.kbci_time,CX
-		mov	WORD PTR [SI].KBDKEYINFO.kbci_time+2,DX
-		pop	DS
-		xor	AX,AX
+		MOV	AH,10H
+		INT	16H
+		MOV	BX,40H
+STORE:
+		PUSH	DS
+		LDS	SI,[DS:BP].ARGS.CHARDATA
+		MOV	[DS:SI].KBDKEYINFO.KBCI_CHCHAR,AL
+		MOV	[DS:SI].KBDKEYINFO.KBCI_CHSCAN,AH
+		MOV	[DS:SI].KBDKEYINFO.KBCI_FBSTATUS,BL
+		MOV	AH,12H		;GET SHIFT KEY STATE
+		INT	16H
+		MOV	[DS:SI].KBDKEYINFO.KBCI_FSSTATE,AX
+		MOV	AH,2CH
+		INT	21H
+		MOV	WORD PTR [SI].KBDKEYINFO.KBCI_TIME,CX
+		MOV	WORD PTR [SI].KBDKEYINFO.KBCI_TIME+2,DX
+		POP	DS
+		XOR	AX,AX
 
 		@BKSEPILOG	BKSCHARIN
-_TEXT	ends
 
-	end
+_TEXT		ENDS
+		END

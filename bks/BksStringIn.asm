@@ -23,12 +23,22 @@
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@BKSPROLOG	BKSSTRINGIN
-CharBuffer	DD	?
-BLength		DD	?
-IOWait		DW	?
-KbdHandle	DW	?
+KBDHANDLE	DW	?
+IOWAIT		DW	?
+BLENGTH		DD	?
+CHARBUFFER	DD	?
 		@BKSSTART	BKSSTRINGIN
-; code here
+
+;buff        db  26        ;MAX NUMBER OF CHARACTERS ALLOWED (25).
+;            db  ?         ;NUMBER OF CHARACTERS ENTERED BY USER.
+;            db  26 dup(0) ;CHARACTERS ENTERED BY USER.
+
+		; Prepare Buffer
+		;CAPTURE STRING FROM KEYBOARD.                                    
+		MOV AH, 0AH
+		MOV DX, OFFSET BUFF
+		INT 21H                 
+
 		@BKSEPILOG	BKSSTRINGIN
 
 _TEXT		ENDS
