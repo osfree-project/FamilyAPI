@@ -35,9 +35,9 @@ CHARBUFFER	DD	?
 
 		; Prepare Buffer
 		;CAPTURE STRING FROM KEYBOARD.                                    
-		MOV AH, 0AH
-		MOV DX, OFFSET BUFF
-		INT 21H                 
+;		MOV AH, 0AH
+;		MOV DX, OFFSET BUFF
+;		INT 21H                 
 
 		@BKSEPILOG	BKSSTRINGIN
 

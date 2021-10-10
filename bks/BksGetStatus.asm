@@ -21,13 +21,13 @@
 		INCLUDE	helpers.inc
 		INCLUDE	..\bseerr.inc
 
-KBDINFO struc
-  kbst_cb           dw  ? ;length in bytes of this structure
-  kbst_fsMask       dw  ? ;bit mask of functions to be altered
-  kbst_chTurnAround dw  ? ;define TurnAround character
-  kbst_fsInterim    dw  ? ;interim character flags
-  kbst_fsState      dw  ? ;shift states
-KBDINFO ends
+KBDINFO STRUC
+  KBST_CB           DW  ? ;LENGTH IN BYTES OF THIS STRUCTURE
+  KBST_FSMASK       DW  ? ;BIT MASK OF FUNCTIONS TO BE ALTERED
+  KBST_CHTURNAROUND DW  ? ;DEFINE TURNAROUND CHARACTER
+  KBST_FSINTERIM    DW  ? ;INTERIM CHARACTER FLAGS
+  KBST_FSSTATE      DW  ? ;SHIFT STATES
+KBDINFO ENDS
         
 _TEXT	segment byte public 'CODE'
 
@@ -35,18 +35,36 @@ _TEXT	segment byte public 'CODE'
 KBDHANDLE	DW	?		;KEYBOARD HANDLE
 STATDATA	DD	?		;
 		@BKSSTART	BKSGETSTATUS
-		mov	AX, ERROR_KBD_INVALID_LENGTH
-		lds	SI,[DS:BP].ARGS.STATDATA
-		cmp	word ptr [SI],000Ah
-		jb	@F
-		mov	AH,012h
-		int	016h
-		mov	[SI].KBDINFO.kbst_fsState ,AX
-		xor	AX,AX
-@@:
+		MOV	AX, ERROR_KBD_INVALID_LENGTH
+		LDS	SI,[DS:BP].ARGS.STATDATA
+		CMP	WORD PTR [DS:SI].KBDINFO.KBST_CB,10
+		JNE	@F
 
+IF		1
+		MOV	AH,012H
+		INT	016H
+ELSE
+; pseudo code here. Subject to write full code
+		DB	"KBD$"
+		CALL	DOSOPEN
+		MOV	AX, IOCTL_KEYBOARD
+		PUSH	AX
+		MOV	AX, KBD_GETINPUTMODE
+		PUSH	AX
+		CALL	DOSDEVIOCTL
+		MOV	AX, KBD_GETINTERIMFLAG
+		PUSH	AX
+		CALL	DOSDEVIOCTL
+		MOV	AX, KBD_GETSHIFTSTATE
+		PUSH	AX
+		CALL	DOSDEVIOCTL
+		CALL	DOSCLOSE
+ENDIF
+		MOV	[SI].KBDINFO.KBST_FSSTATE ,AX
+		XOR	AX,AX
+@@:
 		@BKSEPILOG	BKSGETSTATUS
 
-_TEXT	ends
+_TEXT		ENDS
 
-	end
+		END

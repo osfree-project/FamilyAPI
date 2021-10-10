@@ -47,14 +47,11 @@ REQUESTBLOCK	DD	?		;
 		MOV     BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
 		CALL	VIOCHECKHANDLE
 		JNZ	EXIT
-
-;		PUSH	DS
-;		PUSH    CS
-;		POP     DS
-;		MOV     AX,ANSI_STATE           ; GET CURRENT ANSI STATE
-;		POP	DS
-;		LES     DI,[DS:BP].ARGS.INDICATOR               ; GET POINTER FOR WHERE TO PUT IT
-;		STOSW                           ; MOV IT THERE
+		                                                                   
+		;ask BIOS to return VGA bitmap fonts
+		mov			ax, 1130h
+		mov			bh, 6    ; @todo select table depending on cxCell cyCell
+		int			10h
 
 		XOR     AX,AX                    ; ALL IS OK
 
