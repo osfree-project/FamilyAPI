@@ -46,7 +46,7 @@ CATTABLE:
 	DD	IOKEYBOARD	; Category 4 Keyboard Control
 	DD	?		; Category 5 Printer Control
 	DD	?		; Category 6 Light Pen Control
-	DD	?		; Category 7 Mouse Control
+	DD	IOMOUSE		; Category 7 Mouse Control
 	DD	?		; Category 8 Logical Disk Control
 	DD	?		; Category 9 Physical Disk Control
 	DD	?		; Category 10 Character Device Monitor Control
@@ -82,6 +82,34 @@ KEYTABLE2:
 	DD	IOKTRANSLATE		; Function 79H Translate Scan Code To ASCII
 	DD	IOKGETHWID		; Function 7AH Get Hardware ID
 	DD	IOKGETCPINFO		; Function 7BH Get keyboard current CP info
+
+MOUTBLE1:
+	DD	IOMALLOWPTRDRAW		; Function 50 Allow ptr drawing after screen switch
+	DD	IOMUPDATEDISPLAYMODE	; Function 51 Update screen display mode
+	DD	IOMSCREENSWITCH		; Function 52 Screen switcher call
+	DD	IOMSETSCALEFACTORS	; Function 53 Set scaling factors
+	DD	IOMSETEVENTMASK		; Function 54 Set Event mask
+	DD	IOMRESERVED		; Function 55 Reserved
+	DD	IOMSETPTRSHAPE		; Function 56 Set pointer shape
+	DD	IOMUNMARKCOLLISIONAREA	; Function 57 Unmark collision area
+	DD	IOMMARKCOLLISIONAREA	; Function 58 Mark collision area
+	DD	IOMSETPTRPOS		; Function 59 Set pointer screen position
+	DD	IOMSETPROTDRAWADDRESS	; Function 5A Set OS/2 mode pointer draw address
+	DD	IOMSETREALDRAWADDRESS	; Function 5B Set DOS mode pointer draw address
+	DD	IOMSETMOUSTATUS		; Function 5C Set device status flags
+MOUTABLE2:
+	DD	IOMGETBUTTONCOUNT	; Function 60 Get number of buttons
+	DD	IOMGETMICKEYCOUNT	; Function 61 Get number of mickeys/centimeter
+	DD	IOMGETMOUSTATUS		; Function 62 Get device status flags
+	DD	IOMREADEVENTQUE		; Function 63 Read event queue
+	DD	IOMGETQUESTATUS		; Function 64 Get event queue status
+	DD	IOMGETEVENTMASK		; Function 65 Get event mask
+	DD	IOMGETSCALEFACTORS	; Function 66 Get scaling factors
+	DD	IOMGETPTRPOS		; Function 67 Get pointer screen position
+	DD	IOMGETPTRSHAPE		; Function 68 Get pointer shape image
+	DD	IOMRESERVED		; Function 69 Reserved
+	DD	IOMVER			; Function 6A Return the mouse device driver level/version
+
 _DATA	ENDS
 
 
@@ -105,6 +133,9 @@ DData		DD	?
 
 		@EPILOG	DOSDEVIOCTL
 
+;--------------------------------------------------------
+; Category 4 Handler
+;--------------------------------------------------------
 
 IOKEYBOARD	PROC FAR
 		MOV	SI, [DS:BP].ARGS.FUNCTION
@@ -117,6 +148,20 @@ IOKEYBOARD	PROC FAR
 		RET
 IOKEYBOARD	ENDP
 
+;--------------------------------------------------------
+; Category 7 Handler
+;--------------------------------------------------------
+
+IOMOUSE	PROC FAR
+		MOV	SI, [DS:BP].ARGS.FUNCTION
+		SUB	SI, 50H		; 50H
+		SUB	SI, 10H		; 60H
+
+		SHL	SI, 1
+		SHL	SI, 1
+		CALL	FAR PTR ES:MOUTABLE2[SI]
+		RET
+IOMOUSE	ENDP
 
 ;--------------------------------------------------------
 ; Category 4 Function 50H Set code page
@@ -403,6 +448,260 @@ IOKCHARIN	ENDP
 IOKPEEK		PROC	FAR
 		RET
 IOKPEEK		ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 50 Allow ptr drawing after screen switch
+;--------------------------------------------------------
+;
+;
+;
+
+IOMALLOWPTRDRAW	PROC	FAR
+		RET
+IOMALLOWPTRDRAW	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 51 Update screen display mode
+;--------------------------------------------------------
+;
+;
+;
+
+IOMUPDATEDISPLAYMODE	PROC	FAR
+			RET
+IOMUPDATEDISPLAYMODE	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 52 Screen switcher call
+;--------------------------------------------------------
+;
+;
+;
+
+IOMSCREENSWITCH	PROC	FAR
+		RET
+IOMSCREENSWITCH	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 53 Set scaling factors
+;--------------------------------------------------------
+;
+;
+;
+
+IOMSETSCALEFACTORS	PROC	FAR
+			RET
+IOMSETSCALEFACTORS	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 54 Set Event mask
+;--------------------------------------------------------
+;
+;
+;
+
+IOMSETEVENTMASK	PROC	FAR
+		RET
+IOMSETEVENTMASK	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 55 Reserved
+; Category 7 Function 69 Reserved
+;--------------------------------------------------------
+;
+;
+;
+
+IOMRESERVED	PROC	FAR
+		RET
+IOMRESERVED	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 56 Set pointer shape
+;--------------------------------------------------------
+;
+;
+;
+
+IOMSETPTRSHAPE	PROC	FAR
+		RET
+IOMSETPTRSHAPE	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 57 Unmark collision area
+;--------------------------------------------------------
+;
+;
+;
+
+IOMUNMARKCOLLISIONAREA	PROC	FAR
+			RET
+IOMUNMARKCOLLISIONAREA	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 58 Mark collision area
+;--------------------------------------------------------
+;
+;
+;
+
+IOMMARKCOLLISIONAREA	PROC	FAR
+			RET
+IOMMARKCOLLISIONAREA	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 59 Set pointer screen position
+;--------------------------------------------------------
+;
+;
+;
+
+IOMSETPTRPOS	PROC	FAR
+		RET
+IOMSETPTRPOS	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 5A Set OS/2 mode pointer draw address
+;--------------------------------------------------------
+;
+;
+;
+
+IOMSETPROTDRAWADDRESS	PROC	FAR
+			RET
+IOMSETPROTDRAWADDRESS	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 5B Set DOS mode pointer draw address
+;--------------------------------------------------------
+;
+;
+;
+
+IOMSETREALDRAWADDRESS	PROC	FAR
+			RET
+IOMSETREALDRAWADDRESS	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 5C Set device status flags
+;--------------------------------------------------------
+;
+;
+;
+
+IOMSETMOUSTATUS	PROC	FAR
+		RET
+IOMSETMOUSTATUS	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 60 Get number of buttons
+;--------------------------------------------------------
+;
+;
+;
+
+IOMGETBUTTONCOUNT	PROC	FAR
+			RET
+IOMGETBUTTONCOUNT	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 61 Get number of mickeys/centimeter
+;--------------------------------------------------------
+;
+;
+;
+
+IOMGETMICKEYCOUNT	PROC	FAR
+			RET
+IOMGETMICKEYCOUNT	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 62 Get device status flags
+;--------------------------------------------------------
+;
+;
+;
+
+IOMGETMOUSTATUS	PROC	FAR
+		RET
+IOMGETMOUSTATUS	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 63 Read event queue
+;--------------------------------------------------------
+;
+;
+;
+
+IOMREADEVENTQUE	PROC	FAR
+		RET
+IOMREADEVENTQUE	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 64 Get event queue status
+;--------------------------------------------------------
+;
+;
+;
+
+IOMGETQUESTATUS	PROC	FAR
+		RET
+IOMGETQUESTATUS	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 65 Get event mask
+;--------------------------------------------------------
+;
+;
+;
+
+IOMGETEVENTMASK	PROC	FAR
+		RET
+IOMGETEVENTMASK	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 66 Get scaling factors
+;--------------------------------------------------------
+;
+;
+;
+
+IOMGETSCALEFACTORS	PROC	FAR
+			RET
+IOMGETSCALEFACTORS	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 67 Get pointer screen position
+;--------------------------------------------------------
+;
+;
+;
+
+IOMGETPTRPOS	PROC	FAR
+		RET
+IOMGETPTRPOS	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 68 Get pointer shape image
+;--------------------------------------------------------
+;
+;
+;
+
+IOMGETPTRSHAPE	PROC	FAR
+		RET
+IOMGETPTRSHAPE	ENDP
+
+;--------------------------------------------------------
+; Category 7 Function 6A Return the mouse device driver level/version
+;--------------------------------------------------------
+;
+;
+;
+
+IOMVER		PROC	FAR
+		RET
+IOMVER		ENDP
 
 _TEXT		ENDS
 
