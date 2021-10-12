@@ -39,19 +39,21 @@
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 CATTABLE:
-	DD	?		; 0
-	DD	?		; Category 1 Serial Device Control
-	DD	?		; Category 2 Reserved
-	DD	?		; Category 3 Screen/Video control
+	DD	IOSERIAL	; Category 1 Serial Device Control
+	DD	RESERVED	; Category 2 Reserved
+	DD	RESERVED	; Category 3 Screen/Video control
 	DD	IOKEYBOARD	; Category 4 Keyboard Control
-	DD	?		; Category 5 Printer Control
-	DD	?		; Category 6 Light Pen Control
+	DD	IOPRINTER	; Category 5 Printer Control
+	DD	RESERVED	; Category 6 Light Pen Control
 	DD	IOMOUSE		; Category 7 Mouse Control
-	DD	?		; Category 8 Logical Disk Control
-	DD	?		; Category 9 Physical Disk Control
-	DD	?		; Category 10 Character Device Monitor Control
-	DD	?		; Category 11 General Device Control
+	DD	IODISK		; Category 8 Logical Disk Control
+	DD	RESERVED	; Category 9 Physical Disk Control
+	DD	RESERVED	; Category 10 Character Device Monitor Control
+	DD	RESERVED	; Category 11 General Device Control
 
+SERTABLE1:
+	DD	IOSSETBAUD		; Function 41H Set Baud Rate
+	DD	IOSSETLINE		; Function 42H Set Line Control
 
 KEYTABLE1:
 	DD	IOKSETCP		; Function 50H Set code page
@@ -83,6 +85,21 @@ KEYTABLE2:
 	DD	IOKGETHWID		; Function 7AH Get Hardware ID
 	DD	IOKGETCPINFO		; Function 7BH Get keyboard current CP info
 
+PRNTABLE1:
+	DD	IOPSETFRAME		; Function 41H Set Frame control
+	DD	IOPRESERVED		; Function 42H Reserved
+	DD	IOPRESERVED		; Function 43H Reserved
+	DD	IOPSETRETRY		; Function 44H Set Infinite Retry
+	DD	IOPRESERVED		; Function 45H Reserved
+	DD	IOPINIT			; Function 46H Initialize printer
+
+PRNTABLE2:
+	DD	IOPGETFRAME		; Function 62H Get Frame Control
+	DD	IOPRESERVED		; Function 63H Reserved
+	DD	IOPGETRETRY		; Function 64H Get Infinite Retry
+	DD	IOPRESERVED		; Function 65H Reserved
+	DD	IOPGETSTATUS		; Function 66H Get Printer Status
+
 MOUTBLE1:
 	DD	IOMALLOWPTRDRAW		; Function 50 Allow ptr drawing after screen switch
 	DD	IOMUPDATEDISPLAYMODE	; Function 51 Update screen display mode
@@ -110,6 +127,22 @@ MOUTABLE2:
 	DD	IOMRESERVED		; Function 69 Reserved
 	DD	IOMVER			; Function 6A Return the mouse device driver level/version
 
+DSKTABLE1:
+	DD	IODLOCK			; Function 00H Lock Drive - not supported for versions below DOS 3.2
+	DD	IODUNLOCK		; Function 01H Unlock Drive - not supported for versions below DOS 3.2
+	DD	IODREDETERMINE		; Function 02H Redetermine Media - not supported for versions below DOS 3.2
+	DD	IODSETMAP		; Function 03H Set Logical Map - not supported for versions below DOS 3.2
+DSKTABLE2:
+	DD	IODBLOCKREMOVABLE	; Function 20H Block Removable - not supported for versions below DOS 3.2
+	DD	IODGETMAP		; Function 21H Get Logical Map - not supported for versions below DOS 3.2
+DSKTABLE3:
+	DD	IODSETPARAM		; Function 43H Set Device Parameters - not supported for DOS 2.X and DOS 3.X
+	DD	IODWRITETRACK		; Function 44H Write Track - not supported for DOS 2.X and DOS 3.X
+	DD	IODFORMATTRACK		; Function 45H Format Track - not supported for DOS 2.X and DOS 3.X
+DSKTABLE4:
+	DD	IODGETPARAM		; Function 63H Get Device Parameters - not supported for DOS 2.X and DOS 3.X
+	DD	IODREADTACK		; Function 64H Read Track - not supported for DOS 2.X and DOS 3.X
+	DD	IODVERIFYTRACK		; Function 65H Verify Track - not supported for DOS 2.X and DOS 3.X.
 _DATA	ENDS
 
 
@@ -117,21 +150,44 @@ _DATA	ENDS
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@PROLOG	DOSDEVIOCTL
-DevHandle	DW	?
-Category	DW	?
-Function	DW	?
-ParmList	DD	?
-DData		DD	?
+DEVHANDLE	DW	?
+CATEGORY	DW	?
+FUNCTION	DW	?
+PARMLIST	DD	?
+DDATA		DD	?
 		@START	DOSDEVIOCTL
 
 		MOV	SI, SEG _DATA
 		MOV	ES, SI
 		MOV	SI, [DS:BP].ARGS.CATEGORY
+		DEC	SI
 		SHL	SI, 1
 		SHL	SI, 1
 		CALL	FAR PTR ES:CATTABLE[SI]
 
 		@EPILOG	DOSDEVIOCTL
+
+;--------------------------------------------------------
+; Category Reserved
+;--------------------------------------------------------
+
+RESERVED	PROC FAR
+		RET
+RESERVED	ENDP
+
+;--------------------------------------------------------
+; Category 1 Handler
+;--------------------------------------------------------
+
+IOSERIAL	PROC FAR
+		MOV	SI, [DS:BP].ARGS.FUNCTION
+		SUB	SI, 41H		; 41H
+
+		SHL	SI, 1
+		SHL	SI, 1
+		CALL	FAR PTR ES:SERTABLE1[SI]
+		RET
+IOSERIAL	ENDP
 
 ;--------------------------------------------------------
 ; Category 4 Handler
@@ -149,6 +205,21 @@ IOKEYBOARD	PROC FAR
 IOKEYBOARD	ENDP
 
 ;--------------------------------------------------------
+; Category 5 Handler
+;--------------------------------------------------------
+
+IOPRINTER	PROC FAR
+		MOV	SI, [DS:BP].ARGS.FUNCTION
+		SUB	SI, 41H		; 41H
+		SUB	SI, 21H		; 61H
+
+		SHL	SI, 1
+		SHL	SI, 1
+		CALL	FAR PTR ES:PRNTABLE1[SI]
+		RET
+IOPRINTER	ENDP
+
+;--------------------------------------------------------
 ; Category 7 Handler
 ;--------------------------------------------------------
 
@@ -162,6 +233,45 @@ IOMOUSE	PROC FAR
 		CALL	FAR PTR ES:MOUTABLE2[SI]
 		RET
 IOMOUSE	ENDP
+
+;--------------------------------------------------------
+; Category 8 Handler
+;--------------------------------------------------------
+
+IODISK	PROC FAR
+		MOV	SI, [DS:BP].ARGS.FUNCTION
+		NOP			; 00H
+		SUB	SI, 20H		; 20H
+		SUB	SI, 23H		; 43H
+		SUB	SI, 20H		; 63H
+
+		SHL	SI, 1
+		SHL	SI, 1
+		CALL	FAR PTR ES:DSKTABLE1[SI]
+		RET
+IODISK	ENDP
+
+;--------------------------------------------------------
+; Category 1 Function 41H Set Baud Rate
+;--------------------------------------------------------
+;
+;
+;
+
+IOSSETBAUD	PROC	FAR
+		RET
+IOSSETBAUD	ENDP
+
+;--------------------------------------------------------
+; Category 1 Function 42H Set Line Control
+;--------------------------------------------------------
+;
+;
+;
+
+IOSSETLINE	PROC	FAR
+		RET
+IOSSETLINE	ENDP
 
 ;--------------------------------------------------------
 ; Category 4 Function 50H Set code page
@@ -450,6 +560,90 @@ IOKPEEK		PROC	FAR
 IOKPEEK		ENDP
 
 ;--------------------------------------------------------
+; Category 5 Function 41H Set Frame control
+;--------------------------------------------------------
+;
+;
+;
+
+IOPSETFRAME	PROC	FAR
+		RET
+IOPSETFRAME	ENDP
+
+;--------------------------------------------------------
+; Category 5 Function 42H Reserved
+; Category 5 Function 43H Reserved
+; Category 5 Function 45H Reserved
+; Category 5 Function 63H Reserved
+; Category 5 Function 65H Reserved
+;--------------------------------------------------------
+;
+;
+;
+
+IOPRESERVED	PROC	FAR
+		RET
+IOPRESERVED	ENDP
+
+;--------------------------------------------------------
+; Category 5 Function 44H Set Infinite Retry
+;--------------------------------------------------------
+;
+;
+;
+
+IOPSETRETRY	PROC	FAR
+		RET
+IOPSETRETRY	ENDP
+
+
+;--------------------------------------------------------
+; Category 5 Function 46H Initialize printer
+;--------------------------------------------------------
+;
+;
+;
+
+IOPINIT		PROC	FAR
+		RET
+IOPINIT		ENDP
+
+;--------------------------------------------------------
+; Category 5 Function 62H Get Frame Control
+;--------------------------------------------------------
+;
+;
+;
+
+IOPGETFRAME	PROC	FAR
+		RET
+IOPGETFRAME	ENDP
+
+
+;--------------------------------------------------------
+; Category 5 Function 64H Get Infinite Retry
+;--------------------------------------------------------
+;
+;
+;
+
+IOPGETRETRY	PROC	FAR
+		RET
+IOPGETRETRY	ENDP
+
+
+;--------------------------------------------------------
+; Category 5 Function 66H Get Printer Status
+;--------------------------------------------------------
+;
+;
+;
+
+IOPGETSTATUS	PROC	FAR
+		RET
+IOPGETSTATUS	ENDP
+
+;--------------------------------------------------------
 ; Category 7 Function 50 Allow ptr drawing after screen switch
 ;--------------------------------------------------------
 ;
@@ -702,6 +896,139 @@ IOMGETPTRSHAPE	ENDP
 IOMVER		PROC	FAR
 		RET
 IOMVER		ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 00H Lock Drive - not supported for versions below DOS 3.2
+;--------------------------------------------------------
+;
+;
+;
+
+IODLOCK		PROC	FAR
+		RET
+IODLOCK		ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 01H Unlock Drive - not supported for versions below DOS 3.2
+;--------------------------------------------------------
+;
+;
+;
+
+IODUNLOCK	PROC	FAR
+		RET
+IODUNLOCK	ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 02H Redetermine Media - not supported for versions below DOS 3.2
+;--------------------------------------------------------
+;
+;
+;
+
+IODREDETERMINE	PROC	FAR
+		RET
+IODREDETERMINE	ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 03H Set Logical Map - not supported for versions below DOS 3.2
+;--------------------------------------------------------
+;
+;
+;
+
+IODSETMAP	PROC	FAR
+		RET
+IODSETMAP	ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 20H Block Removable - not supported for versions below DOS 3.2
+;--------------------------------------------------------
+;
+;
+;
+
+IODBLOCKREMOVABLE	PROC	FAR
+			RET
+IODBLOCKREMOVABLE	ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 21H Get Logical Map - not supported for versions below DOS 3.2
+;--------------------------------------------------------
+;
+;
+;
+
+IODGETMAP	PROC	FAR
+		RET
+IODGETMAP	ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 43H Set Device Parameters - not supported for DOS 2.X and DOS 3.X
+;--------------------------------------------------------
+;
+;
+;
+
+IODSETPARAM	PROC	FAR
+		RET
+IODSETPARAM	ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 44H Write Track - not supported for DOS 2.X and DOS 3.X
+;--------------------------------------------------------
+;
+;
+;
+
+IODWRITETRACK	PROC	FAR
+		RET
+IODWRITETRACK	ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 45H Format Track - not supported for DOS 2.X and DOS 3.X
+;--------------------------------------------------------
+;
+;
+;
+
+IODFORMATTRACK	PROC	FAR
+		RET
+IODFORMATTRACK	ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 63H Get Device Parameters - not supported for DOS 2.X and DOS 3.X
+;--------------------------------------------------------
+;
+;
+;
+
+IODGETPARAM	PROC	FAR
+		RET
+IODGETPARAM	ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 64H Read Track - not supported for DOS 2.X and DOS 3.X
+;--------------------------------------------------------
+;
+;
+;
+
+IODREADTACK	PROC	FAR
+		RET
+IODREADTACK	ENDP
+
+;--------------------------------------------------------
+; Category 8 Function 65H Verify Track - not supported for DOS 2.X and DOS 3.X.
+;--------------------------------------------------------
+;
+;
+;
+
+IODVERIFYTRACK	PROC	FAR
+		RET
+IODVERIFYTRACK	ENDP
+
 
 _TEXT		ENDS
 
