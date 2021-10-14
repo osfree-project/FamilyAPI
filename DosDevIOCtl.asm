@@ -34,7 +34,8 @@
 .8086
 
 		; Helpers
-		INCLUDE	helpers.inc
+		INCLUDE	HELPERS.INC
+		INCLUDE	BSEERR.INC
 
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
@@ -50,6 +51,8 @@ CATTABLE:
 	DD	RESERVED	; Category 9 Physical Disk Control
 	DD	RESERVED	; Category 10 Character Device Monitor Control
 	DD	RESERVED	; Category 11 General Device Control
+
+MAXCATEGORY	EQU	11
 
 SERTABLE1:
 	DD	IOSSETBAUD		; Function 41H Set Baud Rate
@@ -67,8 +70,8 @@ KEYTABLE1:
 	DD	IOKSETCPID		; Function 58H Set codepage ID
 	DD	IOKSETNOTIFY		; Function 59H Set Read/Peek notification
 	DD	IOKSETSTATUS		; Function 5AH Set keyboard LEDs
-	DD	IOKRESERVED		; Function 5BH Reserved
-	DD	IOKSETCUSTXT		; Function 5DH Set NLS and Custom Codepage
+	DD	RESERVED		; Function 5BH Reserved
+	DD	IOKSETCUSTXT		; Function 5CH Set NLS and Custom Codepage
 	DD	IOKOPEN			; Function 5DH Create logical keyboard
 	DD	IOCLOSE			; Function 5EH Destroy logical keyboard
 
@@ -87,17 +90,17 @@ KEYTABLE2:
 
 PRNTABLE1:
 	DD	IOPSETFRAME		; Function 41H Set Frame control
-	DD	IOPRESERVED		; Function 42H Reserved
-	DD	IOPRESERVED		; Function 43H Reserved
+	DD	RESERVED		; Function 42H Reserved
+	DD	RESERVED		; Function 43H Reserved
 	DD	IOPSETRETRY		; Function 44H Set Infinite Retry
-	DD	IOPRESERVED		; Function 45H Reserved
+	DD	RESERVED		; Function 45H Reserved
 	DD	IOPINIT			; Function 46H Initialize printer
 
 PRNTABLE2:
 	DD	IOPGETFRAME		; Function 62H Get Frame Control
-	DD	IOPRESERVED		; Function 63H Reserved
+	DD	RESERVED		; Function 63H Reserved
 	DD	IOPGETRETRY		; Function 64H Get Infinite Retry
-	DD	IOPRESERVED		; Function 65H Reserved
+	DD	RESERVED		; Function 65H Reserved
 	DD	IOPGETSTATUS		; Function 66H Get Printer Status
 
 MOUTBLE1:
@@ -106,7 +109,7 @@ MOUTBLE1:
 	DD	IOMSCREENSWITCH		; Function 52 Screen switcher call
 	DD	IOMSETSCALEFACTORS	; Function 53 Set scaling factors
 	DD	IOMSETEVENTMASK		; Function 54 Set Event mask
-	DD	IOMRESERVED		; Function 55 Reserved
+	DD	RESERVED		; Function 55 Reserved
 	DD	IOMSETPTRSHAPE		; Function 56 Set pointer shape
 	DD	IOMUNMARKCOLLISIONAREA	; Function 57 Unmark collision area
 	DD	IOMMARKCOLLISIONAREA	; Function 58 Mark collision area
@@ -124,7 +127,7 @@ MOUTABLE2:
 	DD	IOMGETSCALEFACTORS	; Function 66 Get scaling factors
 	DD	IOMGETPTRPOS		; Function 67 Get pointer screen position
 	DD	IOMGETPTRSHAPE		; Function 68 Get pointer shape image
-	DD	IOMRESERVED		; Function 69 Reserved
+	DD	RESERVED		; Function 69 Reserved
 	DD	IOMVER			; Function 6A Return the mouse device driver level/version
 
 DSKTABLE1:
@@ -156,19 +159,34 @@ FUNCTION	DW	?
 PARMLIST	DD	?
 DDATA		DD	?
 		@START	DOSDEVIOCTL
-
+		; @todo А как проверять хэндл? По идее, хэндл определяет конкретное устройство.
 		MOV	SI, SEG _DATA
 		MOV	ES, SI
 		MOV	SI, [DS:BP].ARGS.CATEGORY
+		MOV	AX, ERROR_INVALID_CATEGORY
+		CMP	SI, 0
+		JZ	EXIT
+		CMP	SI, MAXCATEGORY
+		JA	EXIT
 		DEC	SI
 		SHL	SI, 1
 		SHL	SI, 1
+		MOV	AX, ERROR_INVALID_FUNCTION
 		CALL	FAR PTR ES:CATTABLE[SI]
-
+EXIT:
 		@EPILOG	DOSDEVIOCTL
 
 ;--------------------------------------------------------
-; Category Reserved
+; Category/Function Reserved
+;--------------------------------------------------------
+; Category 5 Function 42H Reserved
+; Category 5 Function 43H Reserved
+; Category 5 Function 45H Reserved
+; Category 5 Function 63H Reserved
+; Category 5 Function 65H Reserved
+; Category 4 Function 5BH Reserved
+; Category 7 Function 55H Reserved
+; Category 7 Function 69H Reserved
 ;--------------------------------------------------------
 
 RESERVED	PROC FAR
@@ -176,16 +194,19 @@ RESERVED	PROC FAR
 RESERVED	ENDP
 
 ;--------------------------------------------------------
-; Category 1 Handler
+; Category 1 Handler Serial Device Control
 ;--------------------------------------------------------
 
 IOSERIAL	PROC FAR
 		MOV	SI, [DS:BP].ARGS.FUNCTION
 		SUB	SI, 41H		; 41H
-
+		JB	EXIT
+		CMP	SI, 1H		; 42H
+		JA	EXIT
 		SHL	SI, 1
 		SHL	SI, 1
 		CALL	FAR PTR ES:SERTABLE1[SI]
+EXIT:
 		RET
 IOSERIAL	ENDP
 
@@ -196,11 +217,24 @@ IOSERIAL	ENDP
 IOKEYBOARD	PROC FAR
 		MOV	SI, [DS:BP].ARGS.FUNCTION
 		SUB	SI, 50H		; 50H
+		JB	EXIT
+		CMP	SI, 0EH		; 5EH
+		JBE	OK1
 		SUB	SI, 21H		; 71H
-
+		JB	ERROR
+		CMP	SI, 0AH		; 7BH
+		JA	ERROR
+		JMP	OK2
+OK1:
+		SHL	SI, 1
+		SHL	SI, 1
+		CALL	FAR PTR ES:KEYTABLE1[SI]
+		JMP	EXIT
+OK2:
 		SHL	SI, 1
 		SHL	SI, 1
 		CALL	FAR PTR ES:KEYTABLE2[SI]
+EXIT:
 		RET
 IOKEYBOARD	ENDP
 
@@ -256,7 +290,9 @@ IODISK	ENDP
 ;--------------------------------------------------------
 ;
 ;
-;
+PP	STRUCT
+	BAUD	DW	?
+PP	ENDS
 
 IOSSETBAUD	PROC	FAR
 		RET
@@ -394,16 +430,6 @@ IOKSETSTATUS	PROC	FAR
 		RET
 IOKSETSTATUS	ENDP
 
-;--------------------------------------------------------
-; Category 4 Function 5BH Reserved
-;--------------------------------------------------------
-;
-;
-;
-
-IOKRESERVED	PROC	FAR
-		RET
-IOKRESERVED	ENDP
 
 ;--------------------------------------------------------
 ; Category 4 Function 5DH Set NLS and Custom Codepage
@@ -571,21 +597,6 @@ IOPSETFRAME	PROC	FAR
 IOPSETFRAME	ENDP
 
 ;--------------------------------------------------------
-; Category 5 Function 42H Reserved
-; Category 5 Function 43H Reserved
-; Category 5 Function 45H Reserved
-; Category 5 Function 63H Reserved
-; Category 5 Function 65H Reserved
-;--------------------------------------------------------
-;
-;
-;
-
-IOPRESERVED	PROC	FAR
-		RET
-IOPRESERVED	ENDP
-
-;--------------------------------------------------------
 ; Category 5 Function 44H Set Infinite Retry
 ;--------------------------------------------------------
 ;
@@ -697,18 +708,6 @@ IOMSETSCALEFACTORS	ENDP
 IOMSETEVENTMASK	PROC	FAR
 		RET
 IOMSETEVENTMASK	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 55 Reserved
-; Category 7 Function 69 Reserved
-;--------------------------------------------------------
-;
-;
-;
-
-IOMRESERVED	PROC	FAR
-		RET
-IOMRESERVED	ENDP
 
 ;--------------------------------------------------------
 ; Category 7 Function 56 Set pointer shape

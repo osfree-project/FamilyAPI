@@ -47,8 +47,14 @@ if		0
 		DB	"CLOCK$"
 		DB	"KBD$"
 		DB	"SCREEN$"
+		DB	"PRN"
 		DB	"LPT1"
+		DB	"LPT2"
+		DB	"LPT3"
+		DB	"AUX"
 		DB	"COM1"
+		DB	"COM2"
+		DB	"COM3"
 endif
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
