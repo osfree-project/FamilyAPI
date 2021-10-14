@@ -103,32 +103,32 @@ PRNTABLE2:
 	DD	RESERVED		; Function 65H Reserved
 	DD	IOPGETSTATUS		; Function 66H Get Printer Status
 
-MOUTBLE1:
-	DD	IOMALLOWPTRDRAW		; Function 50 Allow ptr drawing after screen switch
-	DD	IOMUPDATEDISPLAYMODE	; Function 51 Update screen display mode
-	DD	IOMSCREENSWITCH		; Function 52 Screen switcher call
-	DD	IOMSETSCALEFACTORS	; Function 53 Set scaling factors
-	DD	IOMSETEVENTMASK		; Function 54 Set Event mask
-	DD	RESERVED		; Function 55 Reserved
-	DD	IOMSETPTRSHAPE		; Function 56 Set pointer shape
-	DD	IOMUNMARKCOLLISIONAREA	; Function 57 Unmark collision area
-	DD	IOMMARKCOLLISIONAREA	; Function 58 Mark collision area
-	DD	IOMSETPTRPOS		; Function 59 Set pointer screen position
-	DD	IOMSETPROTDRAWADDRESS	; Function 5A Set OS/2 mode pointer draw address
-	DD	IOMSETREALDRAWADDRESS	; Function 5B Set DOS mode pointer draw address
-	DD	IOMSETMOUSTATUS		; Function 5C Set device status flags
+MOUTABLE1:
+	DD	IOMALLOWPTRDRAW		; Function 50H Allow ptr drawing after screen switch
+	DD	IOMUPDATEDISPLAYMODE	; Function 51H Update screen display mode
+	DD	IOMSCREENSWITCH		; Function 52H Screen switcher call
+	DD	IOMSETSCALEFACTORS	; Function 53H Set scaling factors
+	DD	IOMSETEVENTMASK		; Function 54H Set Event mask
+	DD	RESERVED		; Function 55H Reserved
+	DD	IOMSETPTRSHAPE		; Function 56H Set pointer shape
+	DD	IOMUNMARKCOLLISIONAREA	; Function 57H Unmark collision area
+	DD	IOMMARKCOLLISIONAREA	; Function 58H Mark collision area
+	DD	IOMSETPTRPOS		; Function 59H Set pointer screen position
+	DD	IOMSETPROTDRAWADDRESS	; Function 5AH Set OS/2 mode pointer draw address
+	DD	IOMSETREALDRAWADDRESS	; Function 5BH Set DOS mode pointer draw address
+	DD	IOMSETMOUSTATUS		; Function 5CH Set device status flags
 MOUTABLE2:
-	DD	IOMGETBUTTONCOUNT	; Function 60 Get number of buttons
-	DD	IOMGETMICKEYCOUNT	; Function 61 Get number of mickeys/centimeter
-	DD	IOMGETMOUSTATUS		; Function 62 Get device status flags
-	DD	IOMREADEVENTQUE		; Function 63 Read event queue
-	DD	IOMGETQUESTATUS		; Function 64 Get event queue status
-	DD	IOMGETEVENTMASK		; Function 65 Get event mask
-	DD	IOMGETSCALEFACTORS	; Function 66 Get scaling factors
-	DD	IOMGETPTRPOS		; Function 67 Get pointer screen position
-	DD	IOMGETPTRSHAPE		; Function 68 Get pointer shape image
-	DD	RESERVED		; Function 69 Reserved
-	DD	IOMVER			; Function 6A Return the mouse device driver level/version
+	DD	IOMGETBUTTONCOUNT	; Function 60H Get number of buttons
+	DD	IOMGETMICKEYCOUNT	; Function 61H Get number of mickeys/centimeter
+	DD	IOMGETMOUSTATUS		; Function 62H Get device status flags
+	DD	IOMREADEVENTQUE		; Function 63H Read event queue
+	DD	IOMGETQUESTATUS		; Function 64H Get event queue status
+	DD	IOMGETEVENTMASK		; Function 65H Get event mask
+	DD	IOMGETSCALEFACTORS	; Function 66H Get scaling factors
+	DD	IOMGETPTRPOS		; Function 67H Get pointer screen position
+	DD	IOMGETPTRSHAPE		; Function 68H Get pointer shape image
+	DD	RESERVED		; Function 69H Reserved
+	DD	IOMVER			; Function 6AH Return the mouse device driver level/version
 
 DSKTABLE1:
 	DD	IODLOCK			; Function 00H Lock Drive - not supported for versions below DOS 3.2
@@ -221,9 +221,9 @@ IOKEYBOARD	PROC FAR
 		CMP	SI, 0EH		; 5EH
 		JBE	OK1
 		SUB	SI, 21H		; 71H
-		JB	ERROR
+		JB	EXIT
 		CMP	SI, 0AH		; 7BH
-		JA	ERROR
+		JA	EXIT
 		JMP	OK2
 OK1:
 		SHL	SI, 1
@@ -245,11 +245,24 @@ IOKEYBOARD	ENDP
 IOPRINTER	PROC FAR
 		MOV	SI, [DS:BP].ARGS.FUNCTION
 		SUB	SI, 41H		; 41H
-		SUB	SI, 21H		; 61H
-
+		JB	EXIT
+		CMP	SI, 05H		; 46H
+		JBE	OK1
+		SUB	SI, 20H		; 61H
+		JB	EXIT
+		CMP	SI, 05H		; 66H
+		JA	EXIT
+		JMP	OK2
+OK1:
 		SHL	SI, 1
 		SHL	SI, 1
 		CALL	FAR PTR ES:PRNTABLE1[SI]
+		JMP	EXIT
+OK2:
+		SHL	SI, 1
+		SHL	SI, 1
+		CALL	FAR PTR ES:PRNTABLE2[SI]
+EXIT:
 		RET
 IOPRINTER	ENDP
 
@@ -260,11 +273,23 @@ IOPRINTER	ENDP
 IOMOUSE	PROC FAR
 		MOV	SI, [DS:BP].ARGS.FUNCTION
 		SUB	SI, 50H		; 50H
+		JB	EXIT
+		CMP	SI, 0EH		; 5EH
+		JBE	OK1
 		SUB	SI, 10H		; 60H
-
+		JB	EXIT
+		CMP	SI, 0AH		; 6AH
+		JMP	OK2
+OK1:
+		SHL	SI, 1
+		SHL	SI, 1
+		CALL	FAR PTR ES:MOUTABLE1[SI]
+		JMP	EXIT
+OK2:
 		SHL	SI, 1
 		SHL	SI, 1
 		CALL	FAR PTR ES:MOUTABLE2[SI]
+EXIT:
 		RET
 IOMOUSE	ENDP
 
@@ -274,14 +299,42 @@ IOMOUSE	ENDP
 
 IODISK	PROC FAR
 		MOV	SI, [DS:BP].ARGS.FUNCTION
-		NOP			; 00H
+		CMP	SI, 00H		; 00H
+		JB	EXIT
+		CMP	SI, 03H		; 03H
+		JB	OK1
 		SUB	SI, 20H		; 20H
+		JB	EXIT
+		CMP	SI, 01H		; 21H
+		JBE	OK2
 		SUB	SI, 23H		; 43H
+		JB	EXIT
+		CMP	SI, 02H		; 45H
+		JBE	OK3
 		SUB	SI, 20H		; 63H
-
+		JB	EXIT
+		CMP	SI, 02H		; 65H
+		JBE	OK4
+OK1:
 		SHL	SI, 1
 		SHL	SI, 1
 		CALL	FAR PTR ES:DSKTABLE1[SI]
+		JMP	EXIT
+OK2:
+		SHL	SI, 1
+		SHL	SI, 1
+		CALL	FAR PTR ES:DSKTABLE2[SI]
+		JMP	EXIT
+OK3:
+		SHL	SI, 1
+		SHL	SI, 1
+		CALL	FAR PTR ES:DSKTABLE3[SI]
+		JMP	EXIT
+OK4:
+		SHL	SI, 1
+		SHL	SI, 1
+		CALL	FAR PTR ES:DSKTABLE4[SI]
+EXIT:
 		RET
 IODISK	ENDP
 
