@@ -40,6 +40,25 @@
 ;SeeAlso: AH=13h,AX=4301h,AX=4380h,AX=5D00h,AH=60h,AX=7141h,AX=F244h
 ;SeeAlso: INT 2F/AX=1113h
 ;
+;INT 21 - Windows95 - LONG FILENAME - DELETE FILE
+;
+;	AX = 7141h
+;	DS:DX -> ASCIZ long name of file to delete
+;	SI = wildcard and attributes flag
+;		0000h wildcards are not allowed, and search attributes are
+;			ignored
+;		0001h wildcards are allowed, and only files with matching
+;			names and attributes are deleted
+;	CL = search attributes
+;	CH = must-match attributes
+;Return: CF clear if successful
+;	CF set on error
+;	    AX = error code (see #01680)
+;		7100h if function not supported
+;Note:	for compatibility with DOS versions prior to v7.00, the carry flag
+;	  should be set on call to ensure that it is set on exit
+;SeeAlso: AH=41h
+;
 ;*/
 
 .8086
@@ -48,6 +67,7 @@
 		INCLUDE	HELPERS.INC
 		INCLUDE	DOS.INC
 		INCLUDE BSEERR.INC
+		INCLUDE GLOBALVARS.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
@@ -62,10 +82,14 @@ RESERVED	DD	?
 		JNZ	EXIT
 		CMP	BX, WORD PTR [DS:BP].ARGS.RESERVED+2
 		JNZ	EXIT
-
+		CMP	LFNAPI, 0FFFFH
+		JZ	LFN
 		DELETE_ENTRY [DS:BP].ARGS.FILENAME
-
-		JC	EXIT
+		JMP	ERRCHECK
+LFN:
+		LFN_DELETE_ENTRY [DS:BP].ARGS.FILENAME
+ERRCHECK:
+		JC	EXIT 
 		XOR	AX, AX
 EXIT:
 		@EPILOG	DOSDELETE

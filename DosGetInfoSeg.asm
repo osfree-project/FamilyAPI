@@ -15,6 +15,7 @@
 ;
 ;   Documentation: http://osfree.org/doku/en:docs:fapi:dosgetinfoseg
 ;
+;  * 0 NO_ERROR
 ;
 ;*/
 
@@ -37,6 +38,7 @@ LOCALSEG	DD	?	;Local segment selector (returned)
 		LES	SI, [DS:BP].ARGS.LOCALSEG
 		MOV	AX, _LINFOSEG
 		MOV	[ES:SI], AX
+		XOR	AX, AX
 		@EPILOG	DOSGETINFOSEG
 
 _TEXT		ENDS

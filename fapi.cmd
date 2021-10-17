@@ -69,7 +69,7 @@ jwasm -q doscasemap.ASM
 jwasm -q dosbufreset.ASM 
 jwasm -q doschdir.ASM
 jwasm -q dosclose.ASM
-jwasm -q dosdbcs.ASM 
+jwasm -q dosgetdbcsev.ASM 
 jwasm -q dosdelete.ASM  
 jwasm -q dosdevconfig.ASM  
 jwasm -q dosgetdatetime.ASM
@@ -77,7 +77,7 @@ jwasm -q dosduphandle.ASM
 jwasm -q doserror.ASM
 jwasm -q dosexecpgm.ASM 
 jwasm -q dosexit.ASM 
-jwasm -q dosexitl.ASM
+jwasm -q dosexitlist.ASM
 jwasm -q dosfirst.ASM
 jwasm -q dosfreeseg.ASM
 jwasm -q dosgetcp.ASM
@@ -159,7 +159,7 @@ wlib -q -fo fapi.lib +doschdir.obj
 wlib -q -fo fapi.lib +dosdevioctl.obj
 wlib -q -fo fapi.lib +dosmkdir.obj
 wlib -q -fo fapi.lib +dosclose.obj
-wlib -q -fo fapi.lib +dosdbcs.obj
+wlib -q -fo fapi.lib +dosgetdbcsev.obj
 wlib -q -fo fapi.lib +dosdelete.obj
 wlib -q -fo fapi.lib +dosdevconfig.obj
 wlib -q -fo fapi.lib +dosgetdatetime.obj
@@ -167,7 +167,7 @@ wlib -q -fo fapi.lib +dosduphandle.obj
 wlib -q -fo fapi.lib +doserror.obj
 wlib -q -fo fapi.lib +dosexecpgm.obj
 wlib -q -fo fapi.lib +dosexit.obj
-wlib -q -fo fapi.lib +dosexitl.obj
+wlib -q -fo fapi.lib +dosexitlist.obj
 wlib -q -fo fapi.lib +dosfirst.obj
 wlib -q -fo fapi.lib +dosfreeseg.obj
 wlib -q -fo fapi.lib +dosgetcp.obj

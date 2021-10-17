@@ -151,12 +151,6 @@ create  macro fcb
             int   21H
             endm
 
-rename macro fcb,newname
-            mov   dx,offset fcb
-            mov   ah,17H
-            int   21H
-            endm
-
 set_dta  macro  buffer
             mov    dx,offset buffer
             mov    ah,1AH
@@ -894,6 +888,13 @@ MAKE_DIR  macro  path
         int    21H
         endm
 
+;                                  Function Request 7139H
+LFN_MAKE_DIR  macro  path
+        lds    dx, path
+        mov    ax,7139H
+        int    21H
+        endm
+
 ;                                  Function Request 3AH
 REM_DIR  macro  path
         lds    dx, path
@@ -901,10 +902,24 @@ REM_DIR  macro  path
         int    21H
         endm
 
+;                                  Function Request 713AH
+LFN_REM_DIR  macro  path
+        lds    dx, path
+        mov    ax, 713AH
+        int    21H
+        endm
+
 ;                                  Function Request 3BH
 CHANGE_DIR  macro  path
         lds    dx, path
         mov    ah,3BH
+        int    21H
+        endm
+
+;                                  Function Request 713BH
+LFN_CHANGE_DIR  macro  path
+        lds    dx, path
+        mov    ax,713BH
         int    21H
         endm
 
@@ -954,6 +969,12 @@ DELETE_ENTRY  macro  path
         mov    ah,41H
         int    21H
         endm
+;                                  Function Request 7141H
+LFN_DELETE_ENTRY  macro  path
+        lds    dx, path
+        mov    ax,7141H
+        int    21H
+        endm
 
 ;                                  Function Request 42H
 MOVE_PTR  macro  handle,high,low,method
@@ -971,6 +992,14 @@ CHANGE_MODE  macro  path,action,attrib
         mov    al,action
         mov    cx,attrib
         mov    ah,43H
+        int    21H
+        endm
+;                                  Function Request 7143H
+LFN_CHANGE_MODE  macro  path,action,attrib
+        lds    dx,path
+        mov    bl,action
+        mov    cx,attrib
+        mov    ax,7143H
         int    21H
         endm
 
@@ -1186,6 +1215,13 @@ RENAME_FILE  macro  old_path,new_path
         int    21H
         endm
 
+;                                  Function Request 7156H
+LFN_RENAME_FILE  macro  old_path,new_path
+        LDS    dx, old_path
+        LES    di, new_path
+        mov    ax,7156H
+        int    21H
+        endm
 ;                                  Function Request 57H
 GET_SET_DATE_TIME  macro  handle,action,time,date
         mov     bx,handle
@@ -1206,6 +1242,7 @@ GET_SET_DATE_TIME  macro  handle,action,time,date
 ;                                  Function Request 59H
 GET_ERROR  macro
         mov    ah,59h
+	XOR	BX, BX
         int    21H
         endm
 
