@@ -16,7 +16,6 @@
 ;*/
 
 PUBLIC	API_INITED
-PUBLIC	DOS_VERSION
 PUBLIC	DOS2API
 PUBLIC	DOS3API
 PUBLIC	DOS33API
@@ -34,8 +33,6 @@ PUBLIC	SHARE
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 API_INITED		DW	0       ; IS FAMILY API INITIALIZED?
-
-DOS_VERSION		DW	0	; DOS VERSIION
 
 DOS2API			DW	0	; DOS 2.X API SUPPORTED
 DOS3API			DW	0	; DOS 3.0 API SUPPORTED
@@ -64,36 +61,8 @@ MAXPATHLEN	DW	80		; SFN, For LFN - 260
 wMDSta	 dw 0			;segment of 1. element of 16bit MD table
 wLdrDS	dw ?			; DATA segment of application (or kernel???)
 
-GINFOSEG struc
-  gis_time                dd  ? ;time in seconds
-  gis_msecs               dd  ? ;milliseconds
-  gis_hour                db  ? ;hours
-  gis_minutes             db  ? ;minutes
-  gis_seconds             db  ? ;seconds
-  gis_hundredths          db  ? ;hundredths
-  gis_timezone            dw  ? ;minutes from UTC
-  gis_cusecTimerInterval  dw  ? ;timer interval (units = 0.0001 seconds)
-  gis_day                 db  ? ;day
-  gis_month               db  ? ;month
-  gis_year                dw  ? ;year
-  gis_weekday             db  ? ;day of week
-  gis_uchMajorVersion     db  ? ;major version number
-  gis_uchMinorVersion     db  ? ;minor version number
-  gis_chRevisionLetter    db  ? ;revision letter
-  gis_sgCurrent           db  ? ;current foreground session
-  gis_sgMax               db  ? ;maximum number of sessions
-  gis_cHugeShift          db  ? ;shift count for huge elements
-  gis_fProtectModeOnly    db  ? ;protect mode only indicator
-  gis_pidForeground       dw  ? ;pid of last process in foreground session
-  gis_fDynamicSched       db  ? ;dynamic variation flag
-  gis_csecMaxWait         db  ? ;max wait in seconds
-  gis_cmsecMinSlice       dw  ? ;minimum timeslice (milliseconds)
-  gis_cmsecMaxSlice       dw  ? ;maximum timeslice (milliseconds)
-  gis_bootdrive           dw  ? ;drive from which the system was booted
-  gis_amecRAS             db  32 dup (?) ;system trace major code flag bits
-  gis_csgWindowableVioMax db  ? ;maximum number of VIO windowable sessions
-  gis_csgPMMax            db  ? ;maximum number of pres. services sessions
-GINFOSEG ends
+_DATA		ENDS
+
 
 LINFOSEG struc
   lis_pidCurrent      dw  ? ;current process id
@@ -115,6 +84,5 @@ LINFOSEG struc
   lis_selDS           dw  ? ;data segment handle of the application
 LINFOSEG ends
 
-_DATA		ENDS
 
 		END

@@ -47,6 +47,8 @@ rem dosloadmodule
 :jwasm -q dosloadmodule.ASM
 :jwasm -q dosfrmod.ASM
 
+jwasm -q ginfoseg.asm
+jwasm -q dosgetinfoseg.asm
 jwasm -q globalvars.asm
 jwasm -q globalshared.asm
 jwasm -q helpers.asm
@@ -87,7 +89,7 @@ jwasm -q dosgetpr.ASM
 jwasm -q dosgtpid.ASM
 jwasm -q dosallochuge.ASM 
 jwasm -q doslock.ASM 
-jwasm -q dosmaxfh.ASM
+jwasm -q dossetmaxfh.ASM
 jwasm -q dosgetmachinemode.ASM 
 jwasm -q dosmove.ASM 
 jwasm -q dosnewsize.ASM
@@ -178,7 +180,7 @@ wlib -q -fo fapi.lib +dosgtpid.obj
 wlib -q -fo fapi.lib +dosallochuge.obj
 wlib -q -fo fapi.lib +doscliaccess.obj +dosportaccess.obj
 wlib -q -fo fapi.lib +doslock.obj
-wlib -q -fo fapi.lib +dosmaxfh.obj
+wlib -q -fo fapi.lib +dossetmaxfh.obj
 wlib -q -fo fapi.lib +dosgetmachinemode.obj
 wlib -q -fo fapi.lib +dosmove.obj
 wlib -q -fo fapi.lib +dosnewsize.obj
@@ -204,8 +206,10 @@ wlib -q -fo fapi.lib +dossetverify.obj
 wlib -q -fo fapi.lib +dosssig.obj
 wlib -q -fo fapi.lib +dosstvec.obj
 wlib -q -fo fapi.lib +doswrite.obj
+wlib -q -fo fapi.lib +dosgetinfoseg.obj
 :wlib -q -fo fapi.lib +gblreal.obj
 
+wlib -q -fo fapi.lib +ginfoseg.obj
 wlib -q -fo fapi.lib +globalvars.obj
 
 rem Fapi Subsystem

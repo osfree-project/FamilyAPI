@@ -13,6 +13,25 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
+;---------------------------------------
+;INT 21 - DOS 2+ - GET DOS VERSION
+;        AH = 30h
+;---DOS 5+ ---
+;        AL = what to return in BH
+;            00h OEM number (see #01394)
+;            01h version flag
+;Return: AL = major version number (00h if DOS 1.x)
+;        AH = minor version number
+;        BL:CX = 24-bit user serial number (most versions do not use this)
+;---if DOS <5 or AL=00h---
+;        BH = MS-DOS OEM number (see #01394)
+;---if DOS 5+ and AL=01h---
+;        BH = version flag
+;            bit 3: DOS is in ROM
+;            other: reserved (0)
+;
+;---------------------------------------
+;
 ;INT 21 - Windows95 - LONG FILENAME - GET FILE INFO BY HANDLE
 ;
 ;	AX = 71A6h
@@ -33,6 +52,12 @@
 		INCLUDE	BSEERR.INC
 		INCLUDE	GLOBALVARS.INC
 
+_GINFOSEG SEGMENT BYTE PUBLIC 'DATA' USE16
+EXTERN gis_uchMajorVersion: BYTE
+EXTERN gis_uchMinorVersion: BYTE
+EXTERN gis_chRevisionLetter: BYTE
+_GINFOSEG ENDS
+
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 MS_DOS_Name_String db "MS-DOS", 0
@@ -42,10 +67,14 @@ GLOBALINIT	PROC NEAR
 		JZ	EXIT
 
 		MOV	[API_INITED], 0FFFFH
+
+		MOV	AX, _GINFOSEG
+		MOV	ES, AX
 		
 		GET_VERSION
 		XCHG	AH, AL
-		MOV	[DOS_VERSION],AX
+		MOV	[ES:gis_uchMajorVersion],AH
+		MOV	[ES:gis_uchMinorVersion],AL
 		MOV	BX, AX
 		MOV	AX, 0FFFFH
 		CMP	BX, 0A14H	; >=10.20 OS/2 1.2+
@@ -140,3 +169,32 @@ GLOBALINIT	ENDP
 
 _TEXT		ENDS
 		END
+if 0
+	    0Dh reset drive (see AX=710Dh)
+	    39h create directory (see AX=7139h)
+	    3Ah remove directory (see AX=713Ah)
+	    3Bh set current directory (see AX=713Bh)
+	    41h delete file (see AX=7141h)
+	    43h get/set file attributes (see AX=7143h)
+	    47h get current directory (see AX=7147h)
+	    4Eh find first file (see AX=714Eh)
+	    4Fh find next file (see AX=714Fh)
+	    56h move (rename) file (see AX=7156h)
+	    60h truename (see AX=7160h/CL=00h,AX=7160h/CL=02h)
+	    6Ch create/open file (see AX=716Ch)
+	    A0h get volume information (see AX=71A0h)
+	    A1h terminate FindFirst/FindNext (see AX=71A1h)
+	    A6h get file information (see AX=71A6h)
+	    A7h time conversion (see AX=71A7h/BL=00h,AX=71A7h/BL=01h)
+	    A8h generate short filename (see AX=71A8h)
+	    A9h server create/open file (see AX=71A9h)
+	    AAh create/terminate SUBST (see AX=71AAh/BH=00h,AX=71AAh/BH=02h)
+endif
+
+if 0
+            6C01h open
+	    6D OS/2 v1.x FAPI - "DosMkDir2"
+            6E INT 21 U - OS/2 v1.x FAPI - "DosEnumAttrib"
+            6F00 INT 21 U - OS/2 v1.x FAPI - "DosQMaxEASize" - GET MAXIMUM SIZE OF EXTENDED ATTR
+
+endif

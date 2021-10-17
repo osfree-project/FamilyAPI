@@ -512,12 +512,12 @@ cancel_redir  macro  local
                 endm
 
 
-    ;  Macro Definitions for MS-DOS System Call Examples
-    ;
-    ; *******************
-    ;  Interrupts
-    ; *******************
-    ;                                 Interrupt 25H
+;  Macro Definitions for MS-DOS System Call Examples
+;
+; *******************
+;  Interrupts
+; *******************
+;                                 Interrupt 25H
     ABS_DISK_READ  macro  disk,buffer,num_sectors,first_sector
         mov    al,disk
         mov    bx,offset buffer
@@ -626,6 +626,12 @@ RESET_DISK  macro
         int    21H
         endm
 
+LFN_RESET_DISK macro disk
+	MOV	AX, 710dH
+	MOV	CX, 2
+	MOV	DX, disk
+	int	21h
+	endm
 ;                                 Function Request 0EH
 SELECT_DISK  macro  disk
         mov    dl,disk

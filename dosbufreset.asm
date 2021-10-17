@@ -12,6 +12,7 @@
 ;   to link required API
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
+;  Documentation: 
 ;
 ; Errors:
 ; 2 ERROR_FILE_NOT_FOUND
@@ -84,6 +85,17 @@
 ;          had a bug which depended on AH being preserved
 ;SeeAlso: AH=10h,AH=3Ch,AH=3Dh,INT 2F/AX=1106h,INT 2F/AX=1227h
 ;
+;-------------------------------------------------------------------
+;INT 21 - Windows95 - RESET DRIVE
+;
+;	AX = 710Dh
+;	CX = action (see #01777)
+;	DX = drive number
+;Return: CF clear
+;Note:	for compatibility with DOS versions prior to v7.00, the carry flag
+;	  should be set on call to ensure that it is set on exit
+;SeeAlso: AH=0Dh
+;
 ;*/
 
 .8086
@@ -111,6 +123,7 @@ FILEHANDLE	DW	?
 		JE	DOS3
 DISKRESET:
 		RESET_DISK		; @todo After this call we also need to close all files to flush directory entries
+		;LFN_RESET_DISK disk	; @todo Here we need to process all disks
 		JMP	DONE
 DOS3:
 		XDUP	[DS:BP].ARGS.FILEHANDLE

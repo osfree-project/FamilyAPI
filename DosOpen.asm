@@ -44,17 +44,17 @@
 		INCLUDE GLOBALVARS.INC
 
 if		0
-		DB	"CLOCK$"
-		DB	"KBD$"
-		DB	"SCREEN$"
+		DB	"CLOCK$"	; Present in DOS?
+		DB	"KBD$"		; New in OS/2
+		DB	"SCREEN$"	; New in OS/2
 		DB	"PRN"
-		DB	"LPT1"
-		DB	"LPT2"
-		DB	"LPT3"
+		DB	"LPT1"		; Present in DOS
+		DB	"LPT2"		; Present in DOS
+		DB	"LPT3"		; Present in DOS
 		DB	"AUX"
-		DB	"COM1"
-		DB	"COM2"
-		DB	"COM3"
+		DB	"COM1"		; Present in DOS
+		DB	"COM2"		; Present in DOS
+		DB	"COM3"		; Present in DOS
 endif
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -78,6 +78,10 @@ FILENAME	DD 	?		;File path name string
 		CMP	CX, WORD PTR [DS:BP].ARGS.RESERVED+2
 		JNZ	ERROR
 
+;		CALL	ISDEVICE
+;		JE	OPENDEVICE
+
+
 		MOV	CX, [DS:BP].ARGS.FILEATTRIBUTE	; Check allowed attrs
 		TEST	CX, 1111111111001000B
 		JNZ	ERROR
@@ -96,7 +100,7 @@ NOSHARE:
 		TEST	CX, 1111111100000000B
 		JNZ	ERROR
 
-;		LDS	DX,[DS:BP].ARGS.FILENAME
+
 		MOV	CX,[DS:BP].ARGS.OPENFLAG
 		TEST	AL, 012H
 		JNZ	@F
@@ -137,6 +141,14 @@ ERROR:
 EXIT2:	
 		@EPILOG DOSOPEN
 
-_TEXT		ends
+;----------------------------------------------------------------------
+; @brief Check is filename are device name
+;
+;----------------------------------------------------------------------
+ISDEVICE	PROC
+		RET
+ISDEVICE	ENDP
 
-	end
+_TEXT		ENDS
+
+		END
