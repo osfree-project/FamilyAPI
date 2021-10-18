@@ -64,25 +64,6 @@ wLdrDS	dw ?			; DATA segment of application (or kernel???)
 _DATA		ENDS
 
 
-LINFOSEG struc
-  lis_pidCurrent      dw  ? ;current process id
-  lis_pidParent       dw  ? ;process id of parent
-  lis_prtyCurrent     dw  ? ;priority of current thread
-  lis_tidCurrent      dw  ? ;thread ID of current thread
-  lis_sgCurrent       dw  ? ;session
-  lis_rfProcStatus    db  ? ;process status
-  lis_dummy1          db  ? ;
-  lis_fForeground     dw  ? ;current process has keyboard focus
-  lis_typeProcess     db  ? ;process type
-  lis_dummy2          db  ? ;
-  lis_selEnvironment  dw  ? ;environment selector
-  lis_offCmdLine      dw  ? ;command line offset
-  lis_cbDataSegment   dw  ? ;length of data segment
-  lis_cbStack         dw  ? ;stack size
-  lis_cbHeap          dw  ? ;heap size
-  lis_hmod            dw  ? ;module handle of the application
-  lis_selDS           dw  ? ;data segment handle of the application
-LINFOSEG ends
 
 
 		END

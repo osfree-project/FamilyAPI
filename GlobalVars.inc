@@ -20,6 +20,9 @@ EXTERN gis_uchMajorVersion: BYTE
 EXTERN gis_uchMinorVersion: BYTE
 EXTERN gis_chRevisionLetter: BYTE
 
+EXTERN  lis_selEnvironment: WORD
+EXTERN  lis_offCmdLine: WORD
+
 _GINFOSEG SEGMENT BYTE PUBLIC 'DATA' USE16
 _GINFOSEG ENDS
 

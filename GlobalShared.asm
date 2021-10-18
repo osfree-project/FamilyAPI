@@ -103,6 +103,24 @@ DOS3:
 		MOV	[DOS3API], AX
 DOS2:
 		MOV	[DOS2API], AX
+; Environment & cmdline
+		GET_PSP
+		MOV	ES,BX
+		MOV	ES,ES:[02CH]
+		XOR	DI,DI
+		XOR	AL,AL
+		MOV	CX,0FFFFH
+NEXTLINE:		
+		REPNE SCASB
+		SCASB
+		JNE	NEXTLINE
+		MOV	BX, ES
+		MOV	AX, _LINFOSEG
+		MOV	ES, AX
+		MOV	[ES:lis_selEnvironment],BX
+		ADD	DI,2
+		MOV	[ES:lis_offCmdLine],DI
+
 		; Because LFN API can be supported by side drivers check it
 LFNCHECK:
 		MOV     BX, -1

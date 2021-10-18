@@ -13,6 +13,8 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
+; @todo add filename check
+;
 ;--------D-2141-------------------------------
 ;INT 21 - DOS 2+ - "UNLINK" - DELETE FILE
 ;        AH = 41h

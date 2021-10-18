@@ -3,6 +3,8 @@
 
 		public	DOSEXIT
 
+		include dos.inc
+
 _TEXT	segment byte public 'CODE' use16
 
 DOSEXIT:
@@ -12,8 +14,7 @@ DOSEXIT:
 		je	@F
 		mov	AL,0FFh
 @@:
-		mov	AH,04Ch
-		int	21h
+		END_PROCESS AL
         
 _TEXT	ends
 

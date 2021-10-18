@@ -38,7 +38,7 @@ WSIZE		DW	?
 		AND     AX, [DS:BP].ARGS.ALLOCFLAGS ; bit 0,1,2,3 allowed only
 		CMP	AX, 0
 		MOV	AX, ERROR_INVALID_PARAMETER 
-		JNE     EXIT			; 
+		JNE     EXIT
 		MOV	BX,[DS:BP].ARGS.WSIZE
 		ADD	BX,0FH
 		SHR	BX,1

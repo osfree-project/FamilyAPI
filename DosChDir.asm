@@ -43,7 +43,6 @@
 ;*/
 ;
 ; @todo Add args check and 8.3 filename check
-; @todo Add LFN support
 ;
 .8086
 

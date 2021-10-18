@@ -48,6 +48,7 @@ rem dosloadmodule
 :jwasm -q dosfrmod.ASM
 
 jwasm -q ginfoseg.asm
+jwasm -q linfoseg.asm
 jwasm -q dosgetinfoseg.asm
 jwasm -q globalvars.asm
 jwasm -q globalshared.asm
@@ -210,6 +211,7 @@ wlib -q -fo fapi.lib +dosgetinfoseg.obj
 :wlib -q -fo fapi.lib +gblreal.obj
 
 wlib -q -fo fapi.lib +ginfoseg.obj
+wlib -q -fo fapi.lib +linfoseg.obj
 wlib -q -fo fapi.lib +globalvars.obj
 
 rem Fapi Subsystem
