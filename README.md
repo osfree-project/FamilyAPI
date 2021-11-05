@@ -2,7 +2,8 @@
 
 Shared API for DOS and OS/2 to produce binary dual mode applications which can be run without recompilation
 
-![Building](https://github.com/prokushev/FamilyAPI/actions/workflows/build.yml/badge.svg)
+[![Build status](https://github.com/prokushev/FamilyAPI/actions/workflows/build.yml/badge.svg)](https://github.com/prokushev/FamilyAPI/actions?query=workflow%3Abuild.yml)
+
 
 At the present time we have:
 
