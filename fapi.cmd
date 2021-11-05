@@ -70,8 +70,8 @@ jwasm -q doscasemap.ASM
 jwasm -q dosbufreset.ASM 
 jwasm -q doschdir.ASM
 jwasm -q dosclose.ASM
-jwasm -q dosgetdbcsev.ASM 
-jwasm -q dosdelete.ASM  
+jwasm -q dosgetdbcsev.asm
+jwasm -q dosdelete.ASM
 jwasm -q dosdevconfig.ASM  
 jwasm -q dosgetdatetime.ASM
 jwasm -q dosduphandle.ASM 

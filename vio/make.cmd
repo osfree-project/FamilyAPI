@@ -5,6 +5,7 @@ if exist *.obj del *.obj
 if exist *.lst del *.lst
 if exist *.err del *.err
 if exist *.bak del *.bak
+
 rem Video subsystem
 jwasm -q vioroute.asm
 jwasm -q vioscrlock.asm

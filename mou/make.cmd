@@ -1,9 +1,12 @@
 @echo off
-del mou.lib
-del *.obj
-del *.lst
-del *.err
-del *.bak
+
+echo Building Mouse subsystem
+if exist mou.lib del mou.lib
+if exist *.obj del *.obj
+if exist *.lst del *.lst
+if exist *.err del *.err
+if exist *.bak del *.bak
+
 rem Mouse subsystem
 jwasm -q mouroute.asm
 jwasm -q mougetnumbuttons.asm
@@ -36,3 +39,5 @@ wlib -q -fo mou.lib +mousetscalefact.obj +mouseteventmask.obj +mougethotkey.obj 
 wlib -q -fo mou.lib +mouopen.obj +mouclose.obj +mougetptrshape.obj +mousetptrshape.obj
 wlib -q -fo mou.lib +moudrawptr.obj +mouremoveptr.obj +mougetptrpos.obj +mousetptrpos.obj
 wlib -q -fo mou.lib +mouinitreal.obj +mouflushque.obj +mousetdevstatus.obj
+
+echo Mouse subsystem build finished
