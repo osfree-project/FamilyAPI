@@ -7,8 +7,8 @@ jobs:
       matrix:
         include:
           - os: windows-latest
-
-  steps:
-    - name: Build for Windows
-      run: fapi.cmd
-      shell: cmd
+    steps:
+      - name: Build for Windows
+        uses: actions/checkout@v2
+        run: fapi
+        shell: cmd
