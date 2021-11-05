@@ -1,9 +1,10 @@
 @echo off
-del vio.lib
-del *.obj
-del *.lst
-del *.err
-del *.bak
+echo Building Video subsystem
+if exist vio.lib del vio.lib
+if exist *.obj del *.obj
+if exist *.lst del *.lst
+if exist *.err del *.err
+if exist *.bak del *.bak
 rem Video subsystem
 jwasm -q vioroute.asm
 jwasm -q vioscrlock.asm
@@ -58,3 +59,5 @@ wlib -q -fo vio.lib +viowrtnattr.obj +viogetcp.obj +viosetcp.obj +viogetfont.obj
 wlib -q -fo vio.lib +viogetcurpos.obj +vioderegister.obj +vioregister.obj +vioscrollup.obj +vioscrolldn.obj +viowrttty.obj
 wlib -q -fo vio.lib +viosetansi.obj +viogetansi.obj +viogetmode.obj +vioscrlock.obj +vioscrunlock.obj +viogetconfig.obj 
 wlib -q -fo vio.lib +viowrtcharstratt.obj +viowrtcellstr.obj +viowrtcharstr.obj +viosetmode.obj +viosetcurpos.obj +viowrtnchar.obj +viowrtncell.obj
+
+echo Video subsystem build finished

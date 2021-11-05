@@ -1,9 +1,11 @@
 @echo off
-del bvs.lib
-del *.obj
-del *.lst
-del *.err
-del *.bak
+echo Building Base Video Subsystem
+if exist bvs.lib del bvs.lib
+if exist *.obj del *.obj
+if exist *.lst del *.lst
+if exist *.err del *.err
+if exist *.bak del *.bak
+
 rem Base video subsystem
 jwasm -q bvsshared.asm
 jwasm -q bvsvars.asm
@@ -60,3 +62,4 @@ wlib -q -fo bvs.lib +bvspopup.obj +bvsendpopup.obj +bvsprtsctoggle.obj +bvsmodew
 wlib -q -fo bvs.lib +bvsgetconfig.obj +bvssetcp.obj +bvsgetcp.obj +bvssetfont.obj +bvsgetstate.obj +bvssetstate.obj
 wlib -q -fo bvs.lib +bvsshared.obj +bvsvars.obj
 
+echo Base Video Subsystem build finished
