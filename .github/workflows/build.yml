@@ -9,5 +9,5 @@ jobs:
           - os: windows-latest
     steps:
       - name: Build for Windows
-        run: ./fapi.cmd
+        run: fapi.cmd
         shell: cmd
