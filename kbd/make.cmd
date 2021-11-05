@@ -1,9 +1,12 @@
 @echo off
-del kbd.lib
-del *.obj
-del *.lst
-del *.err
-del *.bak
+
+echo Building Keyboard Subsystem
+if exist kbd.lib del kbd.lib
+if exist *.obj del *.obj
+if exist *.lst del *.lst
+if exist *.err del *.err
+if exist *.bak del *.bak
+
 rem Keyboard subsystem
 jwasm -q kbdroute.asm
 jwasm -q kbdcharin.asm
@@ -26,3 +29,6 @@ rem Kbd Subsystem
 wlib -q -fo kbd.lib +kbdroute.obj +kbdcharin.obj +kbdpeek.obj +kbdflushbuffer.obj +kbdgetstatus.obj +kbdsetstatus.obj
 wlib -q -fo kbd.lib +kbdstringin.obj +kbdopen.obj +kbdclose.obj +kbdgetfocus.obj +kbdfreefocus.obj +kbdgetcp.obj
 wlib -q -fo kbd.lib +kbdsetcp.obj +kbdxlate.obj +kbdsetcustxt.obj +kbdgethwid.obj
+
+echo Keyboard Subsystem build finished
+

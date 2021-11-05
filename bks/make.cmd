@@ -1,9 +1,12 @@
 @echo off
-del bks.lib
-del *.obj
-del *.lst
-del *.err
-del *.bak
+
+echo Building Base Keyboard Subsystem
+if exist bks.lib del bks.lib
+if exist *.obj del *.obj
+if exist *.lst del *.lst
+if exist *.err del *.err
+if exist *.bak del *.bak
+
 rem Base Keyboard Subsystem
 jwasm -q bksmain.asm
 jwasm -q bkscharin.asm
@@ -40,3 +43,4 @@ wlib -q -fo bks.lib +bksxlate.obj
 wlib -q -fo bks.lib +bkssetcustxt.obj
 wlib -q -fo bks.lib +bksgethwid.obj
 
+echo Base Keyboard Subsystem build finished

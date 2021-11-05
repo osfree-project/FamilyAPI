@@ -1,9 +1,12 @@
 @echo off
-del bms.lib
-del *.obj
-del *.lst
-del *.err
-del *.bak
+
+echo Building Base Mouse Subsystem
+if exist bms.lib del bms.lib
+if exist *.obj del *.obj
+if exist *.lst del *.lst
+if exist *.err del *.err
+if exist *.bak del *.bak
+
 rem Base Mouse Subsystem
 jwasm -q bmsmain.asm
 jwasm -q bmsgetnumbuttons.asm
@@ -32,3 +35,4 @@ jwasm -q bmssetdevstatus.asm
 rem Base Mouse Subsystem
 wlib -q -fo bms.lib +bmsmain.obj 
 
+echo Base Mouse Subsystem build finished
