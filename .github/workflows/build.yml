@@ -11,6 +11,8 @@ jobs:
   steps:
     - uses: actions/checkout@v2
 
+    - run: fapi.cmd
+
     - name: Build for Windows
-    if: matrix.os == 'windows-latest'
-    run: fapi.cmd
+      if: matrix.os == 'windows-latest'
+      run: fapi.cmd
