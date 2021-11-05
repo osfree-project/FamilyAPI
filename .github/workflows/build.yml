@@ -9,8 +9,6 @@ jobs:
           - os: windows-latest
 
   steps:
-    - run: fapi.cmd
-
     - name: Build for Windows
-      if: matrix.os == 'windows-latest'
       run: fapi.cmd
+      shell: cmd
