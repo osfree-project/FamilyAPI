@@ -8,6 +8,8 @@ jobs:
         include:
           - os: windows-latest
     steps:
+      - name: Repo clone
+        uses: actions/checkout@v2
       - name: Build for Windows
         run: fapi.cmd
         shell: cmd
