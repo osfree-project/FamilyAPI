@@ -1,4 +1,3 @@
-# .github/workflows/example.yml
 
 name: Merge upstream branches
 on:
@@ -34,4 +33,3 @@ jobs:
           git checkout master
           git merge --no-edit upstream/master
           git push origin master
-          
