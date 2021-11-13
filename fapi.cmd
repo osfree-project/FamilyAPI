@@ -20,6 +20,12 @@ cd ..
 cd bks
 call make
 cd ..
+cd fm
+call make
+cd ..
+cd ioctl
+call make
+cd ..
 
 rem dosloadmodule
 :jwasm -q checkpathname.asm
