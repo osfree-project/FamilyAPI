@@ -20,7 +20,7 @@ jwasm -q bmssetscalefact.asm
 jwasm -q bmsseteventmask.asm
 jwasm -q bmsgethotkey.asm
 jwasm -q bmssethotkey.asm
-jwasm -q bmsopen.asm
+jwasm -q -I..\include bmsopen.asm
 jwasm -q bmsclose.asm
 jwasm -q bmsgetptrshape.asm
 jwasm -q bmssetptrshape.asm

@@ -19,7 +19,7 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
-		INCLUDE	..\bseerr.inc
+		INCLUDE	bseerr.inc
 
 KBDINFO STRUC
   KBST_CB           DW  ? ;LENGTH IN BYTES OF THIS STRUCTURE

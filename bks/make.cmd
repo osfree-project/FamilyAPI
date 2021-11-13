@@ -8,22 +8,22 @@ if exist *.err del *.err
 if exist *.bak del *.bak
 
 rem Base Keyboard Subsystem
-jwasm -q bksmain.asm
-jwasm -q bkscharin.asm
-jwasm -q bkspeek.asm
-jwasm -q bksflushbuffer.asm
-jwasm -q bksgetstatus.asm
-jwasm -q bkssetstatus.asm
-jwasm -q bksstringin.asm
-jwasm -q bksopen.asm
-jwasm -q bksclose.asm
-jwasm -q bksgetfocus.asm
-jwasm -q bksfreefocus.asm
-jwasm -q bksgetcp.asm
-jwasm -q bkssetcp.asm
-jwasm -q bksxlate.asm
-jwasm -q bkssetcustxt.asm
-jwasm -q bksgethwid.asm
+jwasm -q -I..\include bksmain.asm
+jwasm -q -I..\include bkscharin.asm
+jwasm -q -I..\include bkspeek.asm
+jwasm -q -I..\include bksflushbuffer.asm
+jwasm -q -I..\include bksgetstatus.asm
+jwasm -q -I..\include bkssetstatus.asm
+jwasm -q -I..\include bksstringin.asm
+jwasm -q -I..\include bksopen.asm
+jwasm -q -I..\include bksclose.asm
+jwasm -q -I..\include bksgetfocus.asm
+jwasm -q -I..\include bksfreefocus.asm
+jwasm -q -I..\include bksgetcp.asm
+jwasm -q -I..\include bkssetcp.asm
+jwasm -q -I..\include bksxlate.asm
+jwasm -q -I..\include bkssetcustxt.asm
+jwasm -q -I..\include bksgethwid.asm
 
 rem Base Keyboard Subsystem
 wlib -q -fo bks.lib +bksmain.obj 
