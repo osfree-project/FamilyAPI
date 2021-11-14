@@ -25,7 +25,7 @@ _TEXT		SEGMENT DWORD PUBLIC 'CODE' USE16
 		@PROLOG	DOSSUBFREE
 SegSelector	DW	?
 BlockOffset	DW	?
-Size		DW	?
+MSize		DW	?
 		@START	DOSSUBFREE
 ; code here
 		@EPILOG	DOSSUBFREE

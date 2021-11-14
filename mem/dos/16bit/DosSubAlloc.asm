@@ -3,9 +3,9 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief DosBeep DOS wrapper
+;   @brief DosSubAlloc DOS wrapper
 ;
-;   (c) osFree Project 2018, <http://www.osFree.org>
+;   (c) osFree Project 2021, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -25,7 +25,7 @@ _TEXT		SEGMENT DWORD PUBLIC 'CODE' USE16
 		@PROLOG	DOSSUBALLOC
 SegSelector	DW	?
 BlockOffset	DD	?
-Size		DW	?
+MSize		DW	?
 		@START	DOSSUBALLOC
 ; code here
 		@EPILOG	DOSSUBALLOC

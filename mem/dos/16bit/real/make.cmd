@@ -1,5 +1,5 @@
 @echo off
 
-echo Building memory library
+echo Building 16-bit real memory subsystem
 wmake -h
-echo Mem subsystem build finished
+echo 16-bit real memory subsystem build finished

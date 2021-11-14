@@ -26,6 +26,9 @@ cd ..
 cd ioctl
 call make
 cd ..
+cd dos
+call make
+cd ..
 
 rem dosloadmodule
 :jwasm -q checkpathname.asm
@@ -89,4 +92,4 @@ rem dos*module
 :wlib -q -fo fapi.lib +dosfrmod.obj
 
 rem Fapi Subsystem
-wmake
+wmake -h

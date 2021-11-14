@@ -3,7 +3,7 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief DosSubSet DOS wrapper
+;   @brief DosGetCtryInfo DOS wrapper
 ;
 ;   (c) osFree Project 2018, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
@@ -22,13 +22,14 @@
 
 _TEXT		SEGMENT DWORD PUBLIC 'CODE' USE16
 
-		@PROLOG	DOSSUBSET
-SegSelector	DW	?
-Flags		DW	?
-Size		DW	?
-		@START	DOSSUBSET
+		@PROLOG	DOSGETCTRYINFO
+MLength		DW	?
+Structure	DD	?
+MemoryBuffer	DD	?
+DataLength	DD	?
+		@START	DOSGETCTRYINFO
 ; code here
-		@EPILOG	DOSSUBSET
+		@EPILOG	DOSGETCTRYINFO
 
 _TEXT		ENDS
 
