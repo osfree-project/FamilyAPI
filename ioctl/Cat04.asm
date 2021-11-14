@@ -38,7 +38,7 @@ KEYTABLE1:
 
 KEYTABLE2:
 	DD	IOKGETINPUTMODE		; Function 71H Get Input Mode
-	DD	IOKGETINTEROMFLAG	; Function 72H Get Interim Flag
+	DD	IOKGETINTERIMFLAG	; Function 72H Get Interim Flag
 	DD	IOKGETSHIFTSTATE	; Function 73H Get Shift State
 	DD	IOKCHARIN		; Function 74H Read character data record(s)
 	DD	IOKPEEK			; Function 75H Peek character data record
@@ -83,280 +83,30 @@ EXIT:
 		RET
 IOKEYBOARD	ENDP
 
-;--------------------------------------------------------
-; Category 4 Function 50H Set code page
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETCP	PROC	FAR
-		RET
-IOKSETCP	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 51H Set Input Mode
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETINPUTMODE	PROC	FAR
-		RET
-IOKSETINPUTMODE	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 52H Set Interim Character Flags
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETINTERIMFLAG	PROC	FAR
-			RET
-IOKSETINTERIMFLAG	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 53H Set Shift State
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETSHIFTSTATE	PROC	FAR
-		RET
-IOKSETSHIFTSTATE	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 54H Set Typematic Rate and Delay
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETRATE	PROC	FAR
-		RET
-IOKSETRATE	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 55H Notify of Change of Foreground Session
-;--------------------------------------------------------
-;
-;
-;
-
-IOKNOTIFY	PROC	FAR
-		RET
-IOKNOTIFY	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 56H Set Session Manager Hot Key
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETHOTKEY	PROC	FAR
-		RET
-IOKSETHOTKEY	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 74H Function 57H Set KCB
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETKCB	PROC	FAR
-		RET
-IOKSETKCB	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 58H Set codepage ID
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETCPID	PROC	FAR
-		RET
-IOKSETCPID	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 59H Set Read/Peek notification
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETNOTIFY	PROC	FAR
-		RET
-IOKSETNOTIFY	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 5AH Set keyboard LEDs
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETSTATUS	PROC	FAR
-		RET
-IOKSETSTATUS	ENDP
-
-
-;--------------------------------------------------------
-; Category 4 Function 5DH Set NLS and Custom Codepage
-;--------------------------------------------------------
-;
-;
-;
-
-IOKSETCUSTXT	PROC	FAR
-		RET
-IOKSETCUSTXT	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 5DH Create logical keyboard
-;--------------------------------------------------------
-;
-;
-;
-
-IOKOPEN		PROC	FAR
-		RET
-IOKOPEN		ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 5EH Destroy logical keyboard
-;--------------------------------------------------------
-;
-;
-;
-
-IOCLOSE		PROC	FAR
-		RET
-IOCLOSE		ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 71H Get Input Mode
-;--------------------------------------------------------
-;
-;
-;
-
-IOKGETINPUTMODE	PROC	FAR
-		RET
-IOKGETINPUTMODE	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 72H Get Interim Flag
-;--------------------------------------------------------
-;
-;
-;
-
-IOKGETINTEROMFLAG	PROC	FAR
-			RET
-IOKGETINTEROMFLAG	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 73H Get Shift State
-;--------------------------------------------------------
-;
-;
-;
-
-IOKGETSHIFTSTATE	PROC	FAR
-			RET
-IOKGETSHIFTSTATE	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 76H Get Session Manager Hot Key
-;--------------------------------------------------------
-;
-;
-;
-
-IOKGETHOTKEY	PROC	FAR
-		RET
-IOKGETHOTKEY	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 77H Get Keyboard Type
-;--------------------------------------------------------
-;
-;
-;
-
-IOKGETKEYBOARDTYPE	PROC	FAR
-			RET
-IOKGETKEYBOARDTYPE	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 78H Get Codepage ID
-;--------------------------------------------------------
-;
-;
-;
-
-IOKGETCP	PROC	FAR
-		RET
-IOKGETCP	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 79H Translate Scan Code To ASCII
-;--------------------------------------------------------
-;
-;
-;
-
-IOKTRANSLATE	PROC	FAR
-		RET
-IOKTRANSLATE	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 7AH Get Hardware ID
-;--------------------------------------------------------
-;
-;
-;
-
-IOKGETHWID	PROC	FAR
-		RET
-IOKGETHWID	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 7BH Get keyboard current CP info
-;--------------------------------------------------------
-;
-;
-;
-
-IOKGETCPINFO	PROC	FAR
-		RET
-IOKGETCPINFO	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 74H Read character data record(s)
-;--------------------------------------------------------
-;
-;
-;
-
-IOKCHARIN	PROC	FAR
-		RET
-IOKCHARIN	ENDP
-
-;--------------------------------------------------------
-; Category 4 Function 75H Peek character data record
-;--------------------------------------------------------
-;
-;
-;
-
-IOKPEEK		PROC	FAR
-		RET
-IOKPEEK		ENDP
+		INCLUDE	IokSetCp.asm
+		INCLUDE	IokSetInputMode.asm
+		INCLUDE	IokSetInterimFlag.asm
+		INCLUDE	IokSetShiftState.asm
+		INCLUDE	IokSetRate.asm
+		INCLUDE	IokNotify.asm
+		INCLUDE	IokSetHotKey.asm
+		INCLUDE	IokSetKCB.asm
+		INCLUDE	IokSetCPID.asm
+		INCLUDE	IokSetNotify.asm
+		INCLUDE	IokSetStatus.asm
+		INCLUDE	IokSetCustXT.asm
+		INCLUDE IokOpen.asm
+		INCLUDE IokClose.asm
+		INCLUDE	IokGetCp.asm
+		INCLUDE	IokGetHWID.asm
+		INCLUDE	IokGetInputMode.asm
+		INCLUDE	IokGetInterimFlag.asm
+		INCLUDE	IokGetShiftState.asm
+		INCLUDE	IokGetHotKey.asm
+		INCLUDE	IokGetKeyboardType.asm
+		INCLUDE	IokTranslate.asm
+		INCLUDE	IokGetCpInfo.asm
+		INCLUDE	IokCharIn.asm
+		INCLUDE	IokPeek.asm
 
 _TEXT		ENDS

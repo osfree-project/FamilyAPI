@@ -47,29 +47,10 @@ EXIT:
 		RET
 IOSERIAL	ENDP
 
-;--------------------------------------------------------
-; Category 1 Function 41H Set Baud Rate
-;--------------------------------------------------------
-;
-;
-PP	STRUCT
-	BAUD	DW	?
-PP	ENDS
 
-IOSSETBAUD	PROC	FAR
-		RET
-IOSSETBAUD	ENDP
+		INCLUDE	IosSetBaud.asm
+		INCLUDE	IosSetLine.asm
 
-;--------------------------------------------------------
-; Category 1 Function 42H Set Line Control
-;--------------------------------------------------------
-;
-;
-;
-
-IOSSETLINE	PROC	FAR
-		RET
-IOSSETLINE	ENDP
 
 _TEXT		ENDS
 

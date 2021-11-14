@@ -87,136 +87,17 @@ EXIT:
 		RET
 IODISK	ENDP
 
-;--------------------------------------------------------
-; Category 8 Function 00H Lock Drive - not supported for versions below DOS 3.2
-;--------------------------------------------------------
-;
-;
-;
-
-IODLOCK		PROC	FAR
-		RET
-IODLOCK		ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 01H Unlock Drive - not supported for versions below DOS 3.2
-;--------------------------------------------------------
-;
-;
-;
-
-IODUNLOCK	PROC	FAR
-		RET
-IODUNLOCK	ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 02H Redetermine Media - not supported for versions below DOS 3.2
-;--------------------------------------------------------
-;
-;
-;
-
-IODREDETERMINE	PROC	FAR
-		RET
-IODREDETERMINE	ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 03H Set Logical Map - not supported for versions below DOS 3.2
-;--------------------------------------------------------
-;
-;
-;
-
-IODSETMAP	PROC	FAR
-		RET
-IODSETMAP	ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 20H Block Removable - not supported for versions below DOS 3.2
-;--------------------------------------------------------
-;
-;
-;
-
-IODBLOCKREMOVABLE	PROC	FAR
-			RET
-IODBLOCKREMOVABLE	ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 21H Get Logical Map - not supported for versions below DOS 3.2
-;--------------------------------------------------------
-;
-;
-;
-
-IODGETMAP	PROC	FAR
-		RET
-IODGETMAP	ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 43H Set Device Parameters - not supported for DOS 2.X and DOS 3.X
-;--------------------------------------------------------
-;
-;
-;
-
-IODSETPARAM	PROC	FAR
-		RET
-IODSETPARAM	ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 44H Write Track - not supported for DOS 2.X and DOS 3.X
-;--------------------------------------------------------
-;
-;
-;
-
-IODWRITETRACK	PROC	FAR
-		RET
-IODWRITETRACK	ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 45H Format Track - not supported for DOS 2.X and DOS 3.X
-;--------------------------------------------------------
-;
-;
-;
-
-IODFORMATTRACK	PROC	FAR
-		RET
-IODFORMATTRACK	ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 63H Get Device Parameters - not supported for DOS 2.X and DOS 3.X
-;--------------------------------------------------------
-;
-;
-;
-
-IODGETPARAM	PROC	FAR
-		RET
-IODGETPARAM	ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 64H Read Track - not supported for DOS 2.X and DOS 3.X
-;--------------------------------------------------------
-;
-;
-;
-
-IODREADTACK	PROC	FAR
-		RET
-IODREADTACK	ENDP
-
-;--------------------------------------------------------
-; Category 8 Function 65H Verify Track - not supported for DOS 2.X and DOS 3.X.
-;--------------------------------------------------------
-;
-;
-;
-
-IODVERIFYTRACK	PROC	FAR
-		RET
-IODVERIFYTRACK	ENDP
+		INCLUDE	IodLock.asm
+		INCLUDE	IodUnLock.asm
+		INCLUDE	IodRedetermine.asm
+		INCLUDE	IodSetMap.asm
+		INCLUDE	IodBlockRemovable.asm
+		INCLUDE	IodGetMap.asm
+		INCLUDE	IodSetParam.asm
+		INCLUDE	IodWriteTrack.asm
+		INCLUDE	IodFormatTrack.asm
+		INCLUDE	IodGetParam.asm
+		INCLUDE	IodReadTrack.asm
+		INCLUDE	IodVerifyTrack.asm
 
 _TEXT		ENDS

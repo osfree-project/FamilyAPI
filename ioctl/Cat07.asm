@@ -77,248 +77,29 @@ OK2:
 		CALL	FAR PTR ES:MOUTABLE2[SI]
 EXIT:
 		RET
-IOMOUSE	ENDP
+IOMOUSE		ENDP
 
-;--------------------------------------------------------
-; Category 7 Function 50 Allow ptr drawing after screen switch
-;--------------------------------------------------------
-;
-;
-;
-
-IOMALLOWPTRDRAW	PROC	FAR
-		RET
-IOMALLOWPTRDRAW	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 51 Update screen display mode
-;--------------------------------------------------------
-;
-;
-;
-
-IOMUPDATEDISPLAYMODE	PROC	FAR
-			RET
-IOMUPDATEDISPLAYMODE	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 52 Screen switcher call
-;--------------------------------------------------------
-;
-;
-;
-
-IOMSCREENSWITCH	PROC	FAR
-		RET
-IOMSCREENSWITCH	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 53 Set scaling factors
-;--------------------------------------------------------
-;
-;
-;
-
-IOMSETSCALEFACTORS	PROC	FAR
-			RET
-IOMSETSCALEFACTORS	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 54 Set Event mask
-;--------------------------------------------------------
-;
-;
-;
-
-IOMSETEVENTMASK	PROC	FAR
-		RET
-IOMSETEVENTMASK	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 56 Set pointer shape
-;--------------------------------------------------------
-;
-;
-;
-
-IOMSETPTRSHAPE	PROC	FAR
-		RET
-IOMSETPTRSHAPE	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 57 Unmark collision area
-;--------------------------------------------------------
-;
-;
-;
-
-IOMUNMARKCOLLISIONAREA	PROC	FAR
-			RET
-IOMUNMARKCOLLISIONAREA	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 58 Mark collision area
-;--------------------------------------------------------
-;
-;
-;
-
-IOMMARKCOLLISIONAREA	PROC	FAR
-			RET
-IOMMARKCOLLISIONAREA	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 59 Set pointer screen position
-;--------------------------------------------------------
-;
-;
-;
-
-IOMSETPTRPOS	PROC	FAR
-		RET
-IOMSETPTRPOS	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 5A Set OS/2 mode pointer draw address
-;--------------------------------------------------------
-;
-;
-;
-
-IOMSETPROTDRAWADDRESS	PROC	FAR
-			RET
-IOMSETPROTDRAWADDRESS	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 5B Set DOS mode pointer draw address
-;--------------------------------------------------------
-;
-;
-;
-
-IOMSETREALDRAWADDRESS	PROC	FAR
-			RET
-IOMSETREALDRAWADDRESS	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 5C Set device status flags
-;--------------------------------------------------------
-;
-;
-;
-
-IOMSETMOUSTATUS	PROC	FAR
-		RET
-IOMSETMOUSTATUS	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 60 Get number of buttons
-;--------------------------------------------------------
-;
-;
-;
-
-IOMGETBUTTONCOUNT	PROC	FAR
-			RET
-IOMGETBUTTONCOUNT	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 61 Get number of mickeys/centimeter
-;--------------------------------------------------------
-;
-;
-;
-
-IOMGETMICKEYCOUNT	PROC	FAR
-			RET
-IOMGETMICKEYCOUNT	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 62 Get device status flags
-;--------------------------------------------------------
-;
-;
-;
-
-IOMGETMOUSTATUS	PROC	FAR
-		RET
-IOMGETMOUSTATUS	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 63 Read event queue
-;--------------------------------------------------------
-;
-;
-;
-
-IOMREADEVENTQUE	PROC	FAR
-		RET
-IOMREADEVENTQUE	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 64 Get event queue status
-;--------------------------------------------------------
-;
-;
-;
-
-IOMGETQUESTATUS	PROC	FAR
-		RET
-IOMGETQUESTATUS	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 65 Get event mask
-;--------------------------------------------------------
-;
-;
-;
-
-IOMGETEVENTMASK	PROC	FAR
-		RET
-IOMGETEVENTMASK	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 66 Get scaling factors
-;--------------------------------------------------------
-;
-;
-;
-
-IOMGETSCALEFACTORS	PROC	FAR
-			RET
-IOMGETSCALEFACTORS	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 67 Get pointer screen position
-;--------------------------------------------------------
-;
-;
-;
-
-IOMGETPTRPOS	PROC	FAR
-		RET
-IOMGETPTRPOS	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 68 Get pointer shape image
-;--------------------------------------------------------
-;
-;
-;
-
-IOMGETPTRSHAPE	PROC	FAR
-		RET
-IOMGETPTRSHAPE	ENDP
-
-;--------------------------------------------------------
-; Category 7 Function 6A Return the mouse device driver level/version
-;--------------------------------------------------------
-;
-;
-;
-
-IOMVER		PROC	FAR
-		RET
-IOMVER		ENDP
+		INCLUDE	IomAllowPtrDraw.asm
+		INCLUDE	IomUpdateDisplayMode.asm
+		INCLUDE	IomScreenSwitch.asm
+		INCLUDE	IomSetScaleFactors.asm
+		INCLUDE	IomSetEventMask.asm
+		INCLUDE	IomSetPtrShape.asm
+		INCLUDE	IomUnmarkCollisionArea.asm
+		INCLUDE	IomMarkCollisionArea.asm
+		INCLUDE	IomSetPtrPos.asm
+		INCLUDE	IomSetProtDrawAddress.asm
+		INCLUDE	IomSetRealDrawAddress.asm
+		INCLUDE	IomSetMouStatus.asm
+		INCLUDE	IomGetButtonCount.asm
+		INCLUDE	IomGetMickeyCount.asm
+		INCLUDE	IomGetMouStatus.asm
+		INCLUDE	IomReadEventQue.asm
+		INCLUDE	IomGetQueStatus.asm
+		INCLUDE	IomGetEventMask.asm
+		INCLUDE	IomGetScaleFactors.asm
+		INCLUDE	IomGetPtrPos.asm
+		INCLUDE	IomGetPtrShape.asm
+		INCLUDE	IomVer.asm
 
 _TEXT		ENDS

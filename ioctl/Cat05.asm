@@ -68,73 +68,11 @@ EXIT:
 		RET
 IOPRINTER	ENDP
 
-;--------------------------------------------------------
-; Category 5 Function 41H Set Frame control
-;--------------------------------------------------------
-;
-;
-;
-
-IOPSETFRAME	PROC	FAR
-		RET
-IOPSETFRAME	ENDP
-
-;--------------------------------------------------------
-; Category 5 Function 44H Set Infinite Retry
-;--------------------------------------------------------
-;
-;
-;
-
-IOPSETRETRY	PROC	FAR
-		RET
-IOPSETRETRY	ENDP
-
-
-;--------------------------------------------------------
-; Category 5 Function 46H Initialize printer
-;--------------------------------------------------------
-;
-;
-;
-
-IOPINIT		PROC	FAR
-		RET
-IOPINIT		ENDP
-
-;--------------------------------------------------------
-; Category 5 Function 62H Get Frame Control
-;--------------------------------------------------------
-;
-;
-;
-
-IOPGETFRAME	PROC	FAR
-		RET
-IOPGETFRAME	ENDP
-
-
-;--------------------------------------------------------
-; Category 5 Function 64H Get Infinite Retry
-;--------------------------------------------------------
-;
-;
-;
-
-IOPGETRETRY	PROC	FAR
-		RET
-IOPGETRETRY	ENDP
-
-
-;--------------------------------------------------------
-; Category 5 Function 66H Get Printer Status
-;--------------------------------------------------------
-;
-;
-;
-
-IOPGETSTATUS	PROC	FAR
-		RET
-IOPGETSTATUS	ENDP
+		INCLUDE	IopSetFrame.asm
+		INCLUDE	IopSetRetry.asm
+		INCLUDE	IopInit.asm
+		INCLUDE	IopGetFrame.asm
+		INCLUDE	IopGetRetry.asm
+		INCLUDE	IopGetStatus.asm
 
 _TEXT		ENDS
