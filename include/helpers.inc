@@ -61,10 +61,10 @@ NAME		PROC	FAR
 NAME		ENDP
 		ENDM
 
-;------------------------------------------------------------
+;------------------------------------------------------------VIO
 @VIOPROLOG	MACRO	NAME
 
-		INCLUDE	GLOBALSHARED.INC
+;		INCLUDE	GLOBALSHARED.INC
 
 		PUBLIC	NAME
 
@@ -79,7 +79,7 @@ VIOARGS		ENDS
 VIO_ARG_SIZE	EQU	(SIZE VIOARGS)
 
 NAME		PROC	FAR
-		CALL	GLOBALINIT
+;		CALL	GLOBALINIT
 
 		ENDM
 
@@ -90,13 +90,64 @@ NAME		PROC	FAR
 NAME		ENDP
 		ENDM
 
+;------------------------------------------------------------KBD
+@KBDPROLOG	MACRO	NAME
+
+
+		PUBLIC	NAME
+
+KBDARGS		STRUC
+		ENDM
+
+;----------------------------------------------------------------------
+
+@KBDSTART	MACRO	NAME
+KBDARGS		ENDS
+
+KBD_ARG_SIZE	EQU	(SIZE KBDARGS)
+
+NAME		PROC	FAR
+
+		ENDM
+
+;------------------------------------------------------------
+
+@KBDEPILOG		MACRO	NAME
+		RET	KBD_ARG_SIZE
+NAME		ENDP
+		ENDM
+;------------------------------------------------------------MOU
+@MOUPROLOG	MACRO	NAME
+
+
+		PUBLIC	NAME
+
+MOUARGS		STRUC
+		ENDM
+
+;----------------------------------------------------------------------
+
+@MOUSTART	MACRO	NAME
+MOUARGS		ENDS
+
+MOU_ARG_SIZE	EQU	(SIZE MOUARGS)
+
+NAME		PROC	FAR
+
+		ENDM
+
+;------------------------------------------------------------
+
+@MOUEPILOG		MACRO	NAME
+		RET	MOU_ARG_SIZE
+NAME		ENDP
+		ENDM
 ;---------------------------------------------------------------BVS
 @BVSPROLOG	MACRO	NAME
 
 		EXTERN	@INIT : NEAR
 		EXTERN	@INIT_STACK : NEAR
 		EXTERN	@DONE : NEAR
-		INCLUDE	GLOBALSHARED.INC
 
 		PUBLIC	NAME
 
@@ -134,7 +185,6 @@ NAME		PROC	FAR
 		MOV	AX, LSIZE
 		CALL	@INIT_STACK
 		ENDIF
-		CALL	GLOBALINIT
 
 		ENDM
 
@@ -145,6 +195,7 @@ NAME		PROC	FAR
 		RET	ARG_SIZE+LOCSIZE
 NAME		ENDP
 		ENDM
+
 
 ;---------------------------------------------------------------BKS
 @BKSPROLOG	MACRO	NAME
@@ -200,3 +251,56 @@ NAME		PROC	FAR
 NAME		ENDP
 		ENDM
 
+;---------------------------------------------------------------BMS
+@BMSPROLOG	MACRO	NAME
+
+		EXTERN	@INIT : NEAR
+		EXTERN	@INIT_STACK : NEAR
+		EXTERN	@DONE : NEAR
+
+		PUBLIC	NAME
+
+ARGS		STRUC
+oldes		dw	?
+oldsi		dw	?
+OLDBP		DW	?		;tmp BP storage
+RETADDR		DD	?		;BMSMAIN FAR Return address 
+XOLDBP		DW	?		;tmp BP storage
+MOUROUTIP       DW      ?               ;MOUROUTE RETURN OFFSET
+MOUROUTCS       DW      ?               ;MOUROUTE RETURN SELECTOR
+MOUROUTDS       DW      ?               ;MOUROUTE DATA SELECTOR
+MOUIP           DW      ?               ;MOUXXX RETURN OFFSET
+MOUFUNC         DW      ?               ;MOUXXX FUNCTION CODE
+USERIP          DW      ?               ;USER RETURN OFFSET
+USERCS          DW      ?               ;USER RETURN SEGMENT
+		ENDM
+
+;----------------------------------------------------------------------
+
+@BMSSTART	MACRO	NAME, LSIZE
+ARGS		ENDS
+
+ARG_SIZE	EQU	(SIZE ARGS - 26)
+IFB <LSIZE>
+LOCSIZE		EQU	0
+ELSE
+LOCSIZE		EQU	LSIZE
+ENDIF
+
+NAME		PROC	FAR
+		IFB	<LSIZE>
+		CALL	@INIT
+		ELSE
+		MOV	AX, LSIZE
+		CALL	@INIT_STACK
+		ENDIF
+
+		ENDM
+
+;------------------------------------------------------------
+
+@BMSEPILOG	MACRO	NAME
+		CALL	@DONE
+		RET	ARG_SIZE+LOCSIZE
+NAME		ENDP
+		ENDM
