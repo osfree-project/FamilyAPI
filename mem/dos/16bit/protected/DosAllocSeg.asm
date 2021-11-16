@@ -4,7 +4,7 @@
 
 		.286
 
-		public	DOSALLOCSEG
+		public	DOS16PALLOCSEG
     
 _TEXT	segment byte public 'CODE'
 

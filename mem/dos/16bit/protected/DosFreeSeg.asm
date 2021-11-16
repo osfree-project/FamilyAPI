@@ -1,7 +1,7 @@
 
 		.286
 
-        public  DOSFREESEG
+        public  DOS16PFREESEG
 
 _TEXT  segment byte public 'CODE'
 

@@ -1,7 +1,7 @@
 
 		.286
 
-		public DOSMEMAVAIL
+		public DOS16PMEMAVAIL
         
 _TEXT  segment byte public 'CODE'
 

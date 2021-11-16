@@ -1,7 +1,7 @@
 
         .286
 
-        public  DOSGETSHRSEG
+        public  DOS16PGETSHRSEG
 
 _data   segment byte public 'DATA'
 shrseg dw 0

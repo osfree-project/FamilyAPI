@@ -1,7 +1,7 @@
 
         .286
 
-        public  DOSALLOCSHRSEG
+        public  DOS16PALLOCSHRSEG
 
 _data   segment byte public 'DATA'
 shrseg dw 0

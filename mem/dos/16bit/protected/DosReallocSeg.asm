@@ -1,6 +1,7 @@
 
 		.286
 
+		PUBLIC	DOS16PREALLOCSEG
 _TEXT  segment byte public 'CODE'
 
 ;--- DosReallocSeg reallocs only until 64 kB

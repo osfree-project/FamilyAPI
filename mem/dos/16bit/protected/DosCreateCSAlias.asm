@@ -1,6 +1,6 @@
 		.286
 
-		public DOSCREATECSALIAS
+		public DOS16PCREATECSALIAS
 
 _TEXT  segment byte public 'CODE'
         

@@ -1,7 +1,7 @@
 
 		.286
 
-		public DOSALLOCHUGE
+		public DOS16PALLOCHUGE
         
 _TEXT  segment byte public 'CODE'
         
