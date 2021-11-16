@@ -14,6 +14,7 @@ EXTERN		main_buffer: DWORD
 EXTERN		wMDSta: WORD
 EXTERN		wLdrDS: WORD
 EXTERN		MAXPATHLEN: WORD
+EXTERN		modesw: DWORD
 
 EXTERN gis_cHugeShift: BYTE
 EXTERN gis_uchMajorVersion: BYTE

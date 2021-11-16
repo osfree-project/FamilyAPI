@@ -144,11 +144,26 @@ SHARECHECK:
 		MOV	SHARE, 0FFFFH
 
 DPMICHECK:
-if 0
-		MOV	AX, 1687H
-		INT	2FH
-		CMP	AX, 0
-		JNZ	EXIT		; No DPMI found
+	mov	ax,1687h		; get address of DPMI host's
+	int	2fh			; mode switch entry point
+	or	ax,ax			; exit if no DPMI host
+	jnz	EXIT
+	mov	word ptr modesw,di	; save far pointer to host's
+	mov	word ptr modesw+2,es	; mode switch entry point
+	or	si,si			; check private data area size
+	jz	@@1			; jump if no private data area
+
+	mov	bx,si			; allocate DPMI private area
+	mov	ah,48h			; allocate memory
+	int	21h			; transfer to DOS
+	jc	EXIT			; jump, allocation failed
+	mov	es,ax			; let ES=segment of data area
+
+@@1:	mov	ax,0			; bit 0=0 indicates 16-bit app
+	call	modesw			; switch to protected mode
+	jc	EXIT			; jump if mode switch failed
+					; else we're in prot. mode now
+
 DPMIOK:
 		MOV	AX, 0400H
 		INT	31H
@@ -157,6 +172,7 @@ DPMIOK:
 
 		MOV	DPMI, 0FFFFH
 
+if 0
 
 ;
 ;       Note:  This assumes that the program has
