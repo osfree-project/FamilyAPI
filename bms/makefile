@@ -7,6 +7,6 @@ bmssetptrshape.obj bmsdrawptr.obj bmsremoveptr.obj bmsgetptrpos.obj bmssetptrpos
 ..\lib\bms.lib: $(OBJS)
   wlib -q -fo ..\lib\bms.lib $(OBJS)
 
-.asm.obj:
+.asm.obj: .AUTODEPEND
 	@jwasm.exe -q -I..\include $*.asm
 

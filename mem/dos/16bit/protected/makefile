@@ -5,6 +5,6 @@ OBJS=DosAllocHuge.obj DosAllocSeg.obj DosAllocShrSeg.obj DosCreateCSAlias.obj Do
 ..\..\..\..\lib\mem16p.lib: $(OBJS)
   wlib -q -fo ..\..\..\..\lib\mem16p.lib $(OBJS)
 
-.asm.obj:
+.asm.obj: .AUTODEPEND
 	@jwasm.exe -q -I..\..\..\..\include $*.asm
 

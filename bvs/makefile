@@ -13,6 +13,6 @@ bvsshared.obj bvsvars.obj
 ..\lib\bvs.lib: $(OBJS)
   wlib -q -fo ..\lib\bvs.lib $(OBJS)
 
-.asm.obj:
+.asm.obj: .AUTODEPEND
 	@jwasm.exe -q -I..\include $*.asm
 

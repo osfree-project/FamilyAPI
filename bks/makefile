@@ -6,6 +6,6 @@ bksfreefocus.obj bksgetcp.obj bkssetcp.obj bksxlate.obj bkssetcustxt.obj bksgeth
 ..\lib\bks.lib: $(OBJS)
   wlib -q -fo ..\lib\bks.lib $(OBJS)
 
-.asm.obj:
+.asm.obj: .AUTODEPEND
 	@jwasm.exe -q -I..\include $*.asm
 

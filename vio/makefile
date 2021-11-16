@@ -11,6 +11,6 @@ viowrtcharstratt.obj viowrtcellstr.obj viowrtcharstr.obj viosetmode.obj viosetcu
 ..\lib\vio.lib: $(OBJS)
   wlib -q -fo ..\lib\vio.lib $(OBJS)
 
-.asm.obj:
+.asm.obj: .AUTODEPEND
 	@jwasm.exe -q -I..\include $*.asm
 

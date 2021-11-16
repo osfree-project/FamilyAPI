@@ -5,6 +5,6 @@ OBJS=DosSubAlloc.obj DosSubFree.obj DosSubSet.obj
 ..\..\..\lib\mem16.lib: ..\..\..\lib\mem16r.lib ..\..\..\lib\mem16p.lib $(OBJS)
   wlib -q -fo ..\..\..\lib\mem16.lib ..\..\..\lib\mem16r.lib ..\..\..\lib\mem16p.lib $(OBJS)
 
-.asm.obj:
+.asm.obj: .AUTODEPEND
 	@jwasm.exe -q -I..\..\..\include $*.asm
 

@@ -8,6 +8,6 @@ dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosfreemodule.obj dosgetct
 ../lib/dos.lib:  $(OBJS)
   wlib -q -fo ../lib/dos.lib $(OBJS)
 
-.asm.obj:
+.asm.obj: .AUTODEPEND
 	@jwasm.exe -q -I../include $*.asm
 

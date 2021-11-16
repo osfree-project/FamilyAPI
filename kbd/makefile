@@ -7,6 +7,6 @@ kbdsetcp.obj kbdxlate.obj kbdsetcustxt.obj kbdgethwid.obj
 ..\lib\kbd.lib: $(OBJS)
   wlib -q -fo ..\lib\kbd.lib $(OBJS)
 
-.asm.obj:
+.asm.obj: .AUTODEPEND
 	@jwasm.exe -q -I..\include $*.asm
 

@@ -7,6 +7,6 @@ moudrawptr.obj mouremoveptr.obj mougetptrpos.obj mousetptrpos.obj mouinitreal.ob
 ..\lib\mou.lib: $(OBJS)
   wlib -q -fo ..\lib\mou.lib $(OBJS)
 
-.asm.obj:
+.asm.obj: .AUTODEPEND
 	@jwasm.exe -q -I..\include $*.asm
 
