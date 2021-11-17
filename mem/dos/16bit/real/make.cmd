@@ -1,5 +1,5 @@
 @echo off
 
-echo Building 16-bit real memory subsystem
+echo Building 16-bit real mode memory subsystem
 wmake -h
-echo 16-bit real memory subsystem build finished
+echo 16-bit real mode memory subsystem build finished

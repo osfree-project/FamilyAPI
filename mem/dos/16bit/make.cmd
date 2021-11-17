@@ -2,7 +2,7 @@
 cd real
 call make
 cd ..
-cd protected
+cd dpmi
 call make
 cd ..
 echo Building 16-bit memory subsystem
