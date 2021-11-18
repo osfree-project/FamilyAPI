@@ -1,6 +1,7 @@
 ALL: ..\..\..\..\lib\mem16r.lib
 
-OBJS=DosAllocHuge.obj DosAllocSeg.obj DosAllocShrSeg.obj DosCreateCSAlias.obj DosFreeSeg.obj DosGetHugeShift.obj DosGetShrSeg.obj DosMemAvail.obj DosReallocSeg.obj
+OBJS=Dos16RAllocHuge.obj Dos16RAllocSeg.obj Dos16RAllocShrSeg.obj Dos16RCreateCSAlias.obj &
+Dos16RFreeSeg.obj Dos16RGetHugeShift.obj Dos16RGetShrSeg.obj Dos16RMemAvail.obj Dos16RReallocSeg.obj
 
 ..\..\..\..\lib\mem16r.lib: $(OBJS)
   wlib -q -fo ..\..\..\..\lib\mem16r.lib $(OBJS)

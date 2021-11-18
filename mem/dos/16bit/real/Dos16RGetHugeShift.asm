@@ -3,7 +3,7 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief DosFreeSeg DOS wrapper
+;   @brief DosGetHugeShift DOS wrapper
 ;
 ;   (c) osFree Project 2018, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
@@ -18,26 +18,24 @@
 .8086
 
 		; Helpers
-		INCLUDE	HELPERS.INC
-		INCLUDE DOS.INC
+		INCLUDE	helpers.inc
+_GINFOSEG	SEGMENT BYTE PUBLIC 'DATA' USE16
+EXTERN gis_cHugeShift:BYTE
+_GINFOSEG	ENDS
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-		@PROLOG	DOSFREESEG
-SELECTOR	DW	?
-		@START	DOSFREESEG
-		MOV		AX,DS
-		MOV		DX,[DS:BP].ARGS.SELECTOR
-		CMP		AX,DX		;DONT FREE DS SEGMENT
-		JZ		DONE
-
-		FREE_MEMORY	[DS:BP].ARGS.SELECTOR
-		MOV		AX,6
-		JB		EXIT
-DONE:
+		@PROLOG	DOS16RGETHUGESHIFT
+SHIFTCOUNT	DD	?
+		@START	DOS16RGETHUGESHIFT
+		MOV		AX, _GINFOSEG
+		MOV		ES,AX
+		XOR		AX, AX
+		MOV		AL,[ES:gis_cHugeShift]
+		LDS		BX,[DS:BP].ARGS.SHIFTCOUNT
+		MOV		[BX],AX
 		XOR		AX,AX
-EXIT:
-		@EPILOG	DOSFREESEG
+		@EPILOG	DOS16RGETHUGESHIFT
 
 _TEXT		ENDS
 

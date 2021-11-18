@@ -7,7 +7,7 @@ _TEXT  segment byte public 'CODE'
 
 GlobalReAlloc proto far pascal :WORD, :DWORD, :WORD
 
-DOSREALLOCSEG proc far pascal public wSize:WORD, wSel:WORD
+DOS16RREALLOCSEG proc far pascal public wSize:WORD, wSel:WORD
 
 		pusha
 		push es
@@ -43,7 +43,7 @@ endif
 		pop es
 		popa
 		ret
-DOSREALLOCSEG endp
+DOS16RREALLOCSEG endp
 
 _TEXT ends
 
