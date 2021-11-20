@@ -4,8 +4,10 @@ OBJS=DosAllocHuge.obj DosAllocSeg.obj DosAllocShrSeg.obj DosCreateCSAlias.obj Do
 DosGetShrSeg.obj DosMemAvail.obj DosReallocSeg.obj DosSubAlloc.obj DosSubFree.obj DosSubSet.obj
 
 ..\..\..\lib\mem16.lib: ..\..\..\lib\mem16r.lib ..\..\..\lib\mem16p.lib $(OBJS)
-  wlib -q -fo ..\..\..\lib\mem16.lib ..\..\..\lib\mem16r.lib ..\..\..\lib\mem16p.lib $(OBJS)
+	@echo LIB $@
+	@wlib -q -fo $@ ..\..\..\lib\mem16r.lib ..\..\..\lib\mem16p.lib $(OBJS)
 
 .asm.obj: .AUTODEPEND
+	@echo ASM $<
 	@jwasm.exe -q -I..\..\..\include $*.asm
 

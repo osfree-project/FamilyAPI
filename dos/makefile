@@ -6,8 +6,10 @@ doscliaccess.obj dosgetmachinemode.obj dosgetversion.obj dossleep.obj dossetdate
 dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosfreemodule.obj dosgetctryinfo.obj dosholdsignal.obj
 
 ../lib/dos.lib:  $(OBJS)
-  wlib -q -fo ../lib/dos.lib $(OBJS)
+	@echo LIB $@
+	@wlib -q -fo $@ $(OBJS)
 
 .asm.obj: .AUTODEPEND
+	@echo ASM $<
 	@jwasm.exe -q -I../include $*.asm
 

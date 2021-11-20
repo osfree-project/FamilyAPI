@@ -4,8 +4,10 @@ OBJS=bksmain.obj bkscharin.obj bkspeek.obj bksflushbuffer.obj bksgetstatus.obj b
 bksfreefocus.obj bksgetcp.obj bkssetcp.obj bksxlate.obj bkssetcustxt.obj bksgethwid.obj
 
 ..\lib\bks.lib: $(OBJS)
-  wlib -q -fo ..\lib\bks.lib $(OBJS)
+	@echo LIB $@
+	@wlib -q -fo $@ $(OBJS)
 
 .asm.obj: .AUTODEPEND
+	@echo ASM $<
 	@jwasm.exe -q -I..\include $*.asm
 

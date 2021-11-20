@@ -5,8 +5,10 @@ bmsgeteventmask.obj bmssetscalefact.obj bmsseteventmask.obj bmsgethotkey.obj bms
 bmssetptrshape.obj bmsdrawptr.obj bmsremoveptr.obj bmsgetptrpos.obj bmssetptrpos.obj bmsinitreal.obj bmsflushque.obj bmssetdevstatus.obj
 
 ..\lib\bms.lib: $(OBJS)
-  wlib -q -fo ..\lib\bms.lib $(OBJS)
+	@echo LIB $@
+	@wlib -q -fo $@ $(OBJS)
 
 .asm.obj: .AUTODEPEND
+	@echo ASM $<
 	@jwasm.exe -q -I..\include $*.asm
 

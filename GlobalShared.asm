@@ -232,3 +232,60 @@ if 0
             6F00 INT 21 U - OS/2 v1.x FAPI - "DosQMaxEASize" - GET MAXIMUM SIZE OF EXTENDED ATTR
 
 endif
+
+
+HOOKINT08:	PROC
+		;MOV AX,CS
+		;MOV DS,AX ;initialize ds using cs value
+
+		MOV AH,35H ;function 31 of int 21h
+		MOV AL,08H ;store cs:ip for int8h
+		INT 21H  ;es:bx=cs:ip
+
+		MOV OLD_CS,ES
+		MOV OLD_IP,BX
+
+		LEA DX,INT08H ;load effective address for INT 08H handler
+  
+		MOV AH,25H ;function 25 of int21h
+		MOV AL,08H ;store new cs:ip for int 8h
+		INT 21H  ;new cs:ip=ds:dx
+
+HOOKINT08:	ENDP
+
+INT08H: PROC
+
+PUSH AX  ;push all the registers into stack
+PUSH BX
+PUSH CX
+PUSH DX
+PUSH SI
+PUSH DI
+PUSH ES
+                                        
+	push	ds		; Preserve data segment
+	pushf			; Keep interrupt flag
+	xor	ax,ax		; Zero
+	mov	ds,ax		; Address BIOS data area
+	cli			; Don't want a tick to interrupt us
+	mov	ax,ds:[46Ch]	; Get loword of count
+	mov	dx,ds:[46Eh]	; Get hiword of count
+	popf			; Restore interrupt flag as provided
+	pop	ds		; Restore data segment
+
+POP ES  ;pop in LIFO fashion
+POP DI
+POP SI
+POP DX
+POP CX
+POP BX
+POP AX
+
+JMP DWORD PTR CS:OLD_IP ;jump to old cs:ip
+
+OLD_IP DW 00 ;will be used to store the location of the orginal 
+OLD_CS DW 00 ;address of interrupt vector
+
+HOOK08H:	ENDP
+
+		END

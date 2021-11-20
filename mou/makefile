@@ -5,8 +5,10 @@ mousetscalefact.obj mouseteventmask.obj mougethotkey.obj mousethotkey.obj mouope
 moudrawptr.obj mouremoveptr.obj mougetptrpos.obj mousetptrpos.obj mouinitreal.obj mouflushque.obj mousetdevstatus.obj
 
 ..\lib\mou.lib: $(OBJS)
-  wlib -q -fo ..\lib\mou.lib $(OBJS)
+	@echo LIB $@
+	@wlib -q -fo $@ $(OBJS)
 
 .asm.obj: .AUTODEPEND
+	@echo ASM $<
 	@jwasm.exe -q -I..\include $*.asm
 

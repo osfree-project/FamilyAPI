@@ -5,8 +5,10 @@ kbdstringin.obj kbdopen.obj kbdclose.obj kbdgetfocus.obj kbdfreefocus.obj kbdget
 kbdsetcp.obj kbdxlate.obj kbdsetcustxt.obj kbdgethwid.obj
 
 ..\lib\kbd.lib: $(OBJS)
-  wlib -q -fo ..\lib\kbd.lib $(OBJS)
+	@echo LIB $@
+	@wlib -q -fo $@ $(OBJS)
 
 .asm.obj: .AUTODEPEND
+	@echo ASM $<
 	@jwasm.exe -q -I..\include $*.asm
 

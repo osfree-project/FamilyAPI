@@ -5,8 +5,10 @@ dosqcurdisk.obj dosqfileinfo.obj dosqfsinfo.obj dosrmdir.obj dosqverify.obj dosq
 dossetfilemode.obj dosselectdisk.obj dossetverify.obj doswrite.obj dosdelete.obj dossetmaxfh.obj
 
 ..\lib\fm.lib: $(OBJS)
-  wlib -q -fo ..\lib\fm.lib $(OBJS)
+	@echo LIB $@
+	@wlib -q -fo $@ $(OBJS)
 
 .asm.obj: .AUTODEPEND
+	@echo ASM $<
 	@jwasm.exe -q -I..\include $*.asm
 

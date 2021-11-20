@@ -9,8 +9,10 @@ viosetansi.obj viogetansi.obj viogetmode.obj vioscrlock.obj vioscrunlock.obj vio
 viowrtcharstratt.obj viowrtcellstr.obj viowrtcharstr.obj viosetmode.obj viosetcurpos.obj viowrtnchar.obj viowrtncell.obj
 
 ..\lib\vio.lib: $(OBJS)
-  wlib -q -fo ..\lib\vio.lib $(OBJS)
+	@echo LIB $@
+	@wlib -q -fo $@ $(OBJS)
 
 .asm.obj: .AUTODEPEND
+	@echo ASM $<
 	@jwasm.exe -q -I..\include $*.asm
 
