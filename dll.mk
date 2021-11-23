@@ -2,13 +2,13 @@ ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
 
 ..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib makefile
 	@echo LINK $@
-	@wlink.exe op q libpath ..\lib @<<
+	@wlink.exe op q,nod libpath ..\lib @<<
      system   os2_dll
      option   map,nod
      name     ..\dll\$(PROJ)calls
      export $(EXPORT)
-     file     $(PROJ).lib 
-     file	core.lib
+     file     ..\lib\$(PROJ).lib 
+     lib	core.lib
 !ifdef IMPORT
      lib $(IMPORT) 
 !endif
