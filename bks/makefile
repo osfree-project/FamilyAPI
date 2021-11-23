@@ -1,24 +1,26 @@
-ALL: ..\lib\bks.lib ..\dll\bkscalls.dll ..\lib\bkscalls.lib
+PROJ=bks
+
+ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
 
 OBJS=bksmain.obj bkscharin.obj bkspeek.obj bksflushbuffer.obj bksgetstatus.obj bkssetstatus.obj bksstringin.obj bksopen.obj bksclose.obj bksgetfocus.obj &
 bksfreefocus.obj bksgetcp.obj bkssetcp.obj bksxlate.obj bkssetcustxt.obj bksgethwid.obj
 
-..\dll\bkscalls.dll: ..\lib\bks.lib makefile
+..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib makefile
 	@echo LINK $@
 	@wlink.exe @<<
      system   os2_dll
      option   map,nod
-     name     ..\dll\bkscalls
+     name     ..\dll\$(PROJ)calls
      export BKSMAIN.1 RESIDENT
-     file     ..\lib\bks.lib 
+     file     ..\lib\$(PROJ).lib 
      file	..\helpers.obj
 <<
 
-..\lib\bkscalls.lib: ..\dll\bkscalls.dll makefile
+..\lib\$(PROJ)calls.lib: ..\dll\$(PROJ)calls.dll makefile
 	@echo LIB $@
-	@wlib -q -fo $@ ..\dll\bkscalls.dll
+	@wlib -q -fo $@ ..\dll\$(PROJ)calls.dll
 
-..\lib\bks.lib: $(OBJS) makefile
+..\lib\$(PROJ).lib: $(OBJS) makefile
 	@echo LIB $@
 	@wlib -q -fo $@ $(OBJS)
 

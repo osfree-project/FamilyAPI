@@ -1,21 +1,23 @@
-ALL: ..\lib\kbd.lib ..\dll\kbdcalls.dll
+PROJ=kbd
+
+ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll
 
 OBJS=kbdroute.obj kbdcharin.obj kbdpeek.obj kbdflushbuffer.obj kbdgetstatus.obj kbdsetstatus.obj
 kbdstringin.obj kbdopen.obj kbdclose.obj kbdgetfocus.obj kbdfreefocus.obj kbdgetcp.obj &
 kbdsetcp.obj kbdxlate.obj kbdsetcustxt.obj kbdgethwid.obj
 
-..\dll\kbdcalls.dll: ..\lib\kbd.lib makefile
+..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib makefile
 	@echo LINL $@
 	@wlink.exe @<<
      system   os2_dll
      option   map
-     name     ..\dll\kbdcalls
-     file     ..\lib\kbd.lib 
+     name     ..\dll\$(PROJ)calls
+     file     ..\lib\$(PROJ).lib 
      file     ..\lib\bkscalls.lib 
      file	..\helpers.obj
 <<
 
-..\lib\kbd.lib: $(OBJS)
+..\lib\$(PROJ).lib: $(OBJS)
 	@echo LIB $@
 	@wlib -q -fo $@ $(OBJS)
 

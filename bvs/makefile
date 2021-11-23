@@ -1,4 +1,6 @@
-ALL: ..\lib\bvs.lib ..\dll\bvscalls.dll ..\lib\bvscalls.lib
+PROJ=bvs
+
+ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
 
 OBJS=bvsmain.obj bvsgetphysbuf.obj bvsgetbuf.obj bvsshowbuf.obj bvsgetcurpos.obj bvsgetcurtype.obj &
 bvsgetmode.obj bvssetcurpos.obj bvssetcurtype.obj bvssetmode.obj bvsreadcharstr.obj bvsreadcellstr.obj &
@@ -9,23 +11,23 @@ bvspopup.obj bvsendpopup.obj bvsprtsctoggle.obj bvsmodewait.obj bvsmodeundo.obj 
 bvsgetconfig.obj bvssetcp.obj bvsgetcp.obj bvssetfont.obj bvsgetstate.obj bvssetstate.obj &
 bvsshared.obj bvsvars.obj
 
-..\dll\bvscalls.dll: ..\lib\bvs.lib makefile
+..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib makefile
 	@echo LINK $@
 	@wlink.exe @<<
      export BVSMAIN.3 RESIDENT
      system   os2_dll
      option   map
-     name     ..\dll\bvscalls
-     file     ..\lib\bvs.lib 
+     name     ..\dll\$(PROJ)calls
+     file     ..\lib\$(PROJ).lib 
      file	..\helpers.obj
 <<
 
 
-..\lib\bvscalls.lib: ..\dll\bvscalls.dll makefile
+..\lib\$(PROJ)calls.lib: ..\dll\$(PROJ)calls.dll makefile
 	@echo LIB $@
-	@wlib -q -fo $@ ..\dll\bvscalls.dll
+	@wlib -q -fo $@ ..\dll\$(PROJ)calls.dll
 
-..\lib\bvs.lib: $(OBJS)
+..\lib\$(PROJ).lib: $(OBJS)
 	@echo LIB $@
 	@wlib -q -fo $@ $(OBJS)
 

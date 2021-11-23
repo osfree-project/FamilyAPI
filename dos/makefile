@@ -1,4 +1,6 @@
-ALL: ../lib/dos.lib ..\dll\doscalls.dll
+PROJ=dos
+
+ALL: ../lib/$(PROJ).lib ..\dll\$(PROJ)calls.dll
 
 OBJS=dosbeep.obj dosgetmessage.obj dosqsysinfo.obj doscasemap.obj dossetctrycode.obj dosgetdbcsev.obj dosdevconfig.obj dosgetdatetime.obj doserror.obj &
 dosexecpgm.obj dosexit.obj dosexitlist.obj dosgetcp.obj dossetcp.obj dosgetenv.obj dosgetpid.obj dosportaccess.obj &
@@ -7,13 +9,13 @@ dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosgetctryinfo.obj doshold
 
 #dossetsighandler.obj dosfreemodule.obj dosgetmodule.obj dosgetprocaddr.obj
 
-..\dll\doscalls.dll: ..\lib\dos.lib
+..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib
 	@echo LINK $@
 	@wlink.exe @<<
      system   os2_dll
      option   map, nod
-     name     ..\dll\doscalls
-     file     ..\lib\dos.lib
+     name     ..\dll\$(PROJ)calls
+     file     ..\lib\$(PROJ).lib
      file     ..\helpers.obj
      file     ..\globalshared.obj
      file     ..\globalvars.obj
@@ -21,7 +23,7 @@ dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosgetctryinfo.obj doshold
      file     ..\linfoseg.obj
 <<
 
-../lib/dos.lib:  $(OBJS) makefile
+../lib/$(PROJ).lib:  $(OBJS) makefile
 	@echo LIB $@
 	@wlib -q -fo $@ $(OBJS)
 
