@@ -2,24 +2,26 @@
 cd mem
 call make
 cd ..
-cd vio
-call make
-cd ..
 cd bvs
-call make
-cd ..
-cd mou
 call make
 cd ..
 cd bms
 call make
 cd ..
-cd kbd
-call make
-cd ..
 cd bks
 call make
 cd ..
+
+cd vio
+call make
+cd ..
+cd mou
+call make
+cd ..
+cd kbd
+call make
+cd ..
+
 cd fm
 call make
 cd ..

@@ -1,6 +1,6 @@
 PROJ=vio
 
-ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll
+ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
 
 OBJS=vioroute.obj vioshowbuf.obj vioreadcharstr.obj viosetfont.obj viosetcurtype.obj viogetcurtype.obj &
 viosetstate.obj viogetstate.obj vioscrolllf.obj vioscrollrt.obj viogetbuf.obj viogetphysbuf.obj &
@@ -10,23 +10,7 @@ viogetcurpos.obj vioderegister.obj vioregister.obj vioscrollup.obj vioscrolldn.o
 viosetansi.obj viogetansi.obj viogetmode.obj vioscrlock.obj vioscrunlock.obj viogetconfig.obj &
 viowrtcharstratt.obj viowrtcellstr.obj viowrtcharstr.obj viosetmode.obj viosetcurpos.obj viowrtnchar.obj viowrtncell.obj
 
-..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib makefile
-	@echo LINK $@
-	@wlink.exe @<<
-     system   os2_dll
-     option   map
-     name     ..\dll\$(PROJ)calls
-     file     ..\lib\$(PROJ).lib
-     file     ..\lib\bvscalls.lib 
-     file     ..\helpers.obj
-<<
+EXPORT=VIOPOPUP.1 resident
+IMPORT=bvscalls.lib 
 
-
-..\lib\$(PROJ).lib: $(OBJS) makefile
-	@echo LIB $@
-	@wlib -q -fo $@ $(OBJS)
-
-.asm.obj: .AUTODEPEND
-	@echo ASM $<
-	@jwasm.exe -q -I..\include $*.asm
-
+!include <..\dll.mk>
