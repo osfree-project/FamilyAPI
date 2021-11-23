@@ -7,10 +7,10 @@ ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
      option   map,nod
      name     ..\dll\$(PROJ)calls
      export $(EXPORT)
-     file     ..\lib\$(PROJ).lib 
-     file	..\helpers.obj
+     file     $(PROJ).lib 
+     file	core.lib
 !ifdef IMPORT
-     lib $(IMPORT)
+     lib $(IMPORT) 
 !endif
 <<
 

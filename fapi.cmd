@@ -1,4 +1,8 @@
 @echo off
+cd core
+call make
+cd ..
+
 cd mem
 call make
 cd ..
