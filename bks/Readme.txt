@@ -6,5 +6,6 @@ This is open-source OS/2 Base Keyboard Subsystem replacement. It is binary compa
 Files
 -----
 
-BKS.LIB 16-bit small memory model library.
-
+BKS.LIB Static library
+BKSCALLS.DLL Dynamic library
+BKSCALLS.LIB Import library

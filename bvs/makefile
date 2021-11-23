@@ -1,4 +1,4 @@
-ALL: ..\lib\bvs.lib
+ALL: ..\lib\bvs.lib ..\dll\bvscalls.dll ..\lib\bvscalls.lib
 
 OBJS=bvsmain.obj bvsgetphysbuf.obj bvsgetbuf.obj bvsshowbuf.obj bvsgetcurpos.obj bvsgetcurtype.obj &
 bvsgetmode.obj bvssetcurpos.obj bvssetcurtype.obj bvssetmode.obj bvsreadcharstr.obj bvsreadcellstr.obj &
@@ -9,6 +9,21 @@ bvspopup.obj bvsendpopup.obj bvsprtsctoggle.obj bvsmodewait.obj bvsmodeundo.obj 
 bvsgetconfig.obj bvssetcp.obj bvsgetcp.obj bvssetfont.obj bvsgetstate.obj bvssetstate.obj &
 bvsshared.obj bvsvars.obj
 
+..\dll\bvscalls.dll: ..\lib\bvs.lib makefile
+	@echo LINK $@
+	@wlink.exe @<<
+     export BVSMAIN.3 RESIDENT
+     system   os2_dll
+     option   map
+     name     ..\dll\bvscalls
+     file     ..\lib\bvs.lib 
+     file	..\helpers.obj
+<<
+
+
+..\lib\bvscalls.lib: ..\dll\bvscalls.dll makefile
+	@echo LIB $@
+	@wlib -q -fo $@ ..\dll\bvscalls.dll
 
 ..\lib\bvs.lib: $(OBJS)
 	@echo LIB $@

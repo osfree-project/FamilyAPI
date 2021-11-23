@@ -6,5 +6,6 @@ This is open-source OS/2 Base Mouse Subsystem replacement. It is binary compatib
 Files
 -----
 
-BMS.LIB 16-bit small memory model library.
-
+BMS.LIB Static library.
+BMSCALLS.DLL Dynamic library.
+BMSCALLS.LIB Import library.

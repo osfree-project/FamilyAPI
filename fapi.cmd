@@ -91,5 +91,6 @@ rem dos*module
 :wlib -q -fo fapi.lib +getprocaddr16.obj
 :wlib -q -fo fapi.lib +dosfrmod.obj
 
-rem Fapi Subsystem
+echo Building Family API Subsystem
 wmake -h
+echo Family API Subsystem builded
