@@ -1,4 +1,11 @@
-ALL: ..\..\lib\mem.lib
+#echo Building memory subsystem
+#echo Memory subsystem build finished
+ALL: build ..\..\lib\mem.lib
+
+build: .SYMBOLIC
+	cd 16bit
+	@$(MAKE) -h
+	cd ..
 
 ..\..\lib\mem.lib: ..\..\lib\mem16.lib
 	@echo LIB $@

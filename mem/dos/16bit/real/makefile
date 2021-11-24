@@ -1,3 +1,6 @@
+#echo Building 16-bit real mode memory subsystem
+#echo 16-bit real mode memory subsystem build finished
+
 ALL: ..\..\..\..\lib\mem16r.lib
 
 OBJS=Dos16RAllocHuge.obj Dos16RAllocSeg.obj Dos16RAllocShrSeg.obj Dos16RCreateCSAlias.obj &

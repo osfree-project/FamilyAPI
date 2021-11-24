@@ -1,3 +1,6 @@
+#echo Building Mouse subsystem
+#echo Mouse subsystem build finished
+
 PROJ=mou
 
 OBJS=mouroute.obj mougetnumbuttons.obj mougetnummickeys.obj mougetdevstatus.obj mougetnumqueel.obj moureadeventque.obj mougetscalefact.obj mougeteventmask.obj &

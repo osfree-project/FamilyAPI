@@ -1,3 +1,6 @@
+#echo Building Video subsystem
+#echo Video subsystem build finished
+
 PROJ=vio
 
 ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
@@ -6,9 +9,11 @@ OBJS=vioroute.obj vioshowbuf.obj vioreadcharstr.obj viosetfont.obj viosetcurtype
 viosetstate.obj viogetstate.obj vioscrolllf.obj vioscrollrt.obj viogetbuf.obj viogetphysbuf.obj &
 viopopup.obj vioendpopup.obj viosavredrawwait.obj viosavredrawundo.obj vioprtsc.obj vioprtsctoggle.obj &
 viowrtnattr.obj viogetcp.obj viosetcp.obj viogetfont.obj viomodewait.obj viomodeundo.obj viomodewait.obj &
-viogetcurpos.obj vioderegister.obj vioregister.obj vioscrollup.obj vioscrolldn.obj viowrttty.obj &
+viogetcurpos.obj vioscrollup.obj vioscrolldn.obj viowrttty.obj &
 viosetansi.obj viogetansi.obj viogetmode.obj vioscrlock.obj vioscrunlock.obj viogetconfig.obj &
 viowrtcharstratt.obj viowrtcellstr.obj viowrtcharstr.obj viosetmode.obj viosetcurpos.obj viowrtnchar.obj viowrtncell.obj
+
+#vioderegister.obj vioregister.obj
 
 EXPORT=VIOPOPUP.1 resident
 IMPORT=bvscalls.lib 

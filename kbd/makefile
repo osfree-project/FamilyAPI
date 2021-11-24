@@ -1,3 +1,6 @@
+#echo Building Keyboard Subsystem
+#echo Keyboard Subsystem build finished
+
 PROJ=kbd
 
 OBJS=kbdroute.obj kbdcharin.obj kbdpeek.obj kbdflushbuffer.obj kbdgetstatus.obj kbdsetstatus.obj &

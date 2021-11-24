@@ -1,3 +1,6 @@
+#echo Building 16-bit protected mode memory subsystem
+#echo 16-bit protected mode memory subsystem build finished
+
 ALL: ..\..\..\..\lib\mem16p.lib
 
 OBJS=Dos16PAllocHuge.obj Dos16PAllocSeg.obj Dos16PAllocShrSeg.obj Dos16PCreateCSAlias.obj Dos16PFreeSeg.obj &

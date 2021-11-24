@@ -1,3 +1,6 @@
+#echo Building Base Keyboard Subsystem
+#echo Base Keyboard Subsystem build finished
+
 PROJ=bks
 
 OBJS=bksmain.obj bkscharin.obj bkspeek.obj bksflushbuffer.obj bksgetstatus.obj bkssetstatus.obj bksstringin.obj bksopen.obj bksclose.obj bksgetfocus.obj &

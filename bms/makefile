@@ -1,3 +1,6 @@
+#echo Building Base Mouse Subsystem
+#echo Base Mouse Subsystem build finished
+
 PROJ=bms
 
 OBJS=bmsmain.obj bmsgetnumbuttons.obj bmsgetnummickeys.obj bmsgetdevstatus.obj bmsgetnumqueel.obj bmsreadeventque.obj bmsgetscalefact.obj &

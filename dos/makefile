@@ -11,19 +11,19 @@ dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosgetctryinfo.obj doshold
 
 ..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib
 	@echo LINK $@
-	@wlink.exe @<<
-     system   os2_dll
+	@wlink.exe op q @<<
+    option osname='OS/2 16-bit'
+    format os2 dll ^
      option   map, nod
      name     ..\dll\$(PROJ)calls
      file     ..\lib\$(PROJ).lib
-     file     ..\helpers.obj
-     file     ..\globalshared.obj
-     file     ..\globalvars.obj
-     file     ..\ginfoseg.obj
-     file     ..\linfoseg.obj
+     file     ..\lib\core.lib
+	file  ..\lib\mem.lib
+	file ..\lib\fm.lib 
+	file ..\lib\ioctl.lib
 <<
 
-../lib/$(PROJ).lib:  $(OBJS) makefile
+../lib/$(PROJ).lib:  $(OBJS) 
 	@echo LIB $@
 	@wlib -q -fo $@ $(OBJS)
 

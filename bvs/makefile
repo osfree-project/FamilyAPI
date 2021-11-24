@@ -1,3 +1,6 @@
+#echo Building Base Video Subsystem
+#echo Base Video Subsystem build finished
+
 PROJ=bvs
 
 OBJS=bvsmain.obj bvsgetphysbuf.obj bvsgetbuf.obj bvsshowbuf.obj bvsgetcurpos.obj bvsgetcurtype.obj &

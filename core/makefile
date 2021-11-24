@@ -1,3 +1,5 @@
+#echo Building Core Subsystem
+#echo Core Subsystem build finished
 ALL: ../lib/core.lib
 
 OBJS=globalshared.obj baddynlink.obj ginfoseg.obj linfoseg.obj globalvars.obj helpers.obj

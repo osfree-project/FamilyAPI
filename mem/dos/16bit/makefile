@@ -1,4 +1,15 @@
-ALL: ..\..\..\lib\mem16.lib
+#echo Building 16-bit memory subsystem
+#echo 16-bit memory subsystem build finished
+
+ALL: build ..\..\..\lib\mem16.lib
+
+build: .SYMBOLIC
+	cd dpmi
+	@$(MAKE) -h
+	cd ..
+	cd real
+	@$(MAKE) -h
+	cd ..
 
 OBJS=DosAllocHuge.obj DosAllocSeg.obj DosAllocShrSeg.obj DosCreateCSAlias.obj DosFreeSeg.obj DosGetHugeShift.obj &
 DosGetShrSeg.obj DosMemAvail.obj DosReallocSeg.obj DosSubAlloc.obj DosSubFree.obj DosSubSet.obj
