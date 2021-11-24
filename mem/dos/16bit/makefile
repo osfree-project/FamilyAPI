@@ -11,3 +11,23 @@ DosGetShrSeg.obj DosMemAvail.obj DosReallocSeg.obj DosSubAlloc.obj DosSubFree.ob
 	@echo ASM $<
 	@jwasm.exe -q -I..\..\..\include $*.asm
 
+clean: .SYMBOLIC
+	if exist *.obj del *.obj
+	if exist *.err del *.err
+	if exist *.lst del *.lst
+	if exist *.map del *.map
+	cd dpmi
+	@$(MAKE) -h clean
+	cd ..
+#	cd vcpi
+#	@$(MAKE) -h clean
+#	cd ..
+#	cd xms
+#	@$(MAKE) -h clean
+#	cd ..
+#	cd int15
+#	@$(MAKE) -h clean
+#	cd ..
+	cd real
+	@$(MAKE) -h clean
+	cd ..

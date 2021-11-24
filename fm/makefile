@@ -12,3 +12,8 @@ dossetfilemode.obj dosselectdisk.obj dossetverify.obj doswrite.obj dosdelete.obj
 	@echo ASM $<
 	@jwasm.exe -q -I..\include $*.asm
 
+clean: .SYMBOLIC
+	if exist *.obj del *.obj
+	if exist *.err del *.err
+	if exist *.lst del *.lst
+	if exist *.map del *.map

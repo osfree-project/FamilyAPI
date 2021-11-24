@@ -11,3 +11,8 @@ Dos16PGetHugeShift.obj Dos16PGetShrSeg.obj Dos16PMemAvail.obj Dos16PReallocSeg.o
 	@echo ASM $<
 	@jwasm.exe -q -I..\..\..\..\include $*.asm
 
+clean: .SYMBOLIC
+	if exist *.obj del *.obj
+	if exist *.err del *.err
+	if exist *.lst del *.lst
+	if exist *.map del *.map

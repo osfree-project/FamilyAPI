@@ -31,3 +31,8 @@ dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosgetctryinfo.obj doshold
 	@echo ASM $<
 	@jwasm.exe -q -I../include $*.asm
 
+clean: .SYMBOLIC
+	if exist *.obj del *.obj
+	if exist *.err del *.err
+	if exist *.lst del *.lst
+	if exist *.map del *.map

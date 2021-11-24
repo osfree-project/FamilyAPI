@@ -10,3 +10,8 @@ OBJS=globalshared.obj baddynlink.obj ginfoseg.obj linfoseg.obj globalvars.obj he
 	@echo ASM $<
 	@jwasm.exe -q -I../include $*.asm
 
+clean: .SYMBOLIC
+	if exist *.obj del *.obj
+	if exist *.err del *.err
+	if exist *.lst del *.lst
+	if exist *.map del *.map

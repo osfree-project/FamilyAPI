@@ -20,3 +20,9 @@ OBJS=dosdevioctl.obj
 dosdevioctl.obj: dosdevioctl.asm Cat01.asm Cat02.asm Cat03.asm Cat04.asm Cat05.asm Cat06.asm Cat07.asm Cat08.asm Cat09.asm Cat10.asm Cat11.asm $(ASMS)
 	@echo ASM $<
 	@jwasm.exe -q -I..\include $*.asm
+
+clean: .SYMBOLIC
+	if exist *.obj del *.obj
+	if exist *.err del *.err
+	if exist *.lst del *.lst
+	if exist *.map del *.map

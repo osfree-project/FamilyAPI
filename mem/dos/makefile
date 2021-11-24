@@ -8,3 +8,7 @@ ALL: ..\..\lib\mem.lib
 	@echo ASM $<
 	@jwasm.exe -q -I..\..\..\include $*.asm
 
+clean: .SYMBOLIC
+	cd 16bit
+	@$(MAKE) -h clean
+	cd ..
