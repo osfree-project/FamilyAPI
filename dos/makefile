@@ -1,3 +1,6 @@
+#echo Building DOS subsystem
+#echo DOS subsystem build finished
+
 PROJ=dos
 
 ALL: ../lib/$(PROJ).lib ..\dll\$(PROJ)calls.dll

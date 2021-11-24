@@ -1,3 +1,6 @@
+#cho Building file manager subsystem
+#echo File manager sybsystem build finished
+
 ALL: ..\lib\fm.lib
 
 OBJS=dosbufreset.obj doschdir.obj dosmkdir.obj dosclose.obj dosduphandle.obj dosfirst.obj dosfilelocks.obj dosmove.obj dosnewsize.obj dosopen.obj dosqcurdir.obj &
