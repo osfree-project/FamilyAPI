@@ -16,11 +16,10 @@ DOS16PREALLOCSEG proc far pascal public wSize:WORD, wSel:WORD
 		mov ax,wSize
 		cmp ax,1			;convert size 0 to size 64 kb
 		adc dx,dx
-		invoke	GlobalReAlloc, wSel, dx::ax,0
+;		invoke	GlobalReAlloc, wSel, dx::ax,0
 		.if (ax)
 			xor ax,ax
 		.else
-;			mov ax,-1
 			mov ax,0008		;ERROR_NOT_ENOUGH_MEMORY
 		.endif
 		mov [bp-2],ax	;set AX in POPA on stack

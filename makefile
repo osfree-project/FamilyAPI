@@ -11,39 +11,39 @@ fapi.lib: $(LIBS)
 	@jwasm.exe -q -Iinclude $*.asm
 
 build: .SYMBOLIC
-	cd core
+	@cd core
 	@$(MAKE) -h
-	cd ..
-	cd mem
+	@cd ..
+	@cd mem
 	@$(MAKE) -h
-	cd ..
-	cd bvs
+	@cd ..
+	@cd bvs
 	@$(MAKE) -h
-	cd ..
-	cd bms
+	@cd ..
+	@cd bms
 	@$(MAKE) -h
-	cd ..
-	cd bks
+	@cd ..
+	@cd bks
 	@$(MAKE) -h
-	cd ..
-	cd vio
+	@cd ..
+	@cd vio
 	@$(MAKE) -h
-	cd ..
-	cd mou
+	@cd ..
+	@cd mou
 	@$(MAKE) -h
-	cd ..
-	cd kbd
+	@cd ..
+	@cd kbd
 	@$(MAKE) -h
-	cd ..
-        cd fm
+	@cd ..
+	@cd fm
 	@$(MAKE) -h
-	cd ..
-	cd ioctl
+	@cd ..
+	@cd ioctl
 	@$(MAKE) -h
-	cd ..
-	cd dos
+	@cd ..
+	@cd dos
 	@$(MAKE) -h
-	cd ..
+	@cd ..
 
 clean: .SYMBOLIC
 	cd dll

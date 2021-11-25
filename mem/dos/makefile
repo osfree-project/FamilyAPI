@@ -3,9 +3,9 @@
 ALL: build ..\..\lib\mem.lib
 
 build: .SYMBOLIC
-	cd 16bit
+	@cd 16bit
 	@$(MAKE) -h
-	cd ..
+	@cd ..
 
 ..\..\lib\mem.lib: ..\..\lib\mem16.lib
 	@echo LIB $@
@@ -16,6 +16,6 @@ build: .SYMBOLIC
 	@jwasm.exe -q -I..\..\..\include $*.asm
 
 clean: .SYMBOLIC
-	cd 16bit
+	@cd 16bit
 	@$(MAKE) -h clean
-	cd ..
+	@cd ..

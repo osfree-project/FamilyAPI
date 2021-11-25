@@ -1,50 +1,57 @@
+;/*!
+;   @file
+;
+;   @ingroup fapi
+;
+;   @brief DosReallocSeg DOS wrapper
+;
+;   (c) osFree Project 2018, <http://www.osFree.org>
+;   for licence see licence.txt in root directory, or project website
+;
+;   This is Family API implementation for DOS, used with BIND tools
+;   to link required API
+;
+;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
+;
+;   Documentation: http://osfree.org/doku/en:docs:fapi:dosreallocseg
+;
+;0 NO_ERROR
+;8 ERROR_NOT_ENOUGH_MEMORY
+;87 ERROR_INVALID_PARAMETER
+;@todo if size = 0 then allocate max
+;*/
 
-		.286
+.8086
 
-_TEXT  segment byte public 'CODE'
+		; Helpers
+		INCLUDE	HELPERS.INC
+		INCLUDE	BSEERR.INC
 
-;--- DosReallocSeg reallocs only until 64 kB
+_TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-GlobalReAlloc proto far pascal :WORD, :DWORD, :WORD
+		@PROLOG	DOS16RREALLOCSEG
+SELECTOR	DD	?
+WSIZE		DW	?
+		@START	DOS16RREALLOCSEG
+		MOV	BX,[DS:BP].ARGS.WSIZE
+		ADD	BX,0FH
+		SHR	BX,1
+		SHR	BX,1
+		SHR	BX,1
+		SHR	BX,1
+		OR	BX,BX
+		JNE	@F
+		MOV	BX,01000H
+@@:	
+		MOV	AH,04AH
+		INT	21H
+		JB	EXIT
+		LES	BX,[DS:BP].ARGS.SELECTOR
+		MOV	[ES:BX],AX
+		XOR	AX,AX
+EXIT:	
+		@EPILOG	DOS16RREALLOCSEG
 
-DOS16RREALLOCSEG proc far pascal public wSize:WORD, wSel:WORD
+_TEXT		ENDS
 
-		pusha
-		push es
-if 1
-		xor dx,dx
-		mov ax,wSize
-		cmp ax,1			;convert size 0 to size 64 kb
-		adc dx,dx
-		invoke	GlobalReAlloc, wSel, dx::ax,0
-		.if (ax)
-			xor ax,ax
-		.else
-;			mov ax,-1
-			mov ax,0008		;ERROR_NOT_ENOUGH_MEMORY
-		.endif
-else
-		mov bx,wSize
-		add bx,15
-		shr bx,4
-		and bx,bx
-		jnz @F
-		mov bx,1000h
-@@:
-		mov es,wSel
-		mov ah,4ah
-		int 21h
-;		mov ax,-1		;AX contains an error code already
-		jc @F
-		xor ax,ax
-@@:
-endif
-		mov [bp-2],ax	;set AX in POPA on stack
-		pop es
-		popa
-		ret
-DOS16RREALLOCSEG endp
-
-_TEXT ends
-
-		end
+		END

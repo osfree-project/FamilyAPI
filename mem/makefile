@@ -1,9 +1,9 @@
 ALL: .SYMBOLIC
-	cd dos
+	@cd dos
 	@$(MAKE) -h
-	cd ..
+	@cd ..
 
 clean: .SYMBOLIC
-	cd dos
+	@cd dos
 	@$(MAKE) -h clean
-	cd ..
+	@cd ..

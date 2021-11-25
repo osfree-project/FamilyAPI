@@ -4,12 +4,12 @@
 ALL: build ..\..\..\lib\mem16.lib
 
 build: .SYMBOLIC
-	cd dpmi
+	@cd dpmi
 	@$(MAKE) -h
-	cd ..
-	cd real
+	@cd ..
+	@cd real
 	@$(MAKE) -h
-	cd ..
+	@cd ..
 
 OBJS=DosAllocHuge.obj DosAllocSeg.obj DosAllocShrSeg.obj DosCreateCSAlias.obj DosFreeSeg.obj DosGetHugeShift.obj &
 DosGetShrSeg.obj DosMemAvail.obj DosReallocSeg.obj DosSubAlloc.obj DosSubFree.obj DosSubSet.obj
