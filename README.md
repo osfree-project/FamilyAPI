@@ -7,13 +7,12 @@ Shared API for DOS and OS/2 to produce binary dual mode applications which can b
 
 At the present time we have:
 
-- VIOCALLS at level of OS/2 1.0 (both real and protected mode DOS)
-- MOUCALLS at level of OS/2 1.0 (both real and protected mode DOS)
-- KBDCALLS at level of OS/2 1.0 (both real and protected mode DOS)
-- BVSCALLS in progress
-- BMSCALLS in progress
-- BKSCALLS in progress
+- VIOCALLS at level of OS/2 1.0 (both real and protected mode DOS/OS2, except Register/Deregister)
+- MOUCALLS at level of OS/2 1.0 (both real and protected mode DOS/OS2, except Register/Deregister)
+- KBDCALLS at level of OS/2 1.0 (both real and protected mode DOS/OS2, except Register/Deregister)
+- BVSCALLS at level of OS/2 1.0 (both real and protected mode DOS)
+- BMSCALLS at level of OS/2 1.0 (both real and protected mode DOS)
+- BKSCALLS at level of OS/2 1.0 (both real and protected mode DOS)
 - DOSCALLS in progress
-
 
 http://osfree.org/doku/en:docs:fapi
