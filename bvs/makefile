@@ -12,6 +12,9 @@ bvspopup.obj bvsendpopup.obj bvsprtsctoggle.obj bvsmodewait.obj bvsmodeundo.obj 
 bvsgetconfig.obj bvssetcp.obj bvsgetcp.obj bvssetfont.obj bvsgetstate.obj bvssetstate.obj &
 bvsshared.obj bvsvars.obj
 
-EXPORT=BVSMAIN.3 RESIDENT
+EXPORT= &
+#BVSGETPTRDRAWNAME .1 RESIDENT, &
+BVSMAIN.3 RESIDENT
+#          BVSREDRAWSIZE     .4 RESIDENT
 
 !include <..\dll.mk>
