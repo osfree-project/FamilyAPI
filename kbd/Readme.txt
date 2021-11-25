@@ -18,6 +18,9 @@ Because of its nature, all KBD API are 16-bit in 1.20 version of package.
 
 Most probably first release of our Kbd subsystem will be as part of osFree Family API 1.20 release.
 
-Files (draft):
+Files
+-----
 
-
+KBD.LIB Static library.
+KBDCALLS.DLL Dynamic library.
+KBDCALLS.LIB Import library.

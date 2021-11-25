@@ -19,7 +19,7 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
-		INCLUDE	..\bseerr.inc
+		INCLUDE	bseerr.inc
 		INCLUDE	KBD.INC
 
 _TEXT	SEGMENT BYTE PUBLIC 'CODE'

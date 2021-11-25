@@ -1,22 +1,4 @@
 @echo off
-cd vio
-call make
-cd ..
-cd bvs
-call make
-cd ..
-cd mou
-call make
-cd ..
-cd bms
-call make
-cd ..
-cd kbd
-call make
-cd ..
-cd bks
-call make
-cd ..
 
 rem dosloadmodule
 :jwasm -q checkpathname.asm
@@ -47,81 +29,10 @@ rem dosloadmodule
 :jwasm -q dosloadmodule.ASM
 :jwasm -q dosfrmod.ASM
 
-jwasm -q ginfoseg.asm
-jwasm -q linfoseg.asm
-jwasm -q dosgetinfoseg.asm
-jwasm -q globalvars.asm
-jwasm -q globalshared.asm
-jwasm -q helpers.asm
-jwasm -q baddynlink.asm
-jwasm -q dosmemavail.asm
-jwasm -q dosgetmessage.asm
-jwasm -q doscreatecsalias.asm
-jwasm -q dossetctrycode.asm
-jwasm -q dosallocseg.ASM
-jwasm -q dosallocshrseg.ASM
-jwasm -q dosgetshrseg.ASM
-jwasm -q dosqsysinfo.ASM
-jwasm -q doscliaccess.ASM
-jwasm -q dosportaccess.ASM
-jwasm -q dosbeep.ASM 
-jwasm -q dosdevioctl.ASM 
-jwasm -q doscasemap.ASM 
-jwasm -q dosbufreset.ASM 
-jwasm -q doschdir.ASM
-jwasm -q dosclose.ASM
-jwasm -q dosgetdbcsev.asm
-jwasm -q dosdelete.ASM
-jwasm -q dosdevconfig.ASM  
-jwasm -q dosgetdatetime.ASM
-jwasm -q dosduphandle.ASM 
-jwasm -q doserror.ASM
-jwasm -q dosexecpgm.ASM 
-jwasm -q dosexit.ASM 
-jwasm -q dosexitlist.ASM
-jwasm -q dosfirst.ASM
-jwasm -q dosfreeseg.ASM
-jwasm -q dosgetcp.ASM
-jwasm -q dossetcp.ASM
-jwasm -q dosgetenv.ASM
-jwasm -q dosgetmo.ASM
-jwasm -q dosgethugeshift.ASM
-jwasm -q dosgetpr.ASM
-jwasm -q dosgtpid.ASM
-jwasm -q dosallochuge.ASM 
-jwasm -q doslock.ASM 
-jwasm -q dossetmaxfh.ASM
-jwasm -q dosgetmachinemode.ASM 
-jwasm -q dosmove.ASM 
-jwasm -q dosnewsize.ASM
-jwasm -q dosopen.ASM 
-jwasm -q dosqcurdir.ASM 
-jwasm -q dosqfsinfo.ASM 
-jwasm -q dosqcurdisk.ASM 
-jwasm -q dosqfileinfo.ASM
-jwasm -q dosrmdir.ASM
-jwasm -q dossetdatetime.ASM
-jwasm -q dosqfilemode.ASM
-jwasm -q dosqhand.ASM
-jwasm -q dosmkdir.ASM
-jwasm -q dosgetversion.ASM 
-jwasm -q dosrallc.ASM
-jwasm -q dosread.ASM 
-jwasm -q doschgfileptr.ASM 
-jwasm -q dossetfileinfo.ASM
-jwasm -q dossetfilemode.ASM
-jwasm -q dossetverify.ASM
-jwasm -q dosselectdisk.ASM
-jwasm -q dossleep.ASM
-jwasm -q dosssig.ASM 
-jwasm -q dosstvec.ASM
-jwasm -q doswrite.ASM
-jwasm -q dosqverify.asm
 
 :jwasm -q csalias.ASM
 :jwasm -q gblreal.ASM
 
-del fapi.lib
 rem dos*module
 :wlib -q -fo fapi.lib +dosloadmodule.obj +searchmodule16.obj
 :wlib -q -fo fapi.lib +segment2module.obj
@@ -150,5 +61,6 @@ rem dos*module
 :wlib -q -fo fapi.lib +getprocaddr16.obj
 :wlib -q -fo fapi.lib +dosfrmod.obj
 
-rem Fapi Subsystem
-wmake
+echo Building Family API Subsystem
+wmake -h
+echo Family API Subsystem builded
