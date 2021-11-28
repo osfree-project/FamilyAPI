@@ -43,19 +43,24 @@
 		INCLUDE BSEERR.INC
 		INCLUDE GLOBALVARS.INC
 
-if		0
-		DB	"CLOCK$"	; Present in DOS?
-		DB	"KBD$"		; New in OS/2
-		DB	"SCREEN$"	; New in OS/2
-		DB	"PRN"
-		DB	"LPT1"		; Present in DOS
-		DB	"LPT2"		; Present in DOS
-		DB	"LPT3"		; Present in DOS
-		DB	"AUX"
-		DB	"COM1"		; Present in DOS
-		DB	"COM2"		; Present in DOS
-		DB	"COM3"		; Present in DOS
-endif
+_DATA		SEGMENT BYTE PUBLIC 'CODE' USE16
+DEVS:
+		DB	"CLOCK$",0	; Present in DOS
+		DB	"CLOCK",0	; Present in DOS (some 2.x versions)
+		DB	"KBD$",0	; New in OS/2
+		DB	"SCREEN$",0	; New in OS/2
+		DB	"POINTER$",0	; New in OS/2
+		DB	"MOUSE$",0	; New in OS/2
+		DB	"PRN",0
+		DB	"LPT1",0	; Present in DOS
+		DB	"LPT2",0	; Present in DOS
+		DB	"LPT3",0	; Present in DOS
+		DB	"AUX",0 
+		DB	"COM1",0	; Present in DOS
+		DB	"COM2",0	; Present in DOS
+		DB	"COM3",0	; Present in DOS
+		DB	0		; end of list
+_DATA		ENDS
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 

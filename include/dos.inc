@@ -22,22 +22,12 @@ abs_disk_write  macro  disk,buffer,num_sectors,first_sector
                     popf
                     endm
 
-stay_resident  macro last_instruc
-                    mov   dx,offset last_instruc
-                    inc   dx
-                    int   27H
-                    endm
 
 flush macro handle
 		mov bx, handle
 		mov ah,68h
 		int 21h
 		endm
-
-terminate_program  macro
-                        xor    ah,ah
-                        int    21H
-                        endm
 
 read_kbd_and_echo  macro
                         mov  ah, 01H
@@ -78,12 +68,6 @@ read_kbd  macro
             int   21H
             endm
 
-display  macro string
-            mov   dx,offset string
-            mov   ah,09H
-            int   21H
-            endm
-
 get_string  macro  limit,string
                 mov    dx,offset string
                 mov    string,limit
@@ -95,13 +79,6 @@ check_kbd_status  macro
                     mov   ah,0BH
                     int   21H
                     endm
-
-flush_and_read_kbd  macro switch
-                        mov   al,switch
-                        mov   ah,0CH
-                        int   21H
-                        endm
-
 
 open  macro fcb
         mov   dx,offset fcb
@@ -413,11 +390,6 @@ exec_ovl  macro  path,parms,seg_addr
             int    21H
             endm
 
-ret_code  macro
-            mov    ah,4DH
-            int    21H
-            endm
-
 find_first_file  macro  path,attrib
                     mov    dx,offset path
                     mov    cx,attrib
@@ -530,6 +502,7 @@ cancel_redir  macro  local
         popf
         endm
     ;                                 Interrupt 27H
+
     STAY_RESIDENT  macro  last_instruc
         mov    dx,offset last_instruc
         inc    dx
@@ -607,8 +580,8 @@ PRINT_CHAR  macro  character
         mov    ah,0BH
         int    21H
         endm
-    ;                                 Function Request 0CH
-    FLUSH_AND_READ_KBD  macro  switch
+;                                 Function Request 0CH
+FLUSH_AND_READ_KBD  macro  switch
         mov    al,switch
         mov    ah,0CH
         int    21H
@@ -1184,12 +1157,12 @@ END_PROCESS  macro  return_code
                 mov    ah,4CH
                 int    21H
                 endm
-    ;                                  Function Request 4DH
-    RET_CODE macro
+;                                  Function Request 4DH
+RET_CODE macro
         mov    ah,4DH
         int    21H
         endm
-    ;                                  Function Request 4EH
+;                                  Function Request 4EH
     FIND_FIRST_FILE  macro  path,attrib
         mov    dx,offset path
         mov    cx,attrib

@@ -13,49 +13,42 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-; --------D-2162-------------------------------
-;INT 21 - DOS 3.0+ - GET CURRENT PSP ADDRESS
-;        AH = 62h
-;Return: BX = segment of PSP for current process
-;Notes:  this function does not use any of the DOS-internal stacks and may
-;          thus be called at any time, even during another INT 21h call
-;        the current PSP is not necessarily the caller's PSP
-;        identical to the undocumented AH=51h
-;SeeAlso: AH=50h,AH=51h
-;
-; @todo add DOS 2.0 support
-;
-;
 ;*/
 
 .8086
 
 		; Helpers
 		INCLUDE	HELPERS.INC
-		INCLUDE DOS.INC
+		INCLUDE GLOBALVARS.INC
+
+EXTERN	DOSGETINFOSEG: PROC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@PROLOG	DOSGETENV
 CMDOFFSET	DD	?
 ENVSEGMENT	DD	?
+@LOCALW		GLOBALSEG
+@LOCALW		LOCALSEG
 		@START	DOSGETENV
-		GET_PSP
-		MOV	ES,BX
-		MOV	ES,ES:[02CH]
-		XOR	DI,DI
-		XOR	AL,AL
-		MOV	CX,0FFFFH
-NEXTLINE:		
-		REPNE SCASB
-		SCASB
-		JNE	NEXTLINE
-		MOV	AX, ES
+		PUSH	SS
+		LEA	AX, GLOBALSEG
+		PUSH	AX
+		PUSH	SS
+		LEA	AX, LOCALSEG
+		PUSH	AX
+		CALL	DOSGETINFOSEG
+		MOV	AX, LOCALSEG
+		MOV	ES, AX
+		MOV	CX, [ES:lis_selEnvironment]
 		LES	BX,[DS:BP].ARGS.ENVSEGMENT
-		MOV	[ES:BX],AX
+		MOV	[ES:BX], CX
+
+		MOV	ES, AX
+		MOV	CX, [ES:lis_offCmdLine]
 		LES	BX,[DS:BP].ARGS.CMDOFFSET
-		ADD	DI,2
-		MOV	[ES:BX],DI
+		MOV	[ES:BX], CX
+
 		XOR	AX,AX
 		@EPILOG	DOSGETENV
 

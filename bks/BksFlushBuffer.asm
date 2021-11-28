@@ -11,21 +11,20 @@
 ;   This is Family API implementation for DOS, used with BIND tools
 ;   to link required API
 ;
-
 ;*/
 
 .8086
 
 		; Helpers
-		INCLUDE	helpers.inc
+		INCLUDE	HELPERS.INC
+		INCLUDE	DOS.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@BKSPROLOG	BKSFLUSHBUFFER
 KBDHANDLE	DW	?
 		@BKSSTART	BKSFLUSHBUFFER
-		MOV     AX,0C00H
-		INT     21H    
+		FLUSH_AND_READ_KBD	0
 		XOR     AX,AX  
 		@BKSEPILOG	BKSFLUSHBUFFER
 

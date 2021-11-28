@@ -106,6 +106,7 @@ DOS2:
 ; Environment & cmdline
 		GET_PSP
 		MOV	ES,BX
+		MOV	CX,BX
 		MOV	ES,ES:[02CH]
 		XOR	DI,DI
 		XOR	AL,AL
@@ -120,6 +121,10 @@ NEXTLINE:
 		MOV	[ES:lis_selEnvironment],BX
 		ADD	DI,2
 		MOV	[ES:lis_offCmdLine],DI
+
+		MOV	[ES:lis_pidCurrent],CX
+		MOV	[ES:lis_pidParent],0
+		MOV	[ES:lis_tidCurrent],0
 
 		; Because LFN API can be supported by side drivers check it
 LFNCHECK:

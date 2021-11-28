@@ -32,7 +32,7 @@ dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosgetctryinfo.obj doshold
 
 .asm.obj: .AUTODEPEND
 	@echo ASM $<
-	@jwasm.exe -q -I../include $*.asm
+	@jwasm.exe -Fl -q -I../include $*.asm
 
 clean: .SYMBOLIC
 	if exist *.obj del *.obj

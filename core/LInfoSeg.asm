@@ -2,6 +2,10 @@
 
 PUBLIC  lis_selEnvironment  
 PUBLIC  lis_offCmdLine      
+PUBLIC  lis_pidCurrent
+PUBLIC  lis_pidParent
+PUBLIC  lis_tidCurrent
+
 
 _LINFOSEG SEGMENT BYTE PUBLIC 'DATA' USE16
   lis_pidCurrent      dw  ? ;current process id

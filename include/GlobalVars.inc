@@ -21,6 +21,9 @@ EXTERN gis_chRevisionLetter: BYTE
 
 EXTERN  lis_selEnvironment: WORD
 EXTERN  lis_offCmdLine: WORD
+EXTERN  lis_pidCurrent: WORD
+EXTERN  lis_pidParent: WORD
+EXTERN  lis_tidCurrent: WORD
 
 _GINFOSEG SEGMENT BYTE PUBLIC 'DATA' USE16
 _GINFOSEG ENDS
