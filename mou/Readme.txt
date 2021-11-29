@@ -18,6 +18,14 @@ Because of its nature, all MOU API are 16-bit in 1.20 version of package.
 
 Most probably first release of our Mou subsystem will be as part of osFree Family API 1.20 release.
 
-Files (draft):
+Files (draft)
+-------------
 
+MOU.LIB Static library
+MOUCALLS.DLL Dynamic library
+MOUCALLS.LIB Import library
 
+References
+----------
+
+Putting a mouse in your programs PC Mag 1989-06-16 pp. 309-317
