@@ -3,7 +3,7 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief MouOpen router
+;   @brief MouFree router
 ;
 ;   (c) osFree Project 2021, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
@@ -11,9 +11,6 @@
 ;   This is Family API implementation for DOS and OS/2
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
-;
-;   Documentation: http://osfree.org/doku/en:docs:fapi:mouopen
-;
 ;
 ;*/
 
@@ -24,19 +21,16 @@
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-		@MOUPROLOG	MOUOPEN
-MOUHANDLE	DW	?		;MOUSE HANDLE
-DRIVERNAME	DD	?		;
-		@MOUSTART	MOUOPEN
-		;@TRACE		'pre-MOUOPEN'
-		MOV	AX,		MI_MOUOPEN
+		@MOUPROLOG	MOUFREE
+;MOUHANDLE	DW	?		;MOUSE HANDLE	; ??? Not known is it required or not?
+		@MOUSTART	MOUFREE
+	        MOV	AX, MI_MOUFREE
 		PUSH	AX
-		MOV	AX, WORD PTR MOUFUNCTIONMASK
-		AND	AX, LOWWORD MR_MOUOPEN
-		CMP	AX, LOWWORD MR_MOUOPEN
-		CALL    MOUROUTE
-		;@TRACE		'post-MOUOPEN'
-		@MOUEPILOG	MOUOPEN
+		MOV	AX, WORD PTR MOUFUNCTIONMASK+2
+		AND	AX, HIGHWORD MR_MOUFREE
+		CMP	AX, HIGHWORD MR_MOUFREE
+	        CALL    MOUROUTE
+		@MOUEPILOG	MOUFREE
 
 _TEXT		ENDS
 		END

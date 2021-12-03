@@ -155,7 +155,7 @@ MOUARGS		ENDS
 
 MOU_ARG_SIZE	EQU	(SIZE MOUARGS)
 
-NAME		PROC	FAR
+NAME		PROC	NEAR
 
 		ENDM
 
@@ -165,6 +165,7 @@ NAME		PROC	FAR
 		RET	MOU_ARG_SIZE
 NAME		ENDP
 		ENDM
+		
 ;---------------------------------------------------------------BVS
 @BVSPROLOG	MACRO	NAME
 
@@ -332,4 +333,45 @@ NAME		PROC	FAR
 		CALL	@DONE
 		RET	ARG_SIZE+LOCSIZE
 NAME		ENDP
+		ENDM
+
+;-------------------------------------------------------------
+@PUSHA	MACRO
+		PUSH	AX
+		PUSH	CX
+		PUSH	DX
+		PUSH	BX
+		PUSH	SP
+		PUSH	BP
+		PUSH	SI
+		PUSH	DI
+		ENDM
+
+@POPA	MACRO
+		POP	DI
+		POP	SI
+		POP	BP
+		POP	AX
+		POP	BX
+		POP	DX
+		POP	CX
+		POP	AX
+		ENDM
+;----------------------------------------------------------------
+
+
+@TRACE	MACRO Name
+		PUSHF
+		@PUSHA
+		MOV		AX, SEG @CATSTR(NAME, Msg)
+		PUSH	AX
+		MOV		AX, OFFSET @CATSTR(NAME, Msg)
+		PUSH	AX
+		MOV		AX, @CATSTR(NAME, MsgSize)
+		PUSH	AX
+		MOV		AX,0
+		PUSH	AX
+		CALL	VioWrtTTY
+		@POPA
+		POPF
 		ENDM

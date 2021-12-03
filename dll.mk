@@ -1,6 +1,6 @@
 ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
 
-..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib makefile
+..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib $(OBJS) makefile
 	@echo LINK $@
 	@wlink.exe op q,nod libpath ..\lib @<<
 #     system   os2_dll

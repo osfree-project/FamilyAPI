@@ -14,6 +14,7 @@
 
 .8086
 
+	include helpers.inc
 		PUBLIC	MOUROUTE
 		PUBLIC	MOUFUNCTIONMASK
 		PUBLIC	AMSMAIN
@@ -28,17 +29,36 @@ MOUFUNCTIONMASK		DD	0	; MOU FUNCTIONS REDIRECTION MASK
 _DATA		ENDS
 
 EXTERN		BMSMAIN: PROC		; SUBJECT TO MOVE TO DLL
+EXTERN	VioWrtTTY: FAR
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
+CharStr		DB 'MouRoute',0dh,0ah
+CharStr_SIZE     equ     ($ - CharStr)
+
 MOUROUTE	PROC	NEAR
+
+		PUSHF
+		@PUSHA
+		MOV		AX, SEG CHARSTR
+		PUSH	AX
+		MOV		AX, OFFSET CHARSTR
+		PUSH	AX
+		MOV		AX,CharStr_SIZE
+		PUSH	AX
+		MOV		AX,0
+		PUSH	AX
+		CALL	VioWrtTTY
+		@POPA
+		POPF
+
 		JNZ	BMS		; Skip if AMS not registered
 ;Call alternate mouse subsystem if function routed
 		PUSH	DS		; caller data segment
 		XOR	AX,AX
 		MOV	AX, SEG _DATA
 		MOV	ES, AX
-		CALL	[ES:AMSMAIN]
+		CALL	FAR PTR [ES:AMSMAIN]
 		POP	DS
 ; Return code = 0 
 ;           No error.  Do not invoke the corresponding Base Mouse Subsystem 
@@ -51,16 +71,17 @@ MOUROUTE	PROC	NEAR
 ;           Do not invoke the corresponding Base Mouse Subsystem routine. 
 ;           Return to caller with Return code = error. 
 		CMP	AX, 0
-		JZ	@F
+		JZ	EXIT
 		CMP	AX, -1
-		JNZ	@F
+		JNZ	EXIT
 BMS:
 		PUSH	DS		; caller data segment
 		XOR	AX,AX
 		CALL	FAR PTR BMSMAIN
 		POP	DS
-@@:
-		RET	2
+
+EXIT:
+		RET	2			; POP function code
 MOUROUTE	ENDP
 
 _TEXT		ENDS
