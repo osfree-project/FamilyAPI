@@ -2,11 +2,11 @@ ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
 
 ..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib $(OBJS) makefile
 	@echo LINK $@
-	@wlink.exe op q,nod libpath ..\lib @<<
+	@wlink.exe  op q,nod libpath ..\lib @<<
 #     system   os2_dll
     option osname='OS/2 16-bit'
     format os2 dll ^
-     option   map,nod
+     option   map,nod, MANYAUTODATA
      name     ..\dll\$(PROJ)calls
      export $(EXPORT)
      file     ..\lib\$(PROJ).lib 
