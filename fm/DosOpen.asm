@@ -33,6 +33,20 @@
 ;231 ERROR_PIPE_BUSY
 ;99 ERROR_DEVICE_IN_USE
 ;
+; ---------------------------------------------------------------------
+; Implementation notes:
+;
+; Because we need to emulate device drivers we are using intermidate
+; handles table which maps or to dos handle or to device handler.
+;
+; DosOpen first tries to detect is it device driver name and if so
+; marks in table corresponding bit and calls device specific open handler.
+; If it is not device driver name then just opens file using standard
+; INT 21H call. (Note: DASD not supported yet).
+;
+; All file manupulation functions uses handler translation table to access
+; actual handler or device driver handler.
+;
 ;*/
 
 .8086
@@ -43,23 +57,29 @@
 		INCLUDE BSEERR.INC
 		INCLUDE GLOBALVARS.INC
 
-_DATA		SEGMENT BYTE PUBLIC 'CODE' USE16
-DEVS:
-		DB	"CLOCK$",0	; Present in DOS
-		DB	"CLOCK",0	; Present in DOS (some 2.x versions)
-		DB	"KBD$",0	; New in OS/2
-		DB	"SCREEN$",0	; New in OS/2
-		DB	"POINTER$",0	; New in OS/2
-		DB	"MOUSE$",0	; New in OS/2
-		DB	"PRN",0
-		DB	"LPT1",0	; Present in DOS
-		DB	"LPT2",0	; Present in DOS
-		DB	"LPT3",0	; Present in DOS
-		DB	"AUX",0 
-		DB	"COM1",0	; Present in DOS
-		DB	"COM2",0	; Present in DOS
-		DB	"COM3",0	; Present in DOS
-		DB	0		; end of list
+_DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
+
+; Table of emulated device drivers names.
+
+DCLOCKS		DB	"CLOCK$",0	; Present in DOS
+DKBDS		DB	"KBD$",0	; New in OS/2
+;DSCREENS:	DB	"SCREEN$",0	; New in OS/2
+;DPOINTERS:	DB	"POINTER$",0	; New in OS/2
+;DMOUSES:	DB	"MOUSE$",0	; New in OS/2
+;DPRN:		DB	"PRN",0
+;DLPT1:		DB	"LPT1",0	; Present in DOS
+;DLPT2:		DB	"LPT2",0	; Present in DOS
+;DLPT3:		DB	"LPT3",0	; Present in DOS
+;DAUX:		DB	"AUX",0 
+;DCON:		DB	"CON",0 
+;DCOM1:		DB	"COM1",0	; Present in DOS
+;DCOM2:		DB	"COM2",0	; Present in DOS
+;DCOM3:		DB	"COM3",0	; Present in DOS
+;DCOM4:		DB	"COM4",0	; Present in DOS
+;DNUL:		DB	"NUL",0
+
+DINDEX		DW	DCLOCKS, DKBDS	;, DSCREENS, DPOINTERS, DMOUSES, DPRN, DLPT1, DLPT2, DLPT3, DAUX, DCOM1, DCOM2, DCOM3
+
 _DATA		ENDS
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16

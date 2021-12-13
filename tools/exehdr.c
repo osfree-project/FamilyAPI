@@ -39,14 +39,14 @@ BOOL is_NE(struct new_exe hdr)
 
 void printHex(USHORT ptr)
 {
-int i;
-char tmp[2];
-char buf[2];
+  int i;
+  char tmp[2];
+  char buf[2];
 
-buf[0] = ptr & 0xFF;
-buf[1] = (ptr >> 8) & 0xFF;
+  buf[0] = ptr & 0xFF;
+  buf[1] = (ptr >> 8) & 0xFF;
 
-for (i = sizeof(ptr) - 1; i >= 0; i--) {
+  for (i = sizeof(ptr) - 1; i >= 0; i--) {
     tmp[0] = (buf[i] >> 4) & 0xf; 
     tmp[1] = buf[i] & 0xf;        
 
@@ -54,7 +54,7 @@ for (i = sizeof(ptr) - 1; i >= 0; i--) {
     tmp[1] += tmp[1] < 10 ? '0' : 'a' - 10;
 
     VioWrtTTY(tmp, 2, 0);
-}
+  }
 }
 
 

@@ -8,7 +8,7 @@ ALL: ../lib/$(PROJ).lib ..\dll\$(PROJ)calls.dll
 OBJS=dosbeep.obj dosgetmessage.obj dosqsysinfo.obj doscasemap.obj dossetctrycode.obj dosgetdbcsev.obj dosdevconfig.obj dosgetdatetime.obj doserror.obj &
 dosexecpgm.obj dosexit.obj dosexitlist.obj dosgetcp.obj dossetcp.obj dosgetenv.obj dosgetpid.obj dosportaccess.obj &
 doscliaccess.obj dosgetmachinemode.obj dosgetversion.obj dossleep.obj dossetdatetime.obj dossetvec.obj dosgetinfoseg.obj &
-dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosgetctryinfo.obj dosholdsignal.obj
+dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosgetctryinfo.obj dosholdsignal.obj dossystrace.obj
 
 #dossetsighandler.obj dosfreemodule.obj dosgetmodule.obj dosgetprocaddr.obj
 
