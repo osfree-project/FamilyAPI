@@ -38,6 +38,10 @@ Reserved	DW	?	;Reserved (must be zero)
 KillIndic	DW	?	;Terminate indicator
 OwnerIndic	DW	?	;Ownership indicator
 		@BVSSTART	BVSMODEUNDO
+		MOV	AX,ERROR_INVALID_PARAMETER
+		XOR	BX, BX
+		CMP	BX, WORD PTR [DS:BP].ARGS.RESERVED
+		JNZ	EXIT
 
 		XOR	AX, AX                   ; ALL OK
 

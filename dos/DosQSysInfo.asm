@@ -33,9 +33,9 @@
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@PROLOG	DOSQSYSINFO
-DataBufLen	DW	?	;Data buffer size
-DataBuf		DD	?	;System information (returned)
-Index		DW	?	;Which variable
+DATABUFLEN	DW	?	;Data buffer size
+DATABUF		DD	?	;System information (returned)
+INDEX		DW	?	;Which variable
 		@START	DOSQSYSINFO
 		MOV	AX, [DS:BP].ARGS.INDEX
 		CMP	AX, 0

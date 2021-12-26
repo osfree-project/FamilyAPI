@@ -829,8 +829,9 @@ GET_VERSION  macro
         mov    ah,36H
         int    21H
         endm
-    ;                                  Function Request 38H
-    GET_COUNTRY  macro  country,buffer
+
+;                                  Function Request 38H
+GET_COUNTRY  macro  country,buffer
                 local  gc_01
                 mov    dx,offset buffer
                 mov    ax,country
@@ -841,7 +842,16 @@ GET_VERSION  macro
     gc_01:       mov    ah,38H
                 int    21H
                 endm
-    ;                                  Function Request 38H
+;                                  Function Request 66H
+GET_UPPERCASE_TABLE	macro country, codepage, buffer, buflen
+		MOV	bx, codepage
+		MOV	DX, COUNTRY
+		MOV	CX, buflen
+		LES	DI, buffer
+		MOV	AX, 6602H
+		INT	21H
+		endm
+;                                  Function Request 38H
     SET_COUNTRY  macro  country
                 local  sc_01
                 mov    dx,0FFFFH

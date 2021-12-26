@@ -3,7 +3,7 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief DosSetCP DOS wrapper
+;   @brief DosGetSTDA
 ;
 ;   (c) osFree Project 2021, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
@@ -18,20 +18,23 @@
 .8086
 
 		; Helpers
-		INCLUDE	helpers.inc
+		INCLUDE	HELPERS.INC
+		INCLUDE	GLOBALVARS.INC
+		INCLUDE	SAS.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-		@PROLOG	DOSSETCP
-CodePage	DW	?
-Reserved	DW	?
-		@START	DOSSETCP
-		MOV	BX, [DS:BP].ARGS.CodePage
-		mov     ax,6602H
-		int     21h
+		@PROLOG	DOSGETSTDA
+SIZ		DW	?
+OFF		DW	?
+SEL		DW	?
+		@START	DOSGETSTDA
+		MOV	AX, [DS:BP].ARGS.SEL
+		MOV	ES, AX
+		MOV	DI, [DS:BP].ARGS.OFF
+		LDS	SI, SAS.SASRAS
 		XOR	AX, AX
-		@EPILOG	DOSSETCP
-
+		@EPILOG	DOSGETSTDA
 _TEXT		ENDS
 
 		END

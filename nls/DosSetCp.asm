@@ -3,9 +3,9 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief BksGetCp DOS wrapper
+;   @brief DosSetCP DOS wrapper
 ;
-;   (c) osFree Project 2018, <http://www.osFree.org>
+;   (c) osFree Project 2021, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -19,24 +19,26 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
-		INCLUDE	BSEERR.INC
+		INCLUDE	bseerr.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-		@BKSPROLOG	BKSGETCP
-KBDHANDLE	DW	?		;KEYBOARD HANDLE
-CODEPAGEID	DD	?		;
-RESERVED	DD	?		;
-		@BKSSTART	BKSGETCP
-		MOV	AX,ERROR_KBD_PARAMETER
+		@PROLOG	DOSSETCP
+CODEPAGE	DW	?
+RESERVED	DW	?
+		@START	DOSSETCP
+		MOV	AX,ERROR_INVALID_PARAMETER
 		XOR	BX, BX
 		CMP	BX, WORD PTR [DS:BP].ARGS.RESERVED
 		JNZ	EXIT
-		CMP	BX, WORD PTR [DS:BP].ARGS.RESERVED+2
-		JNZ	EXIT
-;code here
+
+		MOV	BX, [DS:BP].ARGS.CODEPAGE
+		MOV     AX,6602H
+		INT     21H
+		XOR	AX, AX
 EXIT:
-		@BKSEPILOG	BKSGETCP
+		@EPILOG	DOSSETCP
 
 _TEXT		ENDS
+
 		END

@@ -34,7 +34,7 @@ ExecFlags	EQU	[BP+22]
 ArgPointer	EQU	[BP+18]
 EnvPointer	EQU	[BP+14]
 ReturnCodes	EQU	[BP+10]
-PgmPointer	EQU	[BP+6]
+PGMPOINTER	EQU	[BP+6]
 
 DOSEXECPGM	PROC	FAR
 		CALL	@INIT

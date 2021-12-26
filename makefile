@@ -38,6 +38,9 @@ build: .SYMBOLIC
 	@cd fm
 	@$(MAKE) -h
 	@cd ..
+	@cd nls
+	@$(MAKE) -h
+	@cd ..
 	@cd ioctl
 	@$(MAKE) -h
 	@cd ..
