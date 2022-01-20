@@ -8,7 +8,17 @@ ALL: ../lib/$(PROJ).lib ..\dll\$(PROJ)calls.dll
 OBJS=dosbeep.obj dosqsysinfo.obj dosdevconfig.obj dosgetdatetime.obj doserror.obj &
 dosexecpgm.obj dosexit.obj dosexitlist.obj dosgetenv.obj dosgetpid.obj dosportaccess.obj &
 doscliaccess.obj dosgetmachinemode.obj dosgetversion.obj dossleep.obj dossetdatetime.obj dossetvec.obj dosgetinfoseg.obj &
-dosholdsignal.obj dossystrace.obj dosgetstda.obj
+dosholdsignal.obj dossystrace.obj dosgetstda.obj dosclosequeue.obj dosclosesem.obj &
+doscreatesem.obj doscreatequeue.obj doscreatethread.obj doscwait.obj dosentercritsec.obj &
+dosexitcritsec.obj dosflagprocess.obj dosgetprty.obj doskillprocess.obj &
+dosmakepipe.obj dosmonclose.obj dosmonopen.obj dosmonread.obj dosmonreg.obj dosmonwrite.obj &
+dosmuxsemwait.obj dosopenqueue.obj dosopensem.obj dospeekqueue.obj dospfsactivate.obj &
+dospfscloseuser.obj dospfsinit.obj dospfsqueryact.obj dospfsverifyfont.obj dosphysicaldisk.obj &
+dosptrace.obj dospurgequeue.obj dosqueryqueue.obj dosreadqueue.obj dosresumethread.obj &
+dosscanenv.obj dossearchpath.obj dosselectsession.obj dossemclear.obj dossemrequest.obj &
+dossemset.obj dossemsetwait.obj dossemwait.obj dossendsignal.obj dossetprty.obj dossetsession.obj &
+dosstartsession.obj dosstopsession.obj dossuspendthread.obj dostimerasync.obj &
+dostimerstart.obj dostimerstop.obj doswritequeue.obj
 
 #dossetsighandler.obj dosfreemodule.obj dosgetmodule.obj dosgetprocaddr.obj
 

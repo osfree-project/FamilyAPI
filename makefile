@@ -83,6 +83,9 @@ clean: .SYMBOLIC
         cd fm
 	@$(MAKE) -h clean
 	cd ..
+	@cd nls
+	@$(MAKE) -h clean
+	@cd ..
 	cd ioctl
 	@$(MAKE) -h clean
 	cd ..
