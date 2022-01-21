@@ -3,7 +3,7 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief DosReallocHuge DOS wrapper
+;   @brief DosAllocSeg DOS wrapper
 ;
 ;   (c) osFree Project 2018, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
@@ -13,22 +13,23 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
+;   Documentation: http://osfree.org/doku/en:docs:fapi:dosallocseg
+;
 ;*/
 
 .8086
+		INCLUDE	GLOBALVARS.INC
 
-		; Helpers
-		INCLUDE	helpers.inc
+EXTERN		DOS16PSIZESEG: PROC
+EXTERN		DOS16RSIZESEG: PROC
 
-_TEXT		SEGMENT DWORD PUBLIC 'CODE' USE16
+_TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-		@PROLOG	DOS16RREALLOCHUGE
-NumSeg		DW	?
-Size_		DW	?
-Selector	DW	?
-		@START	DOS16RREALLOCHUGE
-; code here
-		@EPILOG	DOS16RREALLOCHUGE
+DOSSIZESEG	PROC
+		CMP	DPMI, 0FFFFH
+		JZ	DOS16PSIZESEG
+		JMP	DOS16RSIZESEG
+DOSSIZESEG	ENDP
 
 _TEXT		ENDS
 

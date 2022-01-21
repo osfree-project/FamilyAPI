@@ -3,7 +3,7 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief DosReallocHuge DOS wrapper
+;   @brief DosSizeSeg DOS wrapper
 ;
 ;   (c) osFree Project 2018, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
@@ -18,17 +18,16 @@
 .8086
 
 		; Helpers
-		INCLUDE	helpers.inc
+		INCLUDE	HELPERS.INC
+		INCLUDE DOS.INC
 
-_TEXT		SEGMENT DWORD PUBLIC 'CODE' USE16
+_TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-		@PROLOG	DOS16RREALLOCHUGE
-NumSeg		DW	?
-Size_		DW	?
-Selector	DW	?
-		@START	DOS16RREALLOCHUGE
-; code here
-		@EPILOG	DOS16RREALLOCHUGE
+		@PROLOG	DOS16RSIZESEG
+		@START	DOS16RSIZESEG
+		XOR		AX,AX
+EXIT:
+		@EPILOG	DOS16RSIZESEG
 
 _TEXT		ENDS
 

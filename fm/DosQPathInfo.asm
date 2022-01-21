@@ -3,7 +3,7 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief DosGetPathInfo DOS wrapper
+;   @brief DosQPathInfo DOS wrapper
 ;
 ;   (c) osFree Project 2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
@@ -25,11 +25,11 @@
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-		@PROLOG	DOSGETPATHINFO
-		@START	DOSGETPATHINFO
+		@PROLOG	DOSQPATHINFO
+		@START	DOSQPATHINFO
 	XOR AX,AX
 EXIT:
-		@EPILOG	DOSGETPATHINFO
+		@EPILOG	DOSQPATHINFO
 
 _TEXT		ENDS
 
