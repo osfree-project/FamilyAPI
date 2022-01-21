@@ -5,7 +5,7 @@ PROJ=nls
 
 ALL: ../lib/$(PROJ).lib
 
-OBJS=dosgetmessage.obj doscasemap.obj dossetctrycode.obj dosgetcp.obj dossetcp.obj dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosgetctryinfo.obj dosgetdbcsev.obj dossetproccp.obj
+OBJS=dosgetmessage.obj doscasemap.obj dossetctrycode.obj dosgetcp.obj dossetcp.obj dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosgetctryinfo.obj dosgetdbcsev.obj dossetproccp.obj dosgetcollate.obj
 
 ../lib/$(PROJ).lib:  $(OBJS) 
 	@echo LIB $@

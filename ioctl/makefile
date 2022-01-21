@@ -11,13 +11,17 @@ IomSetEventMask.asm IomSetMouStatus.asm IomSetProtDrawAddress.asm IomSetPtrPos.a
 IomSetScaleFactors.asm IomUnmarkCollisionArea.asm IomUpdateDisplayMode.asm IomVer.asm IopGetFrame.asm IopGetRetry.asm &
 IopGetStatus.asm IopInit.asm IopSetFrame.asm IopSetRetry.asm IosSetBaud.asm IosSetLine.asm
 
-OBJS=dosdevioctl.obj
+OBJS=dosdevioctl.obj dosdevioctl2.obj
 
 ..\lib\ioctl.lib: $(OBJS)
 	@echo LIB $@
 	@wlib -q -fo $@ $(OBJS)
 
 dosdevioctl.obj: dosdevioctl.asm Cat01.asm Cat02.asm Cat03.asm Cat04.asm Cat05.asm Cat06.asm Cat07.asm Cat08.asm Cat09.asm Cat10.asm Cat11.asm $(ASMS)
+	@echo ASM $<
+	@jwasm.exe -q -I..\include $*.asm
+
+dosdevioctl2.obj: dosdevioctl2.asm
 	@echo ASM $<
 	@jwasm.exe -q -I..\include $*.asm
 
