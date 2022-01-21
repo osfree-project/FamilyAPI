@@ -2,6 +2,7 @@
 		.8086
 
 	public	DOSFINDFIRST
+	public	DOSFINDFIRST2
 	public	SETFINDBUF
 	public	DOSFINDNEXT
 	public	DOSFINDCLOSE
@@ -11,6 +12,9 @@ FindBuffer 	db 43 dup (0)
 _DATA 	ends
 
 _TEXT	segment byte public 'CODE' USE16
+
+DOSFINDFIRST2 proc
+DOSFINDFIRST2 endp
 
 DOSFINDFIRST proc
 		push	bp
