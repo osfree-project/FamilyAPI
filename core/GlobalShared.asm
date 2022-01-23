@@ -13,6 +13,68 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
+;   GlobalInit function initializes global structures and resources of
+;   FamilyAPI. It fills GInfoSeg and LInfoSeg structures for future uses
+;   in CPI functions.
+;
+;   GInfoSeg handled in follow logic:
+;
+;  gis_time                dd  ? ;time in seconds
+;  gis_msecs               dd  ? ;milliseconds
+;  gis_hour                db  ? ;hours
+;  gis_minutes             db  ? ;minutes
+;  gis_seconds             db  ? ;seconds
+;  gis_hundredths          db  ? ;hundredths
+;  gis_timezone            dw  ? ;minutes from UTC
+;  gis_cusecTimerInterval  dw  ? ;timer interval (units = 0.0001 seconds)
+;  gis_day                 db  ? ;day
+;  gis_month               db  ? ;month
+;  gis_year                dw  ? ;year
+;  gis_weekday             db  ? ;day of week
+;
+;   Above fields updated using Int 08H handler (except timezone)
+;
+;  gis_uchMajorVersion     db  ? ;major version number
+;  gis_uchMinorVersion     db  ? ;minor version number
+;  gis_chRevisionLetter    db  ? ;revision letter
+;
+;   Above fileds filled once at startup to DOS versions
+;
+;  gis_sgCurrent           db  1 ;current foreground session
+;  gis_sgMax               db  1 ;maximum number of sessions
+;
+;    Above fields filled with 1 and 1 because FamilyAPI support only 1 session
+;
+;  gis_cHugeShift          db  12 ;shift count for huge elements 
+;
+;    Above field is predefined for real mode DOS and filled via DPMI api for protected mode DOS
+;
+;  gis_fProtectModeOnly    db  0 ;protect mode only indicator
+;
+;  gis_pidForeground       dw  ? ;pid of last process in foreground session
+;  gis_fDynamicSched       db  ? ;dynamic variation flag
+;
+;
+;
+;  gis_csecMaxWait         db  ? ;max wait in seconds
+;  gis_cmsecMinSlice       dw  ? ;minimum timeslice (milliseconds)
+;  gis_cmsecMaxSlice       dw  ? ;maximum timeslice (milliseconds)
+;
+;  gis_bootdrive           dw  ? ;drive from which the system was booted
+;
+;    Above filed contains boot drive
+;
+;  gis_amecRAS             db  32 dup (?) ;system trace major code flag bits
+;
+;    Above field is used to turn on or off trace faculty. By default all traces is off.
+;
+;  gis_csgWindowableVioMax db  0 ;maximum number of VIO windowable sessions
+;  gis_csgPMMax            db  0 ;maximum number of pres. services sessions
+;
+;   Above fields always 0 because no Presentation Manager support in Family API.
+;
+;  Used interrupts:
+;
 ;---------------------------------------
 ;INT 21 - DOS 2+ - GET DOS VERSION
 ;        AH = 30h
@@ -52,10 +114,11 @@
 		INCLUDE	BSEERR.INC
 		INCLUDE	GLOBALVARS.INC
 
-_GINFOSEG SEGMENT BYTE PUBLIC 'DATA' USE16
+_GINFOSEG SEGMENT PARA PUBLIC 'DATA' USE16
 EXTERN gis_uchMajorVersion: BYTE
 EXTERN gis_uchMinorVersion: BYTE
 EXTERN gis_chRevisionLetter: BYTE
+EXTERN gis_bootdrive: WORD
 _GINFOSEG ENDS
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -77,12 +140,16 @@ GLOBALINIT	PROC NEAR
 		MOV	[ES:gis_uchMinorVersion],AL
 		MOV	BX, AX
 		MOV	AX, 0FFFFH
+		CMP	BX, 141EH	; >=20.30 OS/2 Warp 3+
+		JAE	DOS2030
 		CMP	BX, 0A14H	; >=10.20 OS/2 1.2+
-		JAE	DOS10
+		JAE	DOS1020
 		CMP	BX, 0A00H	; >=10.00 OS/2 1.0+
 		JAE	DOS10
 		CMP	BX, 0700H	; >=07.00 Windows 95+
 		JAE	DOS7
+		CMP	BX, 0400H	; >=04.00 MS-DOS 4.0+
+		JAE	DOS4
 		CMP	BX, 0303H	; >=03.03 MS-DOS 3.3+
 		JAE	DOS33
 		CMP	BX, 0300H	; >=03.00 MS-DOS 3.0+
@@ -92,17 +159,36 @@ GLOBALINIT	PROC NEAR
 		JMP	LFNCHECK
 ; TODO ERROR AND EXIT
 
+DOS2030:	MOV	[DOS2030API], AX
+		MOV	[DOS1020API], AX
+		MOV	[DOS10API], AX
+		JMP	DOS4
+
 DOS1020:	MOV	[DOS1020API], AX
 DOS10:		MOV	[DOS10API], AX
 		JMP	DOS33
 DOS7:
 		MOV	[DOS7API], AX
+DOS4:
+		MOV	[DOS4API], AX
 DOS33:
 		MOV	[DOS33API], AX
 DOS3:
 		MOV	[DOS3API], AX
 DOS2:
 		MOV	[DOS2API], AX
+
+; Boot drive
+		CMP	DOS4API, 0FFFFH
+		JNZ	NOTBOOTAPI
+		CMP	DOS2030API, 0FFFFH
+		JNZ	NOTBOOTAPI
+		MOV	AX, 3305H
+		INT	21H
+		XOR	DH,DH
+		MOV	[ES:gis_bootdrive],DX
+NOTBOOTAPI:
+
 ; Environment & cmdline
 		GET_PSP
 		MOV	ES,BX
@@ -294,3 +380,5 @@ OLD_CS DW 00 ;address of interrupt vector
 HOOK08H:	ENDP
 
 		END
+
+

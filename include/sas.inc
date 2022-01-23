@@ -1,3 +1,10 @@
+;
+; System Anchor Structure
+;
+; This is main system structure which uset to access to all system data.
+; It is similar to BURGERMASTER structure of Windows system.
+;
+
 SAS			struc
 SAS_signature		DD	?	; 'SAS '
 SAS_tables_data		DW	?	; offset to tables section

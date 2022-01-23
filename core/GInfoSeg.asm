@@ -4,8 +4,9 @@ PUBLIC gis_cHugeShift
 PUBLIC gis_uchMajorVersion
 PUBLIC gis_uchMinorVersion
 PUBLIC gis_chRevisionLetter
+PUBLIC gis_bootdrive
 
-_GINFOSEG SEGMENT BYTE PUBLIC 'DATA' USE16
+_GINFOSEG SEGMENT PARA PUBLIC 'DATA' USE16
   gis_time                dd  ? ;time in seconds
   gis_msecs               dd  ? ;milliseconds
   gis_hour                db  ? ;hours
@@ -21,7 +22,7 @@ _GINFOSEG SEGMENT BYTE PUBLIC 'DATA' USE16
   gis_uchMajorVersion     db  ? ;major version number
   gis_uchMinorVersion     db  ? ;minor version number
   gis_chRevisionLetter    db  ? ;revision letter
-  gis_sgCurrent           db  ? ;current foreground session
+  gis_sgCurrent           db  1 ;current foreground session
   gis_sgMax               db  1 ;maximum number of sessions
   gis_cHugeShift          db  12 ;shift count for huge elements
   gis_fProtectModeOnly    db  0 ;protect mode only indicator
@@ -30,7 +31,7 @@ _GINFOSEG SEGMENT BYTE PUBLIC 'DATA' USE16
   gis_csecMaxWait         db  ? ;max wait in seconds
   gis_cmsecMinSlice       dw  ? ;minimum timeslice (milliseconds)
   gis_cmsecMaxSlice       dw  ? ;maximum timeslice (milliseconds)
-  gis_bootdrive           dw  ? ;drive from which the system was booted
+  gis_bootdrive           dw  1 ;drive from which the system was booted
   gis_amecRAS             db  32 dup (?) ;system trace major code flag bits
   gis_csgWindowableVioMax db  0 ;maximum number of VIO windowable sessions
   gis_csgPMMax            db  0 ;maximum number of pres. services sessions
