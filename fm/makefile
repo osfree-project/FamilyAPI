@@ -6,7 +6,8 @@ ALL: ..\lib\fm.lib
 OBJS=dosbufreset.obj doschdir.obj dosmkdir.obj dosclose.obj dosduphandle.obj dosfirst.obj dosfilelocks.obj dosmove.obj dosnewsize.obj dosopen.obj dosqcurdir.obj &
 dosqcurdisk.obj dosqfileinfo.obj dosqfsinfo.obj dosrmdir.obj dosqverify.obj dosqfilemode.obj dosqhandtype.obj dosread.obj doschgfileptr.obj dossetfileinfo.obj &
 dossetfilemode.obj dosselectdisk.obj dossetverify.obj doswrite.obj dosdelete.obj dossetmaxfh.obj dossetfhandstate.obj &
-dossetfsinfo.obj doswriteasync.obj dosqfhandstate.obj dosreadasync.obj
+dossetfsinfo.obj doswriteasync.obj dosqfhandstate.obj dosreadasync.obj dosenumattribute.obj doseditname.obj &
+dosmkdir2.obj dosopen2.obj dossetpathinfo.obj dosqpathinfo.obj
 
 ..\lib\fm.lib: $(OBJS)
 	@echo LIB $@

@@ -3,9 +3,9 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief DosReallocHuge DOS wrapper
+;   @brief DosErrClass DOS wrapper
 ;
-;   (c) osFree Project 2018, <http://www.osFree.org>
+;   (c) osFree Project 2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -20,15 +20,12 @@
 		; Helpers
 		INCLUDE	helpers.inc
 
-_TEXT		SEGMENT DWORD PUBLIC 'CODE' USE16
+_TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-		@PROLOG	DOS16RREALLOCHUGE
-NumSeg		DW	?
-Size_		DW	?
-Selector	DW	?
-		@START	DOS16RREALLOCHUGE
-; code here
-		@EPILOG	DOS16RREALLOCHUGE
+		@PROLOG	DOSERRCLASS
+		@START	DOSERRCLASS
+		XOR	AX, AX
+		@EPILOG	DOSERRCLASS
 
 _TEXT		ENDS
 

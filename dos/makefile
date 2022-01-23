@@ -18,7 +18,7 @@ dosptrace.obj dospurgequeue.obj dosqueryqueue.obj dosreadqueue.obj dosresumethre
 dosscanenv.obj dossearchpath.obj dosselectsession.obj dossemclear.obj dossemrequest.obj &
 dossemset.obj dossemsetwait.obj dossemwait.obj dossendsignal.obj dossetprty.obj dossetsession.obj &
 dosstartsession.obj dosstopsession.obj dossuspendthread.obj dostimerasync.obj &
-dostimerstart.obj dostimerstop.obj doswritequeue.obj
+dostimerstart.obj dostimerstop.obj doswritequeue.obj doserrclass.obj
 
 #dossetsighandler.obj dosfreemodule.obj dosgetmodule.obj dosgetprocaddr.obj
 

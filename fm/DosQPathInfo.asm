@@ -3,9 +3,9 @@
 ;
 ;   @ingroup fapi
 ;
-;   @brief DosReallocHuge DOS wrapper
+;   @brief DosQPathInfo DOS wrapper
 ;
-;   (c) osFree Project 2018, <http://www.osFree.org>
+;   (c) osFree Project 2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -18,17 +18,18 @@
 .8086
 
 		; Helpers
-		INCLUDE	helpers.inc
+		INCLUDE	HELPERS.INC
+		INCLUDE DOS.INC
+		INCLUDE BSEERR.INC
 
-_TEXT		SEGMENT DWORD PUBLIC 'CODE' USE16
 
-		@PROLOG	DOS16RREALLOCHUGE
-NumSeg		DW	?
-Size_		DW	?
-Selector	DW	?
-		@START	DOS16RREALLOCHUGE
-; code here
-		@EPILOG	DOS16RREALLOCHUGE
+_TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
+
+		@PROLOG	DOSQPATHINFO
+		@START	DOSQPATHINFO
+	XOR AX,AX
+EXIT:
+		@EPILOG	DOSQPATHINFO
 
 _TEXT		ENDS
 
