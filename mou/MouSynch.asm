@@ -30,6 +30,7 @@ FLWAIT	DW	?
 		CALL	PreMouSynch
 ; code here
 		CALL	PostMouSynch
+		XOR		AX, AX
 		@MOUEPILOG	MOUSYNCH
 
 _TEXT		ENDS
