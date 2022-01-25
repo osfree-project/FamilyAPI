@@ -5,7 +5,7 @@ PROJ=kbd
 
 OBJS=kbdroute.obj kbdcharin.obj kbdpeek.obj kbdflushbuffer.obj kbdgetstatus.obj kbdsetstatus.obj &
 kbdstringin.obj kbdopen.obj kbdclose.obj kbdgetfocus.obj kbdfreefocus.obj kbdgetcp.obj &
-kbdsetcp.obj kbdxlate.obj kbdsetcustxt.obj kbdgethwid.obj
+kbdsetcp.obj kbdxlate.obj kbdsetcustxt.obj kbdgethwid.obj debug.obj
 
 EXPORT=  KBDSETCUSTXT.1 RESIDENT,     &
 #           KBDINIT.2 RESIDENT,   &
@@ -33,7 +33,7 @@ EXPORT=  KBDSETCUSTXT.1 RESIDENT,     &
            KBDGETHWID.24 RESIDENT
 #           KBDSETHWID.25 RESIDENT
 
-IMPORT=bkscalls.lib
+IMPORT=bkscalls.lib import VioWrtTTY VIOCALLS.19
 
 !include <..\dll.mk>
 

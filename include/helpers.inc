@@ -155,14 +155,18 @@ MOUARGS		ENDS
 
 MOU_ARG_SIZE	EQU	(SIZE MOUARGS)
 
-NAME		PROC	NEAR
+NAME		PROC	FAR
+			PUSH	BP
+			MOV		BP, SP
 
 		ENDM
 
 ;------------------------------------------------------------
 
 @MOUEPILOG		MACRO	NAME
-		RET	MOU_ARG_SIZE
+			MOV		SP, BP
+			POP		BP
+			RET	MOU_ARG_SIZE
 NAME		ENDP
 		ENDM
 		
@@ -341,17 +345,17 @@ NAME		ENDP
 		PUSH	CX
 		PUSH	DX
 		PUSH	BX
-		PUSH	SP
 		PUSH	BP
 		PUSH	SI
 		PUSH	DI
+		PUSH	DS
 		ENDM
 
 @POPA	MACRO
+		POP	DS
 		POP	DI
 		POP	SI
 		POP	BP
-		POP	AX
 		POP	BX
 		POP	DX
 		POP	CX

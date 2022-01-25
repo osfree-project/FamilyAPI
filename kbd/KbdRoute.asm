@@ -25,11 +25,14 @@ KBDFUNCTIONMASK		DD	0	; KBD FUNCTIONS REDIRECTION MASK
 
 _DATA		ENDS
 
-EXTERN		BKSMAIN: PROC		; SUBJECT TO MOVE TO DLL
+EXTERN	PreKbdRoute: PROC
+EXTERN	PostKbdRoute: PROC
+EXTERN		BKSMAIN: PROC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 KBDROUTE	PROC	NEAR
+		CALL	PreKbdRoute
 		JNZ	BKS		; Skip if AKS not registered
 ;Call alternate keyboard subsystem if function routed
 		PUSH	DS		; caller data segment
@@ -58,6 +61,7 @@ BKS:
 		CALL	FAR PTR BKSMAIN
 		POP	DS
 @@:
+		CALL	PostKbdRoute
 		RET	2
 KBDROUTE	ENDP
 
