@@ -12,7 +12,7 @@ viowrtnattr.obj viogetcp.obj viosetcp.obj viogetfont.obj viomodewait.obj viomode
 viogetcurpos.obj vioscrollup.obj vioscrolldn.obj viowrttty.obj &
 viosetansi.obj viogetansi.obj viogetmode.obj vioscrlock.obj vioscrunlock.obj viogetconfig.obj &
 viowrtcharstratt.obj viowrtcellstr.obj viowrtcharstr.obj viosetmode.obj viosetcurpos.obj viowrtnchar.obj &
-viowrtncell.obj debug.obj
+viowrtncell.obj vioreadcellstr.obj debug.obj
 
 #vioderegister.obj vioregister.obj
 
@@ -39,7 +39,7 @@ EXPORT=	VIOENDPOPUP.1 RESIDENT,            &
 	VIOGETMODE.21 RESIDENT,            &
 	VIOSETMODE.22 RESIDENT,            &
 	VIOSCRLOCK.23 RESIDENT,            &
-#	VIOREADCELLSTR.24 RESIDENT,        &
+	VIOREADCELLSTR.24 RESIDENT,        &
 	VIOSAVREDRAWWAIT.25 RESIDENT,      &
 	VIOWRTNATTR.26 RESIDENT,           &
 	VIOGETCURTYPE.27 RESIDENT,         &

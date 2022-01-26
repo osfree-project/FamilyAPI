@@ -31,13 +31,8 @@ COLUMN		DW	?		;Starting column position for output
 ROW		DW	?		;Starting row position for output
 CTIMES		DW	?		;Repeat count
 CELL		DD	?		;Character to be written
-		@VIOSTART VIOWRTNCELL
-	        MOV	AX, VI_VIOWRTNCELL
-		PUSH	AX
-		MOV	AX, WORD PTR VIOFUNCTIONMASK1
-		AND	AX, LOWWORD VR_VIOWRTNCELL
-		CMP	AX, LOWWORD VR_VIOWRTNCELL
-	        CALL    VIOROUTE
-		@VIOEPILOG VIOWRTNCELL
+		@VIOSTART	VIOWRTNCELL
+		@VIOROUTE	VIOWRTNCELL, 1, 0
+		@VIOEPILOG	VIOWRTNCELL
 _TEXT	ends
 	end
