@@ -18,7 +18,7 @@ dosptrace.obj dospurgequeue.obj dosqueryqueue.obj dosreadqueue.obj dosresumethre
 dosscanenv.obj dossearchpath.obj dosselectsession.obj dossemclear.obj dossemrequest.obj &
 dossemset.obj dossemsetwait.obj dossemwait.obj dossendsignal.obj dossetprty.obj dossetsession.obj &
 dosstartsession.obj dosstopsession.obj dossuspendthread.obj dostimerasync.obj &
-dostimerstart.obj dostimerstop.obj doswritequeue.obj doserrclass.obj
+dostimerstart.obj dostimerstop.obj doswritequeue.obj doserrclass.obj debug.obj
 
 #dossetsighandler.obj dosfreemodule.obj dosgetmodule.obj dosgetprocaddr.obj
 
@@ -35,6 +35,7 @@ dostimerstart.obj dostimerstop.obj doswritequeue.obj doserrclass.obj
 	file ..\lib\fm.lib 
 	file ..\lib\nls.lib 
 	file ..\lib\ioctl.lib
+	import VioWrtTTY VIOCALLS.19
 <<
 
 ../lib/$(PROJ).lib:  $(OBJS) 
