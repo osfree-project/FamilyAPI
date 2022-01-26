@@ -11,7 +11,8 @@ viopopup.obj vioendpopup.obj viosavredrawwait.obj viosavredrawundo.obj vioprtsc.
 viowrtnattr.obj viogetcp.obj viosetcp.obj viogetfont.obj viomodewait.obj viomodeundo.obj viomodewait.obj &
 viogetcurpos.obj vioscrollup.obj vioscrolldn.obj viowrttty.obj &
 viosetansi.obj viogetansi.obj viogetmode.obj vioscrlock.obj vioscrunlock.obj viogetconfig.obj &
-viowrtcharstratt.obj viowrtcellstr.obj viowrtcharstr.obj viosetmode.obj viosetcurpos.obj viowrtnchar.obj viowrtncell.obj
+viowrtcharstratt.obj viowrtcellstr.obj viowrtcharstr.obj viosetmode.obj viosetcurpos.obj viowrtnchar.obj &
+viowrtncell.obj debug.obj
 
 #vioderegister.obj vioregister.obj
 
@@ -91,6 +92,6 @@ EXPORT=	VIOENDPOPUP.1 RESIDENT,            &
 #	VIOCHECKCHARTYPE.75 RESIDENT,      &
 #	XVIOGETCASTATE.76 RESIDENT
 
-IMPORT=bvscalls.lib 
+IMPORT=bvscalls.lib import VioWrtTTY VIOCALLS.19
 
 !include <..\dll.mk>

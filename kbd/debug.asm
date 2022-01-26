@@ -7,70 +7,70 @@ EXTERN	VioWrtTTY: Far
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 PreKbdCharInMsg				DB	'PreKbdCharIn', 0dh, 0ah
-PreKbdCharInMsgSize			EQU	($-PreKbdCharIn)
+PreKbdCharInMsgSize			EQU	($-PreKbdCharInMsg)
 PreKbdCloseMsg				DB	'PreKbdClose', 0dh, 0ah
-PreKbdCloseMsgSize			EQU	($-PreKbdClose)
+PreKbdCloseMsgSize			EQU	($-PreKbdCloseMsg)
 PreKbdFlushBufferMsg		DB	'PreKbdFlushBuffer', 0dh, 0ah
-PreKbdFlushBufferMsgSize	EQU	($-PreKbdFlushBuffer)
+PreKbdFlushBufferMsgSize	EQU	($-PreKbdFlushBufferMsg)
 PreKbdFreeFocusMsg			DB	'PreKbdFreeFocus', 0dh, 0ah
-PreKbdFreeFocusMsgSize		EQU	($-PreKbdFreeFocus)
+PreKbdFreeFocusMsgSize		EQU	($-PreKbdFreeFocusMsg)
 PreKbdGetCpMsg				DB	'PreKbdGetCp', 0dh, 0ah
-PreKbdGetCpMsgSize			EQU	($-PreKbdGetCp)
+PreKbdGetCpMsgSize			EQU	($-PreKbdGetCpMsg)
 PreKbdGetFocusMsg			DB	'PreKbdGetFocus', 0dh, 0ah
-PreKbdGetFocusMsgSize		EQU	($-PreKbdGetFocus)
+PreKbdGetFocusMsgSize		EQU	($-PreKbdGetFocusMsg)
 PreKbdGetHWIdMsg			DB	'PreKbdGetHWId', 0dh, 0ah
-PreKbdGetHWIdMsgSize		EQU	($-PreKbdGetHWId)
+PreKbdGetHWIdMsgSize		EQU	($-PreKbdGetHWIdMsg)
 PreKbdGetStatusMsg			DB	'PreKbdGetStatus', 0dh, 0ah
-PreKbdGetStatusMsgSize		EQU	($-PreKbdGetStatus)
+PreKbdGetStatusMsgSize		EQU	($-PreKbdGetStatusMsg)
 PreKbdOpenMsg				DB	'PreKbdOpen', 0dh, 0ah
-PreKbdOpenMsgSize			EQU	($-PreKbdOpen)
+PreKbdOpenMsgSize			EQU	($-PreKbdOpenMsg)
 PreKbdPeekMsg				DB	'PreKbdPeek', 0dh, 0ah
-PreKbdPeekMsgSize			EQU	($-PreKbdPeek)
+PreKbdPeekMsgSize			EQU	($-PreKbdPeekMsg)
 PreKbdRouteMsg				DB	'PreKbdRoute', 0dh, 0ah
-PreKbdRouteMsgSize			EQU	($-PreKbdRoute)
+PreKbdRouteMsgSize			EQU	($-PreKbdRouteMsg)
 PreKbdSetCpMsg				DB	'PreKbdSetCp', 0dh, 0ah
-PreKbdSetCpMsgSize			EQU	($-PreKbdSetCp)
+PreKbdSetCpMsgSize			EQU	($-PreKbdSetCpMsg)
 PreKbdSetCustXtMsg			DB	'PreKbdSetCustXt', 0dh, 0ah
-PreKbdSetCustXtMsgSize		EQU	($-PreKbdSetCustXt)
+PreKbdSetCustXtMsgSize		EQU	($-PreKbdSetCustXtMsg)
 PreKbdSetStatusMsg			DB	'PreKbdSetStatus', 0dh, 0ah
-PreKbdSetStatusMsgSize		EQU	($-PreKbdSetStatus)
+PreKbdSetStatusMsgSize		EQU	($-PreKbdSetStatusMsg)
 PreKbdStringInMsg			DB	'PreKbdStringIn', 0dh, 0ah
-PreKbdStringInMsgSize		EQU	($-PreKbdStringIn)
+PreKbdStringInMsgSize		EQU	($-PreKbdStringInMsg)
 PreKbdXlateMsg				DB	'PreKbdXlate', 0dh, 0ah
-PreKbdXlateMsgSize			EQU	($-PreKbdXlate)
+PreKbdXlateMsgSize			EQU	($-PreKbdXlateMsg)
 
 PostKbdCharInMsg			DB	'PostKbdCharIn', 0dh, 0ah
-PostKbdCharInMsgSize		EQU	($-PostKbdCharIn)
+PostKbdCharInMsgSize		EQU	($-PostKbdCharInMsg)
 PostKbdCloseMsg				DB	'PostKbdClose', 0dh, 0ah
-PostKbdCloseMsgSize			EQU	($-PostKbdClose)
+PostKbdCloseMsgSize			EQU	($-PostKbdCloseMsg)
 PostKbdFlushBufferMsg		DB	'PostKbdFlushBuffer', 0dh, 0ah
-PostKbdFlushBufferMsgSize	EQU	($-PostKbdFlushBuffer)
+PostKbdFlushBufferMsgSize	EQU	($-PostKbdFlushBufferMsg)
 PostKbdFreeFocusMsg			DB	'PostKbdFreeFocus', 0dh, 0ah
-PostKbdFreeFocusMsgSize		EQU	($-PostKbdFreeFocus)
+PostKbdFreeFocusMsgSize		EQU	($-PostKbdFreeFocusMsg)
 PostKbdGetCpMsg				DB	'PostKbdGetCp', 0dh, 0ah
-PostKbdGetCpMsgSize			EQU	($-PostKbdGetCp)
+PostKbdGetCpMsgSize			EQU	($-PostKbdGetCpMsg)
 PostKbdGetFocusMsg			DB	'PostKbdGetFocus', 0dh, 0ah
-PostKbdGetFocusMsgSize		EQU	($-PostKbdGetFocus)
+PostKbdGetFocusMsgSize		EQU	($-PostKbdGetFocusMsg)
 PostKbdGetHWIdMsg			DB	'PostKbdGetHWId', 0dh, 0ah
-PostKbdGetHWIdMsgSize		EQU	($-PostKbdGetHWId)
+PostKbdGetHWIdMsgSize		EQU	($-PostKbdGetHWIdMsg)
 PostKbdGetStatusMsg			DB	'PostKbdGetStatus', 0dh, 0ah
-PostKbdGetStatusMsgSize		EQU	($-PostKbdGetStatus)
+PostKbdGetStatusMsgSize		EQU	($-PostKbdGetStatusMsg)
 PostKbdOpenMsg				DB	'PostKbdOpen', 0dh, 0ah
-PostKbdOpenMsgSize			EQU	($-PostKbdOpen)
+PostKbdOpenMsgSize			EQU	($-PostKbdOpenMsg)
 PostKbdPeekMsg				DB	'PostKbdPeek', 0dh, 0ah
-PostKbdPeekMsgSize			EQU	($-PostKbdPeek)
+PostKbdPeekMsgSize			EQU	($-PostKbdPeekMsg)
 PostKbdRouteMsg				DB	'PostKbdRoute', 0dh, 0ah
-PostKbdRouteMsgSize			EQU	($-PostKbdRoute)
+PostKbdRouteMsgSize			EQU	($-PostKbdRouteMsg)
 PostKbdSetCpMsg				DB	'PostKbdSetCp', 0dh, 0ah
-PostKbdSetCpMsgSize			EQU	($-PostKbdSetCp)
+PostKbdSetCpMsgSize			EQU	($-PostKbdSetCpMsg)
 PostKbdSetCustXtMsg			DB	'PostKbdSetCustXt', 0dh, 0ah
-PostKbdSetCustXtMsgSize		EQU	($-PostKbdSetCustXt)
+PostKbdSetCustXtMsgSize		EQU	($-PostKbdSetCustXtMsg)
 PostKbdSetStatusMsg			DB	'PostKbdSetStatus', 0dh, 0ah
-PostKbdSetStatusMsgSize		EQU	($-PostKbdSetStatus)
+PostKbdSetStatusMsgSize		EQU	($-PostKbdSetStatusMsg)
 PostKbdStringInMsg			DB	'PostKbdStringIn', 0dh, 0ah
-PostKbdStringInMsgSize		EQU	($-PostKbdStringIn)
+PostKbdStringInMsgSize		EQU	($-PostKbdStringInMsg)
 PostKbdXlateMsg				DB	'PostKbdXlate', 0dh, 0ah
-PostKbdXlateMsgSize			EQU	($-PostKbdXlate)
+PostKbdXlateMsgSize			EQU	($-PostKbdXlateMsg)
 
 _DATA		ENDS
 
