@@ -2,7 +2,7 @@
 
 		include helpers.inc
 
-EXTERN	VioWrtTTY: Far
+EXTERN	VIOWRTTTY: Far
 
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 

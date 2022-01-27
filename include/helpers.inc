@@ -87,15 +87,15 @@ NAME		ENDP
 
 DELTA		=	0
 
-VIOARGS		STRUC
+@CATSTR(NAME,VIOARGS)		STRUC
 		ENDM
 
 ;----------------------------------------------------------------------
 
 @VIOSTART	MACRO	NAME
-VIOARGS		ENDS
-
-VIO_ARG_SIZE	EQU	(SIZE VIOARGS)
+@CATSTR(NAME,VIOARGS)		ENDS
+argsize=SIZE @CATSTR(NAME,VIOARGS)
+@CATSTR(NAME,VIO_ARG_SIZE)	EQU	argsize
 
 NAME		PROC	FAR
 ;		CALL	GLOBALINIT
@@ -105,7 +105,7 @@ NAME		PROC	FAR
 ;------------------------------------------------------------
 
 @VIOEPILOG		MACRO	NAME
-		RET	VIO_ARG_SIZE
+		RET	@CATSTR(NAME,VIO_ARG_SIZE)
 NAME		ENDP
 		ENDM
 
@@ -375,7 +375,7 @@ NAME		ENDP
 		PUSH	AX
 		MOV		AX,0
 		PUSH	AX
-		CALL	VioWrtTTY
+		CALL	VIOWRTTTY
 		@POPA
 		POPF
 		ENDM

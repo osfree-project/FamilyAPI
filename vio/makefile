@@ -5,14 +5,7 @@ PROJ=vio
 
 ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
 
-OBJS=vioroute.obj vioshowbuf.obj vioreadcharstr.obj viosetfont.obj viosetcurtype.obj viogetcurtype.obj &
-viosetstate.obj viogetstate.obj vioscrolllf.obj vioscrollrt.obj viogetbuf.obj viogetphysbuf.obj &
-viopopup.obj vioendpopup.obj viosavredrawwait.obj viosavredrawundo.obj vioprtsc.obj vioprtsctoggle.obj &
-viowrtnattr.obj viogetcp.obj viosetcp.obj viogetfont.obj viomodewait.obj viomodeundo.obj viomodewait.obj &
-viogetcurpos.obj vioscrollup.obj vioscrolldn.obj viowrttty.obj &
-viosetansi.obj viogetansi.obj viogetmode.obj vioscrlock.obj vioscrunlock.obj viogetconfig.obj &
-viowrtcharstratt.obj viowrtcellstr.obj viowrtcharstr.obj viosetmode.obj viosetcurpos.obj viowrtnchar.obj &
-viowrtncell.obj vioreadcellstr.obj debug.obj
+OBJS=vioroute.obj debug.obj
 
 #vioderegister.obj vioregister.obj
 
@@ -92,6 +85,6 @@ EXPORT=	VIOENDPOPUP.1 RESIDENT,            &
 #	VIOCHECKCHARTYPE.75 RESIDENT,      &
 #	XVIOGETCASTATE.76 RESIDENT
 
-IMPORT=bvscalls.lib import VioWrtTTY VIOCALLS.19
+IMPORT=bvscalls.lib import DOSLOADMODULE DOSCALLS.44, DOSFREEMODULE DOSCALLS.46, DOSGETPROCADDR DOSCALLS.45
 
 !include <..\dll.mk>
