@@ -25,13 +25,8 @@
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-		@VIOPROLOG	VIOMODEUNDO
-Reserved	DW	?	;Reserved (must be zero)		
-KillIndic	DW	?	;Terminate indicator
-OwnerIndic	DW	?	;Ownership indicator
-		@VIOSTART	VIOMODEUNDO
-		@VIOROUTE	VIOMODEUNDO, 2, 0
-		@VIOEPILOG	VIOMODEUNDO
+@VIOPROC	VIOMODEUNDO, 2, 0, Reserved DW ?, KillIndic DW ?, OwnerIndic DW ?
+
 _TEXT		ENDS
 		END
 

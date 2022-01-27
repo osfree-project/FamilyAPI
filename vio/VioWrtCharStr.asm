@@ -26,15 +26,8 @@
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-		@VIOPROLOG	VIOWRTCHARSTR
-VIOHANDLE	DW	?		;Video handle
-COLUMN		DW	?		;Starting column position for output
-ROW		DW	?		;Starting row position for output
-SLENGTH		DW	?		;String length
-CHARSTR		DD	?		;String to be written
-		@VIOSTART	VIOWRTCHARSTR
-		@VIOROUTE	VIOWRTCHARSTR, 1, 0
-		@VIOEPILOG	VIOWRTCHARSTR
+@VIOPROC	VIOWRTCHARSTR, 1, 0, VIOHANDLE DW ?, COLUMN DW ?, ROW DW ?, SLENGTH DW ?, CHARSTR DD ?
+
 _TEXT		ENDS
 
 		END
