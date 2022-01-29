@@ -117,15 +117,16 @@ NAME		ENDP
 
 DELTA		=	0
 
-KBDARGS		STRUC
+@CATSTR(NAME,KBDARGS)		STRUC
 		ENDM
 
 ;----------------------------------------------------------------------
 
 @KBDSTART	MACRO	NAME
-KBDARGS		ENDS
 
-KBD_ARG_SIZE	EQU	(SIZE KBDARGS)
+@CATSTR(NAME,KBDARGS)		ENDS
+argsize=SIZE @CATSTR(NAME,KBDARGS)
+@CATSTR(NAME,KBD_ARG_SIZE)	EQU	argsize
 
 NAME		PROC	FAR
 
@@ -134,7 +135,7 @@ NAME		PROC	FAR
 ;------------------------------------------------------------
 
 @KBDEPILOG		MACRO	NAME
-		RET	KBD_ARG_SIZE
+		RET	@CATSTR(NAME,KBD_ARG_SIZE)
 NAME		ENDP
 		ENDM
 ;------------------------------------------------------------MOU
