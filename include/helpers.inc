@@ -138,39 +138,7 @@ NAME		PROC	FAR
 		RET	@CATSTR(NAME,KBD_ARG_SIZE)
 NAME		ENDP
 		ENDM
-;------------------------------------------------------------MOU
-@MOUPROLOG	MACRO	NAME
 
-
-		PUBLIC	NAME
-
-DELTA		=	0
-
-@CATSTR(NAME,MOUARGS)	STRUC
-		ENDM
-
-;----------------------------------------------------------------------
-
-@MOUSTART	MACRO	NAME
-@CATSTR(NAME,MOUARGS)		ENDS
-argsize=SIZE @CATSTR(NAME,MOUARGS)
-@CATSTR(NAME,MOU_ARG_SIZE)	EQU	argsize
-
-NAME		PROC	FAR
-			PUSH	BP
-			MOV		BP, SP
-
-		ENDM
-
-;------------------------------------------------------------
-
-@MOUEPILOG		MACRO	NAME
-			MOV		SP, BP
-			POP		BP
-			RET	@CATSTR(NAME,MOU_ARG_SIZE)
-NAME		ENDP
-		ENDM
-		
 ;---------------------------------------------------------------BVS
 @BVSPROLOG	MACRO	NAME
 
