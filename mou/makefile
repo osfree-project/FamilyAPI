@@ -3,10 +3,7 @@
 
 PROJ=mou
 
-OBJS=mouroute.obj mougetnumbuttons.obj mougetnummickeys.obj mougetdevstatus.obj mougetnumqueel.obj moureadeventque.obj mougetscalefact.obj mougeteventmask.obj &
-mousetscalefact.obj mouseteventmask.obj mougethotkey.obj mousethotkey.obj mouopen.obj mouclose.obj mougetptrshape.obj mousetptrshape.obj &
-moudrawptr.obj mouremoveptr.obj mougetptrpos.obj mousetptrpos.obj mouinitreal.obj mouflushque.obj mousetdevstatus.obj &
-moufree.obj moushellinit.obj mousynch.obj debug.obj
+OBJS=mouroute.obj moufree.obj moushellinit.obj mousynch.obj debug.obj
 
 EXPORT=MOUGETPTRSHAPE.1 RESIDENT,    &
           MOUSETPTRSHAPE.2 RESIDENT,    &
