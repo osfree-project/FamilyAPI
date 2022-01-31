@@ -17,7 +17,6 @@
 .8086
 		; Helpers
 		INCLUDE	HELPERS.INC
-		INCLUDE MOU.INC
 
 EXTERN	PreMouSynch: PROC
 EXTERN	PostMouSynch: PROC
