@@ -6,17 +6,6 @@ EXTERN	VioWrtTTY: Far
 
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
-@tracemsg	macro	event
-@CATSTR(event, Msg)			DB	@CATSTR( <!'>, event, <!'>), 0dh, 0ah
-eventmsg=$-@CATSTR(event, Msg)
-@CATSTR(event, MsgSize)		EQU	eventmsg
-			endm
-
-@tracemsg2	macro	event
-@tracemsg	@CATSTR(Pre, event)
-@tracemsg	@CATSTR(Post, event)
-			endm
-
 @tracemsg2	KbdCharIn
 @tracemsg2	KbdClose
 @tracemsg2	KbdFlushBuffer
@@ -37,18 +26,6 @@ eventmsg=$-@CATSTR(event, Msg)
 _DATA		ENDS
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
-
-@tracecall	macro	event
-	event	proc
-			@TRACE	event
-			ret
-	event	endp
-		endm
-
-@tracecall2	macro	event
-@tracecall	@CATSTR(Pre, event)
-@tracecall	@CATSTR(Post, event)
-			endm
 
 @tracecall2	KBDCHARIN
 @tracecall2	KBDCLOSE
