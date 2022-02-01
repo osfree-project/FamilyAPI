@@ -333,8 +333,8 @@ HOOKINT08:	PROC
 		MOV AL,08H ;store cs:ip for int8h
 		INT 21H  ;es:bx=cs:ip
 
-		MOV OLD_CS,ES
-		MOV OLD_IP,BX
+		MOV [OLD_CS],ES
+		MOV [OLD_IP],BX
 
 		LEA DX,INT08H ;load effective address for INT 08H handler
   

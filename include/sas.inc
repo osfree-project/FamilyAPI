@@ -5,7 +5,7 @@
 ; It is similar to BURGERMASTER structure of Windows system.
 ;
 
-SAS			struc
+SASSTRC			struc
 SAS_signature		DD	?	; 'SAS '
 SAS_tables_data		DW	?	; offset to tables section
 SAS_flat_sel		DW	?	; FLAT selector for kernel data
@@ -16,7 +16,7 @@ SAS_task_data		DW	?	; offset to Tasking section
 SAS_RAS_data		DW	?	; offset to RAS section
 SAS_file_data		DW	?	; offset to File System section
 SAS_info_data		DW	?	; offset to infoseg section
-SAS			ends
+SASSTRC			ends
 
 SASRAS			struc
 SAS_RAS_STDA_p		DW	?	; selector for System Trace Data Area (STDA)

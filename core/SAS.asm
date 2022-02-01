@@ -1,3 +1,5 @@
 	INCLUDE		SAS.INC
 
+SAS	STRUCT	SASSTRC <'SAS ', 0, 0, 0, 0, 0, 0, 0, 0 ,0>
+
 end
