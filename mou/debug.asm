@@ -115,265 +115,65 @@ _DATA		ENDS
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-PreMouClose	proc
-			@TRACE	PreMouClose
+@tracecall	macro	event
+	event	proc
+			@TRACE	event
 			ret
-PreMouClose	endp
+	event	endp
+		endm
 
-PreMouDrawPtr	proc
-			@TRACE	PreMouDrawPtr
-			ret
-PreMouDrawPtr	endp
-
-PreMouFlushQue	proc
-			@TRACE	PreMouFlushQue
-			ret
-PreMouFlushQue	endp
-
-PreMouFree	proc
-			@TRACE	PreMouFree
-			ret
-PreMouFree	endp
-
-PreMouGetDevStatus	proc
-			@TRACE	PreMouGetDevStatus
-			ret
-PreMouGetDevStatus	endp
-
-PreMouGetEventMask	proc
-			@TRACE	PreMouGetEventMask
-			ret
-PreMouGetEventMask	endp
-
-PreMouGetHotKey	proc
-			@TRACE	PreMouGetHotKey
-			ret
-PreMouGetHotKey	endp
-
-PreMouGetNumButtons	proc
-			@TRACE	PreMouGetNumButtons
-			ret
-PreMouGetNumButtons	endp
-
-PreMouGetNumMickeys	proc
-			@TRACE	PreMouGetNumMickeys
-			ret
-PreMouGetNumMickeys	endp
-
-PreMouGetNumQueEl	proc
-			@TRACE	PreMouGetNumQueEl
-			ret
-PreMouGetNumQueEl	endp
-
-PreMouGetPtrPos	proc
-			@TRACE	PreMouGetPtrPos
-			ret
-PreMouGetPtrPos	endp
-
-PreMouGetPtrShape	proc
-			@TRACE	PreMouGetPtrShape
-			ret
-PreMouGetPtrShape	endp
-
-PreMouGetScaleFact	proc
-			@TRACE	PreMouGetScaleFact
-			ret
-PreMouGetScaleFact	endp
-
-PreMouInitReal	proc
-			@TRACE	PreMouInitReal
-			ret
-PreMouInitReal	endp
-
-PreMouOpen	proc
-			@TRACE	PreMouOpen
-			ret
-PreMouOpen	endp
-
-PreMouReadEventQue	proc
-			@TRACE	PreMouReadEventQue
-			ret
-PreMouReadEventQue	endp
-
-PreMouRemovePtr	proc
-			@TRACE	PreMouRemovePtr
-			ret
-PreMouRemovePtr	endp
-
-PreMouRoute	proc
-			@TRACE	PreMouRoute
-			ret
-PreMouRoute	endp
-
-PreMouSetDevStatus	proc
-			@TRACE	PreMouSetDevStatus
-			ret
-PreMouSetDevStatus	endp
-
-PreMouSetEventMask	proc
-			@TRACE	PreMouSetEventMask
-			ret
-PreMouSetEventMask	endp
-
-PreMouSetHotKey	proc
-			@TRACE	PreMouSetHotKey
-			ret
-PreMouSetHotKey	endp
-
-PreMouSetPtrPos	proc
-			@TRACE	PreMouSetPtrPos
-			ret
-PreMouSetPtrPos	endp
-
-PreMouSetPtrShape	proc
-			@TRACE	PreMouSetPtrShape
-			ret
-PreMouSetPtrShape	endp
-
-PreMouSetScaleFact	proc
-			@TRACE	PreMouSetScaleFact
-			ret
-PreMouSetScaleFact	endp
-
-PreMouShellInit	proc
-			@TRACE	PreMouShellInit
-			ret
-PreMouShellInit	endp
-
-PreMouSynch	proc
-			@TRACE	PreMouSynch
-			ret
-PreMouSynch	endp
-
-PostMouClose	proc
-			@TRACE	PostMouClose
-			ret
-PostMouClose	endp
-
-PostMouDrawPtr	proc
-			@TRACE	PostMouDrawPtr
-			ret
-PostMouDrawPtr	endp
-
-PostMouFlushQue	proc
-			@TRACE	PostMouFlushQue
-			ret
-PostMouFlushQue	endp
-
-PostMouFree	proc
-			@TRACE	PostMouFree
-			ret
-PostMouFree	endp
-
-PostMouGetDevStatus	proc
-			@TRACE	PostMouGetDevStatus
-			ret
-PostMouGetDevStatus	endp
-
-PostMouGetEventMask	proc
-			@TRACE	PostMouGetEventMask
-			ret
-PostMouGetEventMask	endp
-
-PostMouGetHotKey	proc
-			@TRACE	PostMouGetHotKey
-			ret
-PostMouGetHotKey	endp
-
-PostMouGetNumButtons	proc
-			@TRACE	PostMouGetNumButtons
-			ret
-PostMouGetNumButtons	endp
-
-PostMouGetNumMickeys	proc
-			@TRACE	PostMouGetNumMickeys
-			ret
-PostMouGetNumMickeys	endp
-
-PostMouGetNumQueEl	proc
-			@TRACE	PostMouGetNumQueEl
-			ret
-PostMouGetNumQueEl	endp
-
-PostMouGetPtrPos	proc
-			@TRACE	PostMouGetPtrPos
-			ret
-PostMouGetPtrPos	endp
-
-PostMouGetPtrShape	proc
-			@TRACE	PostMouGetPtrShape
-			ret
-PostMouGetPtrShape	endp
-
-PostMouGetScaleFact	proc
-			@TRACE	PostMouGetScaleFact
-			ret
-PostMouGetScaleFact	endp
-
-PostMouInitReal	proc
-			@TRACE	PostMouInitReal
-			ret
-PostMouInitReal	endp
-
-PostMouOpen	proc
-			@TRACE	PostMouOpen
-			ret
-PostMouOpen	endp
-
-PostMouReadEventQue	proc
-			@TRACE	PostMouReadEventQue
-			ret
-PostMouReadEventQue	endp
-
-PostMouRemovePtr	proc
-			@TRACE	PostMouRemovePtr
-			ret
-PostMouRemovePtr	endp
-
-PostMouRoute	proc
-			@TRACE	PostMouRoute
-			ret
-PostMouRoute	endp
-
-PostMouSetDevStatus	proc
-			@TRACE	PostMouSetDevStatus
-			ret
-PostMouSetDevStatus	endp
-
-PostMouSetEventMask	proc
-			@TRACE	PostMouSetEventMask
-			ret
-PostMouSetEventMask	endp
-
-PostMouSetHotKey	proc
-			@TRACE	PostMouSetHotKey
-			ret
-PostMouSetHotKey	endp
-
-PostMouSetPtrPos	proc
-			@TRACE	PostMouSetPtrPos
-			ret
-PostMouSetPtrPos	endp
-
-PostMouSetPtrShape	proc
-			@TRACE	PostMouSetPtrShape
-			ret
-PostMouSetPtrShape	endp
-
-PostMouSetScaleFact	proc
-			@TRACE	PostMouSetScaleFact
-			ret
-PostMouSetScaleFact	endp
-
-PostMouShellInit	proc
-			@TRACE	PostMouShellInit
-			ret
-PostMouShellInit	endp
-
-PostMouSynch	proc
-			@TRACE	PostMouSynch
-			ret
-PostMouSynch	endp
+@tracecall	PreMOUCLOSE
+@tracecall	PreMOUDRAWPTR
+@tracecall	PreMOUFLUSHQUE
+@tracecall	PreMOUFREE
+@tracecall	PreMOUGETDEVSTATUS
+@tracecall	PreMOUGETEVENTMASK
+@tracecall	PreMOUGETHOTKEY
+@tracecall	PreMOUGETNUMBUTTONS
+@tracecall	PreMOUGETNUMMICKEYS
+@tracecall	PreMOUGETNUMQUEEL
+@tracecall	PreMOUGETPTRPOS
+@tracecall	PreMOUGETPTRSHAPE
+@tracecall	PreMOUGETSCALEFACT
+@tracecall	PreMOUINITREAL
+@tracecall	PreMOUOPEN
+@tracecall	PreMOUREADEVENTQUE
+@tracecall	PreMOUREMOVEPTR
+@tracecall	PreMOUROUTE
+@tracecall	PreMOUSETDEVSTATUS
+@tracecall	PreMOUSETEVENTMASK
+@tracecall	PreMOUSETHOTKEY
+@tracecall	PreMOUSETPTRPOS
+@tracecall	PreMOUSETPTRSHAPE
+@tracecall	PreMOUSETSCALEFACT
+@tracecall	PreMOUSHELLINIT
+@tracecall	PreMOUSYNCH
+@tracecall	PostMOUCLOSE
+@tracecall	PostMOUDRAWPTR
+@tracecall	PostMOUFLUSHQUE
+@tracecall	PostMOUFREE
+@tracecall	PostMOUGETDEVSTATUS
+@tracecall	PostMOUGETEVENTMASK
+@tracecall	PostMOUGETHOTKEY
+@tracecall	PostMOUGETNUMBUTTONS
+@tracecall	PostMOUGETNUMMICKEYS
+@tracecall	PostMOUGETNUMQUEEL
+@tracecall	PostMOUGETPTRPOS
+@tracecall	PostMOUGETPTRSHAPE
+@tracecall	PostMOUGETSCALEFACT
+@tracecall	PostMOUINITREAL
+@tracecall	PostMOUOPEN
+@tracecall	PostMOUREADEVENTQUE
+@tracecall	PostMOUREMOVEPTR
+@tracecall	PostMOUROUTE
+@tracecall	PostMOUSETDEVSTATUS
+@tracecall	PostMOUSETEVENTMASK
+@tracecall	PostMOUSETHOTKEY
+@tracecall	PostMOUSETPTRPOS
+@tracecall	PostMOUSETPTRSHAPE
+@tracecall	PostMOUSETSCALEFACT
+@tracecall	PostMOUSHELLINIT
+@tracecall	PostMOUSYNCH
 
 _TEXT		ENDS
 
