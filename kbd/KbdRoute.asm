@@ -13,6 +13,7 @@
 .8086
 
 		INCLUDE	HELPERS.INC
+		include bsesub.inc
 		INCLUDE	KBD.INC
 
 		PUBLIC	KBDROUTE

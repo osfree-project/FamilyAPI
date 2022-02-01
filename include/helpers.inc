@@ -15,6 +15,8 @@
 ;
 ;*/
 
+include	bsesub.inc
+
 @LOCALB		MACRO	NAME
 DELTA		=	DELTA+1
 NAME		CATSTR	<[BP->,%DELTA,<]>
@@ -336,15 +338,7 @@ NAME		ENDP
 @TRACE	MACRO Name
 		PUSHF
 		@PUSHA
-		MOV		AX, SEG @CATSTR(NAME, Msg)
-		PUSH	AX
-		MOV		AX, OFFSET @CATSTR(NAME, Msg)
-		PUSH	AX
-		MOV		AX, @CATSTR(NAME, MsgSize)
-		PUSH	AX
-		MOV		AX,0
-		PUSH	AX
-		CALL	VIOWRTTTY
+		@VioWrtTTY	@CATSTR(NAME, Msg), @CATSTR(NAME, MsgSize), 0
 		@POPA
 		POPF
 		ENDM
