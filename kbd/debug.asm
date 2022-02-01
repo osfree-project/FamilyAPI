@@ -45,38 +45,27 @@ _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 	event	endp
 		endm
 
-@tracecall	PreKBDCHARIN
-@tracecall	PreKBDCLOSE
-@tracecall	PreKBDFLUSHBUFFER
-@tracecall	PreKBDFREEFOCUS
-@tracecall	PreKBDGETCP
-@tracecall	PreKBDGETFOCUS
-@tracecall	PreKBDGETHWID
-@tracecall	PreKBDGETSTATUS
-@tracecall	PreKBDOPEN
-@tracecall	PreKBDPEEK
-@tracecall	PreKBDROUTE
-@tracecall	PreKBDSETCP
-@tracecall	PreKBDSETCUSTXT
-@tracecall	PreKBDSETSTATUS
-@tracecall	PreKBDSTRINGIN
-@tracecall	PreKBDXLATE
-@tracecall	PostKBDCHARIN
-@tracecall	PostKBDCLOSE
-@tracecall	PostKBDFLUSHBUFFER
-@tracecall	PostKBDFREEFOCUS
-@tracecall	PostKBDGETCP
-@tracecall	PostKBDGETFOCUS
-@tracecall	PostKBDGETHWID
-@tracecall	PostKBDGETSTATUS
-@tracecall	PostKBDOPEN
-@tracecall	PostKBDPEEK
-@tracecall	PostKBDROUTE
-@tracecall	PostKBDSETCP
-@tracecall	PostKBDSETCUSTXT
-@tracecall	PostKBDSETSTATUS
-@tracecall	PostKBDSTRINGIN
-@tracecall	PostKBDXLATE
+@tracecall2	macro	event
+@tracecall	@CATSTR(Pre, event)
+@tracecall	@CATSTR(Post, event)
+			endm
+
+@tracecall2	KBDCHARIN
+@tracecall2	KBDCLOSE
+@tracecall2	KBDFLUSHBUFFER
+@tracecall2	KBDFREEFOCUS
+@tracecall2	KBDGETCP
+@tracecall2	KBDGETFOCUS
+@tracecall2	KBDGETHWID
+@tracecall2	KBDGETSTATUS
+@tracecall2	KBDOPEN
+@tracecall2	KBDPEEK
+@tracecall2	KBDROUTE
+@tracecall2	KBDSETCP
+@tracecall2	KBDSETCUSTXT
+@tracecall2	KBDSETSTATUS
+@tracecall2	KBDSTRINGIN
+@tracecall2	KBDXLATE
 
 _TEXT		ends
 			end

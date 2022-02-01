@@ -55,6 +55,11 @@ _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 	event	endp
 		endm
 
+@tracecall2	macro	event
+@tracecall	@CATSTR(Pre, event)
+@tracecall	@CATSTR(Post, event)
+			endm
+
 if 0
 @LOCALW		GLOBALSEG
 @LOCALW		LOCALSEG
@@ -69,58 +74,32 @@ if 0
 		MOV	AX, LOCALSEG
 endif
 
-@tracecall	PreMOUCLOSE
-@tracecall	PreMOUDRAWPTR
-@tracecall	PreMOUFLUSHQUE
-@tracecall	PreMOUFREE
-@tracecall	PreMOUGETDEVSTATUS
-@tracecall	PreMOUGETEVENTMASK
-@tracecall	PreMOUGETHOTKEY
-@tracecall	PreMOUGETNUMBUTTONS
-@tracecall	PreMOUGETNUMMICKEYS
-@tracecall	PreMOUGETNUMQUEEL
-@tracecall	PreMOUGETPTRPOS
-@tracecall	PreMOUGETPTRSHAPE
-@tracecall	PreMOUGETSCALEFACT
-@tracecall	PreMOUINITREAL
-@tracecall	PreMOUOPEN
-@tracecall	PreMOUREADEVENTQUE
-@tracecall	PreMOUREMOVEPTR
-@tracecall	PreMOUROUTE
-@tracecall	PreMOUSETDEVSTATUS
-@tracecall	PreMOUSETEVENTMASK
-@tracecall	PreMOUSETHOTKEY
-@tracecall	PreMOUSETPTRPOS
-@tracecall	PreMOUSETPTRSHAPE
-@tracecall	PreMOUSETSCALEFACT
-@tracecall	PreMOUSHELLINIT
-@tracecall	PreMOUSYNCH
-@tracecall	PostMOUCLOSE
-@tracecall	PostMOUDRAWPTR
-@tracecall	PostMOUFLUSHQUE
-@tracecall	PostMOUFREE
-@tracecall	PostMOUGETDEVSTATUS
-@tracecall	PostMOUGETEVENTMASK
-@tracecall	PostMOUGETHOTKEY
-@tracecall	PostMOUGETNUMBUTTONS
-@tracecall	PostMOUGETNUMMICKEYS
-@tracecall	PostMOUGETNUMQUEEL
-@tracecall	PostMOUGETPTRPOS
-@tracecall	PostMOUGETPTRSHAPE
-@tracecall	PostMOUGETSCALEFACT
-@tracecall	PostMOUINITREAL
-@tracecall	PostMOUOPEN
-@tracecall	PostMOUREADEVENTQUE
-@tracecall	PostMOUREMOVEPTR
-@tracecall	PostMOUROUTE
-@tracecall	PostMOUSETDEVSTATUS
-@tracecall	PostMOUSETEVENTMASK
-@tracecall	PostMOUSETHOTKEY
-@tracecall	PostMOUSETPTRPOS
-@tracecall	PostMOUSETPTRSHAPE
-@tracecall	PostMOUSETSCALEFACT
-@tracecall	PostMOUSHELLINIT
-@tracecall	PostMOUSYNCH
+@tracecall2	MOUCLOSE
+@tracecall2	MOUDRAWPTR
+@tracecall2	MOUFLUSHQUE
+@tracecall2	MOUFREE
+@tracecall2	MOUGETDEVSTATUS
+@tracecall2	MOUGETEVENTMASK
+@tracecall2	MOUGETHOTKEY
+@tracecall2	MOUGETNUMBUTTONS
+@tracecall2	MOUGETNUMMICKEYS
+@tracecall2	MOUGETNUMQUEEL
+@tracecall2	MOUGETPTRPOS
+@tracecall2	MOUGETPTRSHAPE
+@tracecall2	MOUGETSCALEFACT
+@tracecall2	MOUINITREAL
+@tracecall2	MOUOPEN
+@tracecall2	MOUREADEVENTQUE
+@tracecall2	MOUREMOVEPTR
+@tracecall2	MOUROUTE
+@tracecall2	MOUSETDEVSTATUS
+@tracecall2	MOUSETEVENTMASK
+@tracecall2	MOUSETHOTKEY
+@tracecall2	MOUSETPTRPOS
+@tracecall2	MOUSETPTRSHAPE
+@tracecall2	MOUSETSCALEFACT
+@tracecall2	MOUSHELLINIT
+@tracecall2	MOUSYNCH
 
 _TEXT		ENDS
 
