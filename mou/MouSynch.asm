@@ -32,7 +32,7 @@ ARGS	ENDS
 ; code here
 		CALL	PostMouSynch
 		XOR		AX, AX
-		RETF	2
+		RETF	SIZE ARGS
 MOUSYNCH	ENDP
 
 _TEXT		ENDS

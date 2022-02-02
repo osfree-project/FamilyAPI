@@ -17,4 +17,6 @@ EXPORT= &
 BVSMAIN.3 RESIDENT
 #          BVSREDRAWSIZE     .4 RESIDENT
 
+
+IMPORT=import VIOWRTTTY VIOCALLS.19
 !include <..\dll.mk>

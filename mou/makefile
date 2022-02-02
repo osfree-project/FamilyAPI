@@ -3,7 +3,7 @@
 
 PROJ=mou
 
-OBJS=mouroute.obj moufree.obj moushellinit.obj mousynch.obj debug.obj
+OBJS=mouroute.obj moushellinit.obj mousynch.obj debug.obj
 
 EXPORT=MOUGETPTRSHAPE.1 RESIDENT,    &
           MOUSETPTRSHAPE.2 RESIDENT,    &
@@ -36,7 +36,7 @@ EXPORT=MOUGETPTRSHAPE.1 RESIDENT,    &
 #          MOUGETTHRESHOLD.29 RESIDENT,  &
 #          MOUSETTHRESHOLD.30 RESIDENT
 
-IMPORT=bmscalls.lib import VioWrtTTY VIOCALLS.19, DOSOPEN DOSCALLS.70, DOSCLOSE DOSCALLS.59, DOSGETINFOSEG DOSCALLS.8
+IMPORT=bmscalls.lib import VIOWRTTTY VIOCALLS.19, DOSOPEN DOSCALLS.70, DOSCLOSE DOSCALLS.59, DOSGETINFOSEG DOSCALLS.8
 
 !include <..\dll.mk>
 

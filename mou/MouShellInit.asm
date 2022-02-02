@@ -18,61 +18,85 @@
 		; Helpers
 		INCLUDE	HELPERS.INC
 		INCLUDE	BSEDOS.INC
+		INCLUDE	BSESUB.INC
 		INCLUDE	BSEERR.INC
+
+		;
+		INCLUDE	GLOBALVARS.INC
 
 ; Global Data
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
-CharStr		DB 'MouShellInit'
-CharStr_size equ ($-charstr)
-
 MOUSEFLAG	DW	0					; Is mouse device driver presented
 MOUSEDD		DB	'MOUSE$', 0			; Mouse device driver name
+
+SHELL_PID	DW	?					; PID of session manager/shell. Used by MouFree to prevent non-sesmgs call.
 
 ;-- move to stack --
 MOUSEH		DW	?					; Mouse device driver handle
 MOUSEA		DW	?					; ActionTaken on mouse device driver open
-GBL			DD	?
-LCL			DD	?
+GBL		DW	?
+LCL		DW	?
 ;-- move to stack --
 
-SHELL_PID	DW	?					; PID of session manager/shell
 
 _DATA		ENDS
 
-EXTERN	VioWrtTTY: FAR
+EXTERN	PreMOUSHELLINIT: PROC
+EXTERN	PostMOUSHELLINIT: PROC
+EXTERN	PreMOUFREE: PROC
+EXTERN	PostMOUFREE: PROC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		PUBLIC	MOUSHELLINIT
 MOUSHELLINIT	PROC FAR
-		XOR		AX, AX				; RC=NO_ERROR
+		call		PreMOUSHELLINIT
+		PUSH		ES
+		PUSH		DS
 		@DosOpen	MOUSEDD, MOUSEH, MOUSEA, 0, 0, 1, 42h, 0
 		CMP		AX, 0
-		MOV		AX, ERROR_MOUSE_NO_DEVICE	;ERR
+		MOV		AX, ERROR_MOUSE_NO_DEVICE
 		JNE		BAD
 		MOV		AX, SEG _DATA
 		MOV		ES, AX
 		@DosClose	ES:MOUSEH
 		MOV		ES:MOUSEFLAG, 1
 		@DosGetInfoSeg	GBL, LCL
+		MOV		DS, ES:LCL
+		MOV		AX, lis_pidCurrent
+		MOV		ES:SHELL_PID, AX
 		XOR		AX, AX
 BAD:
-
-		@PUSHA
-		MOV		AX, SEG CHARSTR
-		PUSH	AX
-		MOV		AX, OFFSET CHARSTR
-		PUSH	AX
-		MOV		AX,charstr_size
-		PUSH	AX
-		MOV		AX,0
-		PUSH	AX
-		CALL	VioWrtTTY
-		@POPA
-
+		POP		DS
+		POP		ES
+		call		PostMOUSHELLINIT
 		RETF
-MOUSHELLINIT		ENDP
+MOUSHELLINIT	ENDP
+
+		PUBLIC	MOUFREE
+MouFree		proc far
+		CALL		PreMOUFREE
+		PUSH		ES
+		PUSH		DS
+		MOV		AX, _DATA
+		MOV		ES, AX
+		@DosGetInfoSeg	GBL, LCL
+		MOV		DS, ES:LCL
+		MOV		AX, lis_pidCurrent
+		CMP		ES:SHELL_PID, AX
+		MOV		AX, ERROR_MOUSE_SMG_ONLY
+		JNE		EXIT
+		XOR		AX, AX
+EXIT:
+		POP		DS
+		POP		ES
+		CALL		PostMOUFREE
+		RETF
+MouFree		endp
+
+_TEXT		ENDS
+		END
 
 _TEXT		ENDS
 		END
