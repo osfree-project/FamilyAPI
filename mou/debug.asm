@@ -3,8 +3,6 @@
 		include helpers.inc
 		include bsesub.inc
 
-EXTERN	VioWrtTTY: Far
-
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 @tracemsg2	MouClose

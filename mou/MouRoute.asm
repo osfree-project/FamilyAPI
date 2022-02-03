@@ -240,7 +240,7 @@ EXIT:
 		PUSH	AX
 		MOV		AX,0
 		PUSH	AX
-		CALL	VioWrtTTY
+		CALL	far ptr VioWrtTTY
 		@POPA
 		POPF
 

@@ -9,5 +9,6 @@ bmssetptrshape.obj bmsdrawptr.obj bmsremoveptr.obj bmsgetptrpos.obj bmssetptrpos
 
 EXPORT=BMSMAIN.1 RESIDENT
 
+
 !include <..\dll.mk>
 

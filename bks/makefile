@@ -8,5 +8,6 @@ bksfreefocus.obj bksgetcp.obj bkssetcp.obj bksxlate.obj bkssetcustxt.obj bksgeth
 
 EXPORT=BKSMAIN.1 RESIDENT
 
+
 !include <..\dll.mk>
 
