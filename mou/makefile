@@ -3,7 +3,7 @@
 
 PROJ=mou
 
-OBJS=mouroute.obj mousynch.obj debug.obj
+OBJS=mouroute.obj debug.obj
 
 EXPORT=MOUGETPTRSHAPE.1 RESIDENT,    &
           MOUSETPTRSHAPE.2 RESIDENT,    &
