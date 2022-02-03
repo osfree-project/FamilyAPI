@@ -1,9 +1,9 @@
 ;/*!
 ;   @file
 ;
-;   @brief MouRoute
+;   @brief Mouse Router
 ;
-;   (c) osFree Project 2021, <http://www.osFree.org>
+;   (c) osFree Project 2018-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS and OS/2
@@ -14,8 +14,14 @@
 
 .8086
 
-		include helpers.inc
-		include bsesub.inc
+		; Helpers
+		INCLUDE	HELPERS.INC
+		INCLUDE	BSEDOS.INC
+		INCLUDE	BSESUB.INC
+		INCLUDE	BSEERR.INC
+
+		;
+		INCLUDE	GLOBALVARS.INC
 
 MI_MOUGETNUMBUTTONS	EQU	00H
 MI_MOUGETNUMMICKEYS	EQU	01H
@@ -64,28 +70,28 @@ NAME		PROC	FAR
 
 ;------------------------------------------------------------
 
-@MOUEPILOG		MACRO	NAME
-			RETF	@CATSTR(NAME,MOU_ARG_SIZE)
+@MOUEPILOG	MACRO	NAME
+		RETF	@CATSTR(NAME,MOU_ARG_SIZE)
 NAME		ENDP
 		ENDM
 
 ;------------------------------------------------------------
 
 @MOUROUTE	MACRO	FUNC, OFF
-			MOV	AX, @CATSTR(MI_, FUNC)
-			PUSH	AX
-			MOV		AX, _DATA
-			MOV		ES, AX
-			MOV	AX, WORD PTR ES:MOUFUNCTIONMASK+OFF
-			IF	OFF EQ 0
-			AND	AX, LOWWORD @CATSTR(MR_, FUNC)
-			CMP	AX, LOWWORD @CATSTR(MR_, FUNC)
-			ELSE
-			AND	AX, HIGHWORD @CATSTR(MR_, FUNC)
-			CMP	AX, HIGHWORD @CATSTR(MR_, FUNC)
-			ENDIF
-			CALL    MOUROUTE
-			ENDM
+		MOV	AX, @CATSTR(MI_, FUNC)
+		PUSH	AX
+		MOV		AX, _DATA
+		MOV		ES, AX
+		MOV	AX, WORD PTR ES:MOUFUNCTIONMASK+OFF
+		IF	OFF EQ 0
+		AND	AX, LOWWORD @CATSTR(MR_, FUNC)
+		CMP	AX, LOWWORD @CATSTR(MR_, FUNC)
+		ELSE
+		AND	AX, HIGHWORD @CATSTR(MR_, FUNC)
+		CMP	AX, HIGHWORD @CATSTR(MR_, FUNC)
+		ENDIF
+		CALL    MOUROUTE
+		ENDM
 
 ;------------------------------------------------------------
 
@@ -101,20 +107,39 @@ NAME		ENDP
 		CALL	@CATSTR(Post, NAME)
 		@MOUEPILOG	NAME
 
-			ENDM
+		ENDM
 
+; Global Data
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
+;-- move to SG structure (name it control block?) --
 AMSMAIN			DD	?	; AMSMAIN far address
 AMSHANDLE		DW	?	; AMSHANDLE module handle
 MOUFUNCTIONMASK		DD	0	; MOU FUNCTIONS REDIRECTION MASK
+;-- move to SG structure (name it control block?) --
 
 CharStr		DB 'MouRoute',0dh,0ah
-CharStr_SIZE     equ     ($ - CharStr)
+CharStr_SIZE	equ ($ - CharStr)
+
+MOUSEFLAG	DW	0		; Is mouse device driver presented
+MOUSEDD		DB	'MOUSE$', 0	; Mouse device driver name
+BMSCALLS	DB	'BMSCALLS', 0	; Base Mouse Subsystem filename
+BMSMAIN		DB	'BMSMAIN', 0	; Base Mouse Subsystem BMSMAIN name
+BMSPROC		DD	?		; Base Mouse Subsystem BMSMAIN address
+BMSHANDLE	DW	?		; Base Mouse Subsystem handle
+
+SHELL_PID	DW	?		; PID of session manager/shell. Used by MouFree to prevent non-sesmgs call.
+
+;-- move to function local stack --
+MOUSEH		DW	?		; Mouse device driver handle
+MOUSEA		DW	?		; ActionTaken on mouse device driver open
+GBL		DW	?		; Segment of GInfoSeg
+LCL		DW	?		; Segment of LInfoSeg
+;-- move to function local stack --
 
 _DATA		ENDS
 
-EXTERN		BMSMAIN: FAR
+_TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 EXTERN	PreMOUCLOSE: PROC
 EXTERN	PreMOUDRAWPTR: PROC
@@ -166,9 +191,85 @@ EXTERN	PostMOUSETPTRSHAPE: PROC
 EXTERN	PostMOUSETSCALEFACT: PROC
 EXTERN	PostMOUSHELLINIT: PROC
 EXTERN	PostMOUSYNCH: PROC
+EXTERN	PreMOUSHELLINIT: PROC
+EXTERN	PostMOUSHELLINIT: PROC
+EXTERN	PreMOUFREE: PROC
+EXTERN	PostMOUFREE: PROC
 
 
-_TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
+;
+; This function called by Shell/Session manager during initialization
+;
+; 1. Check is mouse device driver exists
+; 2. Remember Shell/Session Manager PID
+; 3. Allocate memory for Screen Group variables
+; 4. Load base mouse subsystem
+;
+; * NO_ERROR
+; * ERROR_MOUSE_NO_DEVICE
+;
+		PUBLIC	MOUSHELLINIT
+MOUSHELLINIT	PROC FAR
+		CALL		PreMOUSHELLINIT
+		PUSH		ES
+		PUSH		DS
+		@DosOpen	MOUSEDD, MOUSEH, MOUSEA, 0, 0, 1, 42h, 0
+		CMP		AX, 0
+		MOV		AX, ERROR_MOUSE_NO_DEVICE
+		JNE		BAD
+		MOV		AX, SEG _DATA
+		MOV		ES, AX
+		@DosClose	ES:MOUSEH
+		MOV		ES:MOUSEFLAG, 1
+		@DosGetInfoSeg	GBL, LCL
+		MOV		DS, ES:LCL
+		MOV		AX, lis_pidCurrent
+		MOV		ES:SHELL_PID, AX
+
+		@DosLoadModule	0,0, ES:BMSCALLS,ES:BMSHANDLE
+		@DosGetProcAddr	[ES:BMSHANDLE], ES:BMSMAIN, ES:BMSPROC
+
+		XOR		AX, AX
+BAD:
+		POP		DS
+		POP		ES
+		CALL		PostMOUSHELLINIT
+		RETF
+MOUSHELLINIT	ENDP
+
+;
+; This function called during Shell/Sesson manager shutdown
+;
+; 1. Check is caller PID same as Shell/Session Manager PID
+; 2. Check is mouse device driver presented
+; 3. Uninitialize Screen Group variables
+;
+; * NO_ERROR
+; * ERROR_MOUSE_NO_DEVICE
+; * ERROR_MOUSE_SMG_ONLY
+;
+		PUBLIC	MOUFREE
+MouFree		PROC FAR
+		CALL		PreMOUFREE
+		PUSH		ES
+		PUSH		DS
+		MOV		AX, _DATA
+		MOV		ES, AX
+		@DosGetInfoSeg	GBL, LCL
+		MOV		DS, ES:LCL
+		MOV		AX, lis_pidCurrent
+		CMP		ES:SHELL_PID, AX
+		MOV		AX, ERROR_MOUSE_SMG_ONLY
+		JNE		EXIT
+		@DosFreeModule	[ES:BMSHANDLE]
+		XOR		AX, AX
+EXIT:
+		POP		DS
+		POP		ES
+		CALL		PostMOUFREE
+		RETF
+MouFree		ENDP
+
 
 @MOUPROC	MOUOPEN, 0, MOUHANDLE DD ?, DRIVERNAME DD ?
 @MOUPROC	MOUCLOSE, 0, MOUHANDLE DW ?
@@ -225,22 +326,16 @@ MOUROUTE	PROC	NEAR
 		JNZ	EXIT
 BMS:
 		PUSH	DS		; caller data segment
+		MOV	AX, SEG _DATA
+		MOV	ES, AX
 		XOR	AX,AX
-		CALL	FAR PTR BMSMAIN
+		CALL	FAR PTR [ES:BMSPROC]
 		POP	DS
 
 EXIT:
 		PUSHF
 		@PUSHA
-		MOV		AX, SEG CHARSTR
-		PUSH	AX
-		MOV		AX, OFFSET CHARSTR
-		PUSH	AX
-		MOV		AX,CharStr_SIZE
-		PUSH	AX
-		MOV		AX,0
-		PUSH	AX
-		CALL	far ptr VioWrtTTY
+		@VioWrtTTY	CHARSTR, CharStr_SIZE, 0
 		@POPA
 		POPF
 
