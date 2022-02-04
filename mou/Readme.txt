@@ -25,6 +25,26 @@ MOU.LIB Static library
 MOUCALLS.DLL Dynamic library
 MOUCALLS.LIB Import library
 
+Internals
+---------
+
+MOUCALLS router is a 16-bit OS/2 API to manage high-level functions of Mouse Subsystem. It routes
+Mou* functions to Alternate or Base mouse subsystem. Mouse Router manages its own data for each screen group.
+
+Mouse Router support three Initialization/Deinitialization functions for Shell/Session Manager. On
+startup Session Manager calls MouShellInit function to initialize Mouse Router. MouShellInit stores Shell PID
+to global variable to prevent calling of MouFree and MouInitReal from non-shell application. It also prepares
+global data for each screen group. On shutdown Shell calls MouFree, used to free internal data structures.
+
+On each Mou* call Mouse Router checks is Mouse Router initialized and is mouse presented. If it not initialized, 
+then it calls initialization routine similar to MouShellInit. If mouse device driver is present then Mouse Router
+check is Alternate Mouse Subsystem function registered and calls or Alternate function or Base function. If Alternate
+function executed, depends on return code, Mouse Router executes Base function and returns to application.
+
+Different Alternate Mouse Subsystem can be registered for each Screen Group.
+
+MouSync function used by Mouse Subsystem for syncronization.
+
 References
 ----------
 
