@@ -36,6 +36,7 @@
 		; Helpers
 		INCLUDE	HELPERS.INC
 		INCLUDE	BSEERR.INC
+		INCLUDE	BSEDOS.INC
 
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
@@ -51,6 +52,7 @@ CATTABLE:
 	DD	RESERVED	; Category 9 Physical Disk Control
 	DD	RESERVED	; Category 10 Character Device Monitor Control
 	DD	RESERVED	; Category 11 General Device Control
+
 
 MAXCATEGORY	EQU	11
 
