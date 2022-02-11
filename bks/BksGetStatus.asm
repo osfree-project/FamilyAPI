@@ -20,7 +20,7 @@
 		; Helpers
 		INCLUDE	helpers.inc
 		INCLUDE	bseerr.inc
-		INCLUDE	kbd.inc
+		INCLUDE	bsesub.inc
 
         
 _TEXT	segment byte public 'CODE'
