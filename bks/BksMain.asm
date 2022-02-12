@@ -79,7 +79,7 @@ BKSMAIN		PROC FAR
 		MOV	ES, SI
 		MOV	SI, [DS:BP].stackframe.kbdfunc
 		SHL	SI, 1
-		CALL	NEAR PTR es:bkstable[SI]
+		CALL	WORD PTR es:bkstable[SI]
 		MOV	SP,BP
 		POP	ES
 		POP	SI

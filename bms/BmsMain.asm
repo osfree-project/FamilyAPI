@@ -44,28 +44,28 @@ EXTERN	BMSSETDEVSTATUS	: PROC
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 bmstable:
-	DD	BmsGetNumButtons	;00H
-	DD	BmsGetNumMickeys	;01H
-	DD	BmsGetDevStatus		;02H
-	DD	BmsGetNumQueEl		;03H
-	DD	BmsReadEventQue		;04H
-	DD	BmsGetScaleFact		;05H
-	DD	BmsGetEventMask		;06H
-	DD	BmsSetScaleFact		;07H
-	DD	BmsSetEventMask		;08H
-	DD	BmsGetHotKey		;09H
-	DD	BmsSetHotKey		;0AH
-	DD	BmsOpen			;0BH
-	DD	BmsClose		;0CH
-	DD	BmsGetPtrShape		;0DH
-	DD	BmsSetPtrShape		;0EH
-	DD	BmsDrawPtr		;0FH
-	DD	BmsRemovePtr		;10H
-	DD	BmsGetPtrPos		;11H
-	DD	BmsSetPtrPos		;12H
-	DD	BmsInitReal		;13H
-	DD	BmsFlushQue		;14H
-	DD	BmsSetDevStatus		;15H
+	DW	BmsGetNumButtons	;00H
+	DW	BmsGetNumMickeys	;01H
+	DW	BmsGetDevStatus		;02H
+	DW	BmsGetNumQueEl		;03H
+	DW	BmsReadEventQue		;04H
+	DW	BmsGetScaleFact		;05H
+	DW	BmsGetEventMask		;06H
+	DW	BmsSetScaleFact		;07H
+	DW	BmsSetEventMask		;08H
+	DW	BmsGetHotKey		;09H
+	DW	BmsSetHotKey		;0AH
+	DW	BmsOpen			;0BH
+	DW	BmsClose		;0CH
+	DW	BmsGetPtrShape		;0DH
+	DW	BmsSetPtrShape		;0EH
+	DW	BmsDrawPtr		;0FH
+	DW	BmsRemovePtr		;10H
+	DW	BmsGetPtrPos		;11H
+	DW	BmsSetPtrPos		;12H
+	DW	BmsInitReal		;13H
+	DW	BmsFlushQue		;14H
+	DW	BmsSetDevStatus		;15H
 _DATA	ENDS
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -93,8 +93,7 @@ BMSMAIN		PROC FAR
 		MOV	ES, SI
 		MOV	SI, [DS:BP].stackframe.moufunc
 		SHL	SI, 1
-		SHL	SI, 1
-		CALL	DWORD PTR es:bmstable[SI]
+		CALL	WORD PTR es:bmstable[SI]
 		MOV	SP,BP
 		POP	ES
 		POP	SI
