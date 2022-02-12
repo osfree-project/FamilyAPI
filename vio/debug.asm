@@ -1,6 +1,7 @@
 .8086
 
 		include helpers.inc
+		INCL_VIO	EQU	1
 		include bsesub.inc
 
 EXTERN	VIOWRTTTY: Far

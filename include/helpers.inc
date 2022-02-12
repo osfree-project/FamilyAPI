@@ -15,6 +15,7 @@
 ;
 ;*/
 
+		INCL_VIO	EQU	1
 include	bsesub.inc
 
 @LOCALB		MACRO	NAME

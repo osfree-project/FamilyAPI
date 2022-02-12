@@ -11,10 +11,18 @@
 
 @PUSHS		MACRO	ARG
 			.ERRB	<ARG>
+			a=.type ARG
+			IF (A EQ 62h)
+				MOV	AX, WORD PTR ARG
+				PUSH	AX
+				MOV	AX, WORD PTR ARG+2
+				PUSH	AX
+			else
 			MOV		AX,SEG ARG
 			PUSH	AX
 			LEA		AX,ARG
 			PUSH	AX
+			endif
 			ENDM
 
 @PUSHD		MACRO	ARG

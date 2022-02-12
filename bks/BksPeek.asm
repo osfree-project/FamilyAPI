@@ -20,6 +20,7 @@
 		; Helpers
 		INCLUDE	helpers.inc
 		INCLUDE	bseerr.inc
+		INCL_KBD	EQU	1
 		INCLUDE	bsesub.INC
 
 _TEXT	SEGMENT BYTE PUBLIC 'CODE'

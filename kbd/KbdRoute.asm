@@ -13,6 +13,7 @@
 .8086
 
 		INCLUDE	HELPERS.INC
+		INCL_KBD	EQU	1
 		include bsesub.inc
 
 @KBDROUTE	MACRO	FUNC

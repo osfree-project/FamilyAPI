@@ -31,7 +31,7 @@ EXPORT=  KBDSETCUSTXT.1 RESIDENT,     &
            KBDGETHWID.24 RESIDENT
 #           KBDSETHWID.25 RESIDENT
 
-IMPORT=bkscalls.lib import VioWrtTTY VIOCALLS.19
+IMPORT=bkscalls.lib import VIOWRTTTY VIOCALLS.19
 
 !include <..\dll.mk>
 
