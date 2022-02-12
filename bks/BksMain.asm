@@ -37,21 +37,21 @@ EXTERN	BKSGETHWID: PROC
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 bkstable:
-	DD	BKSCharIn		; 0
-	DD	BKSPeek			; 1
-	DD	BKSFlushBuffer		; 2
-	DD	BKSGetStatus		; 3
-	DD	BKSSetStatus		; 4
-	DD	BKSStringIn		; 5
-	DD	BKSOpen			; 6
-	DD	BKSClose		; 7
-	DD	BKSGetFocus		; 8
-	DD	BKSFreeFocus		; 9
-	DD	BKSGetCp		; 10
-	DD	BKSSetCp		; 11
-	DD	BKSXlate		; 12
-	DD	BKSSetCustXt		; 13
-	DD	BKSGetHWId		; 14
+	DW	BKSCharIn		; 0
+	DW	BKSPeek			; 1
+	DW	BKSFlushBuffer		; 2
+	DW	BKSGetStatus		; 3
+	DW	BKSSetStatus		; 4
+	DW	BKSStringIn		; 5
+	DW	BKSOpen			; 6
+	DW	BKSClose		; 7
+	DW	BKSGetFocus		; 8
+	DW	BKSFreeFocus		; 9
+	DW	BKSGetCp		; 10
+	DW	BKSSetCp		; 11
+	DW	BKSXlate		; 12
+	DW	BKSSetCustXt		; 13
+	DW	BKSGetHWId		; 14
 _DATA	ENDS
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -79,8 +79,7 @@ BKSMAIN		PROC FAR
 		MOV	ES, SI
 		MOV	SI, [DS:BP].stackframe.kbdfunc
 		SHL	SI, 1
-		SHL	SI, 1
-		CALL	FAR PTR es:bkstable[SI]
+		CALL	NEAR PTR es:bkstable[SI]
 		MOV	SP,BP
 		POP	ES
 		POP	SI
