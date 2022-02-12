@@ -62,47 +62,47 @@ EXTERN	BVSSETSTATE: PROC
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 bvstable:
-	DD	BVSGetPhysBuf		; 0
-	DD	BVSGetBuf		; 1
-	DD	BVSShowBuf		; 2
-	DD	BVSGetCurPos		; 3
-	DD	BVSGetCurType		; 4
-	DD	BVSGetMode		; 5
-	DD	BVSSetCurPos		; 6
-	DD	BVSSetCurType		; 7
-	DD	BVSSetMode		; 8
-	DD	BVSReadCharStr		; 9
-	DD	BVSReadCellStr		; 10
-	DD	BVSWrtNChar		; 11
-	DD	BVSWrtNAttr		; 12
-	DD	BVSWrtNCell		; 13
-	DD	BVSWrtCharStr		; 14
-	DD	BVSWrtCharStrAtt	; 15
-	DD	BVSWrtCellStr		; 16
-	DD	BVSWrtTTY		; 17
-	DD	BVSScrollUp		; 18
-	DD	BVSScrollDn		; 19
-	DD	BVSScrollLf		; 20
-	DD	BVSScrollRt		; 21
-	DD	BVSSetAnsi		; 22
-	DD	BVSGetAnsi		; 23
-	DD	BVSPrtSc		; 24
-	DD	BVSScrLock		; 25
-	DD	BVSScrUnLock		; 26
-	DD	BVSSavRedrawWait	; 27
-	DD	BVSSavRedrawUndo	; 28
-	DD	BVSPopUp		; 29
-	DD	BVSEndPopUp		; 30
-	DD	BVSPrtScToggle		; 31
-	DD	BVSModeWait		; 32
-	DD	BVSModeUndo		; 33
-	DD	BVSGetFont		; 34
-	DD	BVSGetConfig		; 35
-	DD	BVSSetCp		; 36
-	DD	BVSGetCp		; 37
-	DD	BVSSetFont		; 38
-	DD	BVSGetState		; 39
-	DD	BVSSetState		; 40
+	DW	BVSGetPhysBuf		; 0
+	DW	BVSGetBuf		; 1
+	DW	BVSShowBuf		; 2
+	DW	BVSGetCurPos		; 3
+	DW	BVSGetCurType		; 4
+	DW	BVSGetMode		; 5
+	DW	BVSSetCurPos		; 6
+	DW	BVSSetCurType		; 7
+	DW	BVSSetMode		; 8
+	DW	BVSReadCharStr		; 9
+	DW	BVSReadCellStr		; 10
+	DW	BVSWrtNChar		; 11
+	DW	BVSWrtNAttr		; 12
+	DW	BVSWrtNCell		; 13
+	DW	BVSWrtCharStr		; 14
+	DW	BVSWrtCharStrAtt	; 15
+	DW	BVSWrtCellStr		; 16
+	DW	BVSWrtTTY		; 17
+	DW	BVSScrollUp		; 18
+	DW	BVSScrollDn		; 19
+	DW	BVSScrollLf		; 20
+	DW	BVSScrollRt		; 21
+	DW	BVSSetAnsi		; 22
+	DW	BVSGetAnsi		; 23
+	DW	BVSPrtSc		; 24
+	DW	BVSScrLock		; 25
+	DW	BVSScrUnLock		; 26
+	DW	BVSSavRedrawWait	; 27
+	DW	BVSSavRedrawUndo	; 28
+	DW	BVSPopUp		; 29
+	DW	BVSEndPopUp		; 30
+	DW	BVSPrtScToggle		; 31
+	DW	BVSModeWait		; 32
+	DW	BVSModeUndo		; 33
+	DW	BVSGetFont		; 34
+	DW	BVSGetConfig		; 35
+	DW	BVSSetCp		; 36
+	DW	BVSGetCp		; 37
+	DW	BVSSetFont		; 38
+	DW	BVSGetState		; 39
+	DW	BVSSetState		; 40
 _DATA	ENDS
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -130,8 +130,7 @@ BVSMAIN		PROC FAR
 		MOV	ES, SI
 		MOV	SI, [DS:BP].stackframe.viofunc
 		SHL	SI, 1
-		SHL	SI, 1
-		CALL	FAR PTR es:bvstable[SI]
+		CALL	WORD PTR es:bvstable[SI]
 		MOV	SP,BP
 		POP	ES
 		POP	SI
