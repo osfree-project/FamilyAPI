@@ -30,7 +30,7 @@ dostimerstart.obj dostimerstop.obj doswritequeue.obj doserrclass.obj debug.obj
      option   map, nod
      name     ..\dll\$(PROJ)calls
      file     ..\lib\$(PROJ).lib
-     file     ..\lib\core.lib
+     file     ..\lib\kal.lib
 	file  ..\lib\mem.lib
 	file ..\lib\fm.lib 
 	file ..\lib\nls.lib 

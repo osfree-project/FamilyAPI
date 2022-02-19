@@ -1,6 +1,6 @@
 ALL: build fapi.lib
 
-LIBS=lib/core.lib lib/dos.lib lib/kbd.lib lib/mem.lib lib/fm.lib lib/ioctl.lib lib/vio.lib lib/bvs.lib lib/bks.lib lib/mou.lib lib/bms.lib
+LIBS=lib/kal.lib lib/dos.lib lib/kbd.lib lib/mem.lib lib/fm.lib lib/ioctl.lib lib/vio.lib lib/bvs.lib lib/bks.lib lib/mou.lib lib/bms.lib
 
 fapi.lib: $(LIBS) 
  	@echo LIB $@
@@ -11,7 +11,7 @@ fapi.lib: $(LIBS)
 	@jwasm.exe -Zg -q -Iinclude $*.asm
 
 build: .SYMBOLIC
-	@cd core
+	@cd kal
 	@$(MAKE) -h
 	@cd ..
 	@cd mem
@@ -56,7 +56,7 @@ clean: .SYMBOLIC
 	if exist *.bak del *.bak
 	if exist *.lib del *.lib
 	cd ..
-	cd core
+	cd kal
 	@$(MAKE) -h clean
 	cd ..
 	cd mem

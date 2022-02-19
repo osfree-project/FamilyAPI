@@ -1,10 +1,10 @@
 #echo Building Core Subsystem
 #echo Core Subsystem build finished
-ALL: ../lib/core.lib
+ALL: ../lib/kal.lib
 
 OBJS=globalshared.obj baddynlink.obj ginfoseg.obj linfoseg.obj globalvars.obj helpers.obj sas.obj
 
-../lib/core.lib: $(OBJS)
+../lib/kal.lib: $(OBJS)
 	@echo LIB $@
 	@wlib -q -fo $@ $(LIBS) $(OBJS)
 

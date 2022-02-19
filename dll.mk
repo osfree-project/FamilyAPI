@@ -10,7 +10,7 @@ ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
      name     ..\dll\$(PROJ)calls
      export $(EXPORT)
      file     ..\lib\$(PROJ).lib 
-     lib	core.lib
+     lib	kal.lib
 !ifdef IMPORT
      lib $(IMPORT) 
 !endif
