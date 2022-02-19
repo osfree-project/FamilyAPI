@@ -6,7 +6,7 @@ PUBLIC gis_uchMinorVersion
 PUBLIC gis_chRevisionLetter
 PUBLIC gis_bootdrive
 
-_GINFOSEG SEGMENT PARA PUBLIC 'DATA' USE16
+_GINFOSEG SEGMENT PARA PUBLIC 'GDATA' USE16
   gis_time                dd  ? ;time in seconds
   gis_msecs               dd  ? ;milliseconds
   gis_hour                db  ? ;hours

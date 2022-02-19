@@ -7,7 +7,7 @@ PUBLIC  lis_pidParent
 PUBLIC  lis_tidCurrent
 
 
-_LINFOSEG SEGMENT PARA PUBLIC 'DATA' USE16
+_LINFOSEG SEGMENT PARA PUBLIC 'LDATA' USE16
   lis_pidCurrent      dw  ? ;current process id
   lis_pidParent       dw  ? ;process id of parent
   lis_prtyCurrent     dw  ? ;priority of current thread
