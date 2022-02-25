@@ -26,17 +26,10 @@
 		INCLUDE	HELPERS.INC
 		INCLUDE DOS.INC
 		INCLUDE BSEERR.INC
+INCL_SUB	EQU	1
+		INCLUDE	BSESUB.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
-
-VIOFONTINFO struc
-  viofi_cb      dw  ? ;length of this structure
-  viofi_type    dw  ? ;request type
-  viofi_cxCell  dw  ? ;pel columns in character cell
-  viofi_cyCell  dw  ? ;pel rows in character cell
-  viofi_pbData  dd  ? ;requested font table (returned)
-  viofi_cbData  dw  ? ;length of caller supplied data area (in bytes)
-VIOFONTINFO ends
 
 		@BVSPROLOG	BVSGETFONT
 VIOHANDLE	DW	?		;Video handle

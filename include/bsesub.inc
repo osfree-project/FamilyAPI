@@ -338,7 +338,6 @@ FC_VIOGETSTATE		EQU	39
 FC_VIOSETSTATE		EQU	40
 
 VIOCONFIGINFO STRUC
-
 VIOIN_CB            DW  ? ;LENGTH OF THIS DATA STRUCTURE
 VIOIN_ADAPTER       DW  ? ;DISPLAY ADAPTER TYPE
 VIOIN_DISPLAY       DW  ? ;DISPLAY/MONITOR TYPE
@@ -352,6 +351,79 @@ VIOIN_PARTSAVESIZE  DD  ? ;
 VIOIN_EMADAPTERSOFF DW  ? ;OFFSET TO EMULATED ADAPTER TYPES
 VIOIN_EMDISPLAYSOFF DW  ? ;OFFSET TO EMULATED DISPLAY TYPES
 VIOCONFIGINFO ENDS
+
+VIOMODEINFO STRUC
+VIOMI_CB             DW ? ;LENGTH OF THE ENTIRE DATA STRUCTURE
+VIOMI_FBTYPE         DB ? ;BIT MASK OF MODE BEING SET
+VIOMI_COLOR          DB ? ;NUMBER OF COLORS (POWER OF 2)
+VIOMI_COL            DW ? ;NUMBER OF TEXT COLUMNS
+VIOMI_ROW            DW ? ;NUMBER OF TEXT ROWS
+VIOMI_HRES           DW ? ;HORIZONTAL RESOLUTION
+VIOMI_VRES           DW ? ;VERTICAL RESOLUTION
+VIOMI_FMT_ID         DB ? ;ATTRIBUTE FORMAT
+VIOMI_ATTRIB         DB ? ;NUMBER OF ATTRIBUTES
+VIOMI_BUF_ADDR       DD ? ;
+VIOMI_BUF_LENGTH     DD ? ;
+VIOMI_FULL_LENGTH    DD ? ;
+VIOMI_PARTIAL_LENGTH DD ? ;
+VIOMI_EXT_DATA_ADDR  DD ? ;
+VIOMODEINFO ENDS
+
+VIOCURSORINFO STRUC
+VIOCI_YSTART DW  ? ;CURSOR START LINE
+VIOCI_CEND   DW  ? ;CURSOR END LINE
+VIOCI_CX     DW  ? ;CURSOR WIDTH
+VIOCI_ATTR   DW  ? ;-1=HIDDEN CURSOR, ANY OTHER=NORMAL CURSOR
+VIOCURSORINFO ENDS
+
+VIOFONTINFO struc
+  viofi_cb      dw  ? ;length of this structure
+  viofi_type    dw  ? ;request type
+  viofi_cxCell  dw  ? ;pel columns in character cell
+  viofi_cyCell  dw  ? ;pel rows in character cell
+  viofi_pbData  dd  ? ;requested font table (returned)
+  viofi_cbData  dw  ? ;length of caller supplied data area (in bytes)
+VIOFONTINFO ends
+
+VIOPALSTATE struc
+  viopal_cb               dw ? ;Length of this structure in bytes
+  viopal_type             dw ? ;Request type=0 get palette registers
+  viopal_iFirst           dw ? ;First palette register to return
+  viopal_acolor  dw 1  dup (?) ;Color value palette register
+VIOPALSTATE ends
+
+VIOOVERSCAN struc
+  vioos_cb                dw ? ;Length of this structure
+  vioos_type              dw ? ;Request type=1 get overscan (border) color
+  vioos_color             dw ? ;Color value
+VIOOVERSCAN ends
+
+VIOINTENSITY struc
+  vioint_cb               dw ? ;Length of this structure
+  vioint_type             dw ? ;Request type=2 get blink/background
+                              ; intensity switch
+  vioint_fs               dw ? ;Value of blink/background switch
+VIOINTENSITY ends
+
+VIOCOLORREG struc
+  viocreg_cb              dw ? ;
+  viocreg_type            dw ? ;
+  viocreg_firstcolorreg   dw ? ;
+  viocreg_numcolorregs    dw ? ;
+  viocreg_colorregaddr    dd ? ;
+VIOCOLORREG ends
+
+VIOSETULINELOC struc
+  viouline_cb             dw ? ;
+  viouline_type           dw ? ;
+  viouline_scanline       dw ? ;
+VIOSETULINELOC ends
+
+VIOSETTARGET struc
+  viosett_cb               dw ? ;
+  viosett_type             dw ? ;
+  viosett_defaultalgorithm dw ? ;
+VIOSETTARGET    ends
 
 @VioWrtTTY	MACRO	STRING, LENGTH, HANDLE
 		@DEFINE	VIOWRTTTY

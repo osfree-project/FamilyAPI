@@ -25,23 +25,9 @@
 		INCLUDE	HELPERS.INC
 		INCLUDE DOS.INC
 		INCLUDE BSEERR.INC
+INCL_SUB	EQU	1
+		INCLUDE	BSESUB.INC
 
-VIOMODEINFO struc
-  viomi_cb             dw ? ;Length of the entire data structure
-  viomi_fbType         db ? ;Bit mask of mode being set
-  viomi_color          db ? ;Number of colors (power of 2)
-  viomi_col            dw ? ;Number of text columns
-  viomi_row            dw ? ;Number of text rows
-  viomi_hres           dw ? ;Horizontal resolution
-  viomi_vres           dw ? ;Vertical resolution
-  viomi_fmt_ID         db ? ;Attribute format
-  viomi_attrib         db ? ;Number of attributes
-  viomi_buf_addr       dd ? ;
-  viomi_buf_length     dd ? ;
-  viomi_full_length    dd ? ;
-  viomi_partial_length dd ? ;
-  viomi_ext_data_addr  dd ? ;
-VIOMODEINFO ends
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 

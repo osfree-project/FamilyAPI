@@ -508,6 +508,34 @@ TEST tst_dosmemavail(void) {
     PASS();
 }
 
+TEST tst_dosdevioctl(void) {
+    USHORT  rc;
+    HFILE   FileHandle;
+    USHORT  Action;
+    USHORT  Wrote;
+    CHAR    FileData[] ="test write";
+
+    rc = DosOpen("MOUSE$",            /* File path name */
+               &FileHandle,             /* File handle */
+               &Action,                 /* Action taken */
+               0,                       /* File primary allocation */
+               FILE_ARCHIVED,           /* File attribute */
+               FILE_CREATE,             /* Open Function type */
+               0,                       /* Open mode of the file */
+               0);                      /* Reserved (must be zero) */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+
+    rc=DosDevIOCtl(FileHandle,           /* File handle */
+             FileData,     /* User buffer */
+             sizeof(FileData),     /* Buffer length */
+             &Wrote);              /* Bytes written */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+
+    rc=DosClose(FileHandle);           /* File handle */
+    ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
+    PASS();
+}
+
 
 /* Suites can group multiple tests with common setup. */
 SUITE(dos) {
@@ -520,6 +548,7 @@ SUITE(dos) {
     RUN_TEST(tst_dosallocseg);
 //    RUN_TEST(tst_dosallocshrseg);
 //    RUN_TEST(tst_dosgetshrseg);
+    RUN_TEST(tst_dosdevioctl);
 }
 
 /* Suites can group multiple tests with common setup. */

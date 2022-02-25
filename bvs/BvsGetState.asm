@@ -21,49 +21,11 @@
 		INCLUDE	HELPERS.INC
 		INCLUDE DOS.INC
 		INCLUDE BSEERR.INC
-
+INCL_SUB	EQU	1
+		INCLUDE	BSESUB.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-VIOPALSTATE struc
-  viopal_cb               dw ? ;Length of this structure in bytes
-  viopal_type             dw ? ;Request type=0 get palette registers
-  viopal_iFirst           dw ? ;First palette register to return
-  viopal_acolor  dw 1  dup (?) ;Color value palette register
-VIOPALSTATE ends
-
-VIOOVERSCAN struc
-  vioos_cb                dw ? ;Length of this structure
-  vioos_type              dw ? ;Request type=1 get overscan (border) color
-  vioos_color             dw ? ;Color value
-VIOOVERSCAN ends
-
-VIOINTENSITY struc
-  vioint_cb               dw ? ;Length of this structure
-  vioint_type             dw ? ;Request type=2 get blink/background
-                              ; intensity switch
-  vioint_fs               dw ? ;Value of blink/background switch
-VIOINTENSITY ends
-
-VIOCOLORREG struc
-  viocreg_cb              dw ? ;
-  viocreg_type            dw ? ;
-  viocreg_firstcolorreg   dw ? ;
-  viocreg_numcolorregs    dw ? ;
-  viocreg_colorregaddr    dd ? ;
-VIOCOLORREG ends
-
-VIOSETULINELOC struc
-  viouline_cb             dw ? ;
-  viouline_type           dw ? ;
-  viouline_scanline       dw ? ;
-VIOSETULINELOC ends
-
-VIOSETTARGET struc
-  viosett_cb               dw ? ;
-  viosett_type             dw ? ;
-  viosett_defaultalgorithm dw ? ;
-VIOSETTARGET    ends
 
 		@BVSPROLOG	BVSGETSTATE
 VIOHANDLE	DW	?		;VIDEO HANDLE
