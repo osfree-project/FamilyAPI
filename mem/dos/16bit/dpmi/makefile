@@ -13,7 +13,7 @@ Dos16PReallocHuge.obj
 
 .asm.obj: .AUTODEPEND
 	@echo ASM $<
-	@jwasm.exe -q -I..\..\..\..\include $*.asm
+	@jwasm.exe -q -I..\..\..\..\macrolib;..\..\..\..\include $*.asm
 
 clean: .SYMBOLIC
 	if exist *.obj del *.obj

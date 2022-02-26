@@ -26,7 +26,7 @@ ALL: ..\lib\$(PROJ).lib ..\dll\$(PROJ)calls.dll ..\lib\$(PROJ)calls.lib
 
 .asm.obj: .AUTODEPEND
 	@echo ASM $<
-	@jwasm.exe -Zg -Fl -q -I..\include $*.asm
+	@jwasm.exe -Zg -Fl -q -I..\macrolib;..\include $*.asm
 
 clean: .SYMBOLIC
 	if exist *.obj del *.obj

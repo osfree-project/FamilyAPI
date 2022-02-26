@@ -44,7 +44,7 @@ dostimerstart.obj dostimerstop.obj doswritequeue.obj doserrclass.obj debug.obj
 
 .asm.obj: .AUTODEPEND
 	@echo ASM $<
-	@jwasm.exe -Fl -q -I../include $*.asm
+	@jwasm.exe -Fl -q -I../macrolib;../include $*.asm
 
 clean: .SYMBOLIC
 	if exist *.obj del *.obj

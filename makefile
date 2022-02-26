@@ -8,7 +8,7 @@ fapi.lib: $(LIBS)
 
 .asm.obj: .AUTODEPEND
 	@echo ASM $<
-	@jwasm.exe -Zg -q -Iinclude $*.asm
+	@jwasm.exe -Zg -q -Imacrolib;include $*.asm
 
 build: .SYMBOLIC
 	@cd kal

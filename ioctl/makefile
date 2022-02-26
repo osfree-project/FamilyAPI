@@ -19,11 +19,11 @@ OBJS=dosdevioctl.obj dosdevioctl2.obj
 
 dosdevioctl.obj: dosdevioctl.asm Cat01.asm Cat02.asm Cat03.asm Cat04.asm Cat05.asm Cat06.asm Cat07.asm Cat08.asm Cat09.asm Cat10.asm Cat11.asm $(ASMS)
 	@echo ASM $<
-	@jwasm.exe -Fl -q -I..\include $*.asm
+	@jwasm.exe -Fl -q -I..\macrolib;..\include $*.asm
 
 dosdevioctl2.obj: dosdevioctl2.asm
 	@echo ASM $<
-	@jwasm.exe -Fl -q -I..\include $*.asm
+	@jwasm.exe -Fl -q -I..\macrolib;..\include $*.asm
 
 clean: .SYMBOLIC
 	if exist *.obj del *.obj

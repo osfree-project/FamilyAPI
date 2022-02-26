@@ -1,0 +1,3 @@
+[submodule "macrolib"]
+	path = macrolib
+	url = https://github.com/prokushev/macrolib

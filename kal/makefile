@@ -10,7 +10,7 @@ OBJS=globalshared.obj baddynlink.obj ginfoseg.obj linfoseg.obj globalvars.obj he
 
 .asm.obj: .AUTODEPEND
 	@echo ASM $<
-	@jwasm.exe -q -I../include $*.asm
+	@jwasm.exe -q -I../macrolib;../include $*.asm
 
 clean: .SYMBOLIC
 	if exist *.obj del *.obj
