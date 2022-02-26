@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Repo clone
         uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - name: Build for Windows
         run: fapi.cmd
         shell: cmd
