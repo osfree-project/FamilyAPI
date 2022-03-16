@@ -54,7 +54,7 @@ MODEINFO	DD	?		;
 		MOV	AX, 40H
 		MOV	ES, AX
 		MOV	AX, [ES:84H]				; Number of rows for EGA and higher
-		CMP	0
+		CMP	AX, 0
 		JZ	OK_ROWS
 		MOV	AX, 24
 OK_ROWS:
