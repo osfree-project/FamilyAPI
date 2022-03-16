@@ -3,7 +3,7 @@
 ;
 ;   @brief BvsGetMode DOS wrapper
 ;
-;   (c) osFree Project 2021, <http://www.osFree.org>
+;   (c) osFree Project 2008-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -11,11 +11,11 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-;*0  NO_ERROR
-;*436 ERROR_VIO_INVALID_HANDLE
-;*438 ERROR_VIO_INVALID_LENGTH
-;*465 ERROR_VIO_DETACHED
-;*494 ERROR_VIO_EXTENDED_SG
+; *0  NO_ERROR
+; *436 ERROR_VIO_INVALID_HANDLE
+; *438 ERROR_VIO_INVALID_LENGTH
+; *465 ERROR_VIO_DETACHED
+; *494 ERROR_VIO_EXTENDED_SG
 ;
 ; @todo add check for structure length
 ;
@@ -24,9 +24,9 @@
 .8086
 		; Helpers
 		INCLUDE	HELPERS.INC
-		INCLUDE DOS.INC
-		INCLUDE BSEERR.INC
+		INCLUDE BIOS.INC
 INCL_SUB	EQU	1
+		INCLUDE BSEERR.INC
 		INCLUDE	BSESUB.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -37,24 +37,36 @@ MODEINFO	DD	?		;
 		@BVSSTART	BVSGETMODE
 
 		EXTERN	VIOCHECKHANDLE: PROC
-		MOV     BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
+		MOV	BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
 		CALL	VIOCHECKHANDLE
 		JNZ	EXIT
 
-		LDS     SI,[DS:BP].ARGS.MODEINFO
-		MOV	AH, 0FH
-		INT	10H
+		LDS	SI, [DS:BP].ARGS.MODEINFO
+		@GetMode
+		MOV	BL, AH
+
+		; Number of Columns
 		MOV	AL, AH
 		XOR	AH, AH
-		MOV     [DS:SI].VIOMODEINFO.VIOMI_COL,AX      ;COLUMNS
-		MOV	AX, 25
-		MOV     [DS:SI].VIOMODEINFO.VIOMI_ROW,AX      ;ROWS 
-		MOV     AL,1
-		MOV     [DS:SI].VIOMODEINFO.VIOMI_FBTYPE,AL      ;TYPE: 1=TEXT MODE/3=GRAPH MODE
-		MOV     AL,4
-		MOV     [DS:SI].VIOMODEINFO.VIOMI_COLOR,AL      ;COLOR: 16 COLORS
+		MOV	[DS:SI].VIOMODEINFO.VIOMI_COL, AX	; Columns
 
-		XOR     AX,AX
+		; Number of Rows
+		MOV	AX, 40H
+		MOV	ES, AX
+		MOV	AX, [ES:84H]				; Number of rows for EGA and higher
+		CMP	0
+		JZ	OK_ROWS
+		MOV	AX, 24
+OK_ROWS:
+		INC	AX
+		MOV	[DS:SI].VIOMODEINFO.VIOMI_ROW, AX	; Rows
+
+		MOV	AL,1
+		MOV	[DS:SI].VIOMODEINFO.VIOMI_FBTYPE, AL	; TYPE: 1=TEXT MODE/3=GRAPH MODE
+		MOV	AL,4
+		MOV	[DS:SI].VIOMODEINFO.VIOMI_COLOR, AL	; COLOR: 16 COLORS
+
+		XOR	AX,AX
 EXIT:
 		@BVSEPILOG	BVSGETMODE
 _TEXT		ENDS
