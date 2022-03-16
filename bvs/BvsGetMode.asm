@@ -55,14 +55,14 @@ MODEINFO	DD	?		;
 		MOV	[DS:SI].VIOMODEINFO.VIOMI_FBTYPE, AL	; TYPE: 1=TEXT MODE/3=GRAPH MODE
 
 		CMP	CX, 3
-		JZ	OK_EXIT
+		JBE	OK_EXIT
 
-		; Number of colors
+		; Number of Colors
 		MOV	AL,4
 		MOV	[DS:SI].VIOMODEINFO.VIOMI_COLOR, AL	; COLOR: 16 COLORS
 
 		CMP	CX, 4
-		JZ	OK_EXIT
+		JBE	OK_EXIT
 
 		; Number of Columns
 		MOV	AL, BH
