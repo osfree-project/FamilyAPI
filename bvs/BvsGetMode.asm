@@ -42,13 +42,35 @@ MODEINFO	DD	?		;
 		JNZ	EXIT
 
 		LDS	SI, [DS:BP].ARGS.MODEINFO
+		MOV	CX, [DS:SI].VIOMODEINFO.VIOMI_CB
+		CMP	CX, 2
+		MOV	AX, ERROR_VIO_INVALID_LENGTH
+		JBE	EXIT
+
 		@GetMode
-		MOV	BL, AH
+		MOV	BX, AX
+
+		; Frame buffer type
+		MOV	AL,1
+		MOV	[DS:SI].VIOMODEINFO.VIOMI_FBTYPE, AL	; TYPE: 1=TEXT MODE/3=GRAPH MODE
+
+		CMP	CX, 3
+		JZ	OK_EXIT
+
+		; Number of colors
+		MOV	AL,4
+		MOV	[DS:SI].VIOMODEINFO.VIOMI_COLOR, AL	; COLOR: 16 COLORS
+
+		CMP	CX, 4
+		JZ	OK_EXIT
 
 		; Number of Columns
-		MOV	AL, AH
+		MOV	AL, BH
 		XOR	AH, AH
 		MOV	[DS:SI].VIOMODEINFO.VIOMI_COL, AX	; Columns
+
+		CMP	CX, 6
+		JBE	OK_EXIT
 
 		; Number of Rows
 		MOV	AX, 40H
@@ -61,11 +83,31 @@ OK_ROWS:
 		INC	AX
 		MOV	[DS:SI].VIOMODEINFO.VIOMI_ROW, AX	; Rows
 
-		MOV	AL,1
-		MOV	[DS:SI].VIOMODEINFO.VIOMI_FBTYPE, AL	; TYPE: 1=TEXT MODE/3=GRAPH MODE
-		MOV	AL,4
-		MOV	[DS:SI].VIOMODEINFO.VIOMI_COLOR, AL	; COLOR: 16 COLORS
+		CMP	CX, 8
+		JBE	OK_EXIT
 
+		; Hres
+
+		; Vres
+
+		; fmt_id
+
+		; attrib
+
+		; buf_addr
+
+		; buf_length
+
+		; full_length
+
+		; partail_length
+
+		; ext_data_addr
+
+		MOV	AX, ERROR_VIO_INVALID_LENGTH
+		JMP	EXIT
+
+OK_EXIT:
 		XOR	AX,AX
 EXIT:
 		@BVSEPILOG	BVSGETMODE
