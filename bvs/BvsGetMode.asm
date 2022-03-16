@@ -11,13 +11,49 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-; *0  NO_ERROR
-; *436 ERROR_VIO_INVALID_HANDLE
-; *438 ERROR_VIO_INVALID_LENGTH
-; *465 ERROR_VIO_DETACHED
-; *494 ERROR_VIO_EXTENDED_SG
+; * 0   NO_ERROR
+; * 436 ERROR_VIO_INVALID_HANDLE
+; * 438 ERROR_VIO_INVALID_LENGTH
+; * 465 ERROR_VIO_DETACHED
+; * 494 ERROR_VIO_EXTENDED_SG
 ;
-; @todo add check for structure length
+;BIOS MODE	TYPE	COLOR	COLS	ROWS	HRES	VRES	VALID ADAPTER/DISPLAY COMBINATIONS [EMULATED]
+;0	5	4	40	25	320	200	[CGA/CD], CGA/Comp, [EGA/CD], [EGA/ECD], VGA/Mono, VGA/Color, VGA/Plasma
+;0*	5	4	40	25	320	350	[EGA/ECD], VGA/Mono, VGA/Color, VGA/Plasma
+;0+	5	4	40	25	360	400	VGA/Mono, VGA/Color
+;0#	5	4	40	25	320	400	VGA/Mono, VGA/Color, VGA/Plasma
+;1	1	4	40	25	320	200	CGA/CD, CGA/Comp, EGA/CD, EGA/ECD, [VGA/Mono], VGA/Color, [VGA/Plasma]
+;1*	1	4	40	25	320	350	EGA/ECD, [VGA/Mono], VGA/Color, [VGA/Plasma]
+;1+	1	4	40	25	360	400	[VGA/Mono], VGA/Color
+;1#	1	4	40	25	320	400	[VGA/Mono], VGA/Color, [VGA/Plasma]
+;2	5	4	80	25	640	200	[CGA/CD], CGA/Comp, [EGA/CD], [EGA/ECD], VGA/Mono, VGA/Color, VGA/Plasma
+;2*	5	4	80	25	640	350	[EGA/ECD], VGA/Mono, VGA/Color, VGA/Plasma
+;2+	5	4	80	25	720	400	VGA/Mono, VGA/Color
+;2#	5	4	80	25	640	400	VGA/Mono, VGA/Color, VGA/Plasma
+;3	1	4	80	25	640	200	CGA/CD, CGA/Comp, EGA/CD, EGA/ECD, [VGA/Mono], VGA/Color, [VGA/Plasma]
+;3*	1	4	80	25	640	350	EGA/ECD, [VGA/Mono], VGA/Color, [VGA/Plasma]
+;3+	1	4	80	25	720	400	[VGA/Mono], VGA/Color
+;3#	1	4	80	25	640	400	[VGA/Mono], VGA/Color, [VGA/Plasma]
+;7	0	0	80	25	720	350	MPA/MD, EGA/MD, VGA/Mono, VGA/Color
+;7+	0	0	80	25	720	400	VGA/Mono, VGA/Color
+;7#	0	0	80	25	640	400	VGA/Mono, VGA/Color, VGA/Plasma
+;n/a	0	0	80	25	640	350	VGA/Mono, VGA/Color, VGA/Plasma
+;n/a	1	4	80	30	720	480	[VGA/Mono], VGA/Color
+;n/a	1	4	80	30	640	480	[VGA/Mono], VGA/Color, [VGA/Plasma]
+;4	3	2	[40]	[25]	320	200	CGA/CD, CGA/Comp, EGA/CD, EGA/ECD, [VGA/Mono], VGA/Color,[VGA/Plasma]
+;5	7	2	[40]	[25]	320	200	[CGA/CD], CGA/Comp, [EGA/CD], [EGA/ECD], VGA/Mono, VGA/Color, VGA/Plasma
+;6	3	1	[80]	[25]	640	200	CGA/CD, CGA/Comp, EGA/CD, EGA/ECD, VGA/Mono, VGA/Color, VGA/Plasma
+;D	3	4	[40]	[25]	320	200	EGA/CD, EGA/ECD, [VGA/Mono], VGA/Color, [VGA/Plasma]
+;E	3	4	[80]	[25]	640	200	EGA/CD, EGA/ECD, [VGA/Mono], VGA/Color, [VGA/Plasma]
+;F	2	0	[80]	[25]	640	350	EGA/MD, VGA/Mono, VGA/Color, VGA/Plasma
+;10	3	4	[80]	[25]	640	350	EGA/ECD, [VGA/Mono], VGA/Color, [VGA/Plasma]
+;11	3	1	[80]	[30]	640	480	VGA/Mono, VGA/Color, VGA/Plasma
+;12	3	4	[80]	[30]	640	480	[VGA/Mono], VGA/Color, [VGA/Plasma]
+;13	3	8	[40]	[25]	320	200	[VGA/Mono], VGA/Color, [VGA/Plasma]
+;n/a	11	8	[80]	[30]	640	480	[8514A/Mono], 8514A/Color
+;n/a	11	4	[80]	[30]	640	480	[8514A/Mono], 8514A/Color
+;n/a	11	8	[85]	[38]	1024	768	[8514A/HMono], 8514A/HColor
+;n/a	11	4	[85]	[38]	1024	768	[8514A/HMono], 8514A/HColor
 ;
 ;*/
 

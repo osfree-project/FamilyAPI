@@ -3,7 +3,7 @@
 ;
 ;   @brief BvsGetConfig DOS wrapper
 ;
-;   (c) osFree Project 2021, <http://www.osFree.org>
+;   (c) osFree Project 2008-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -11,11 +11,11 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-;*0 NO_ERROR
-;*421 ERROR_VIO_INVALID_PARMS
-;*436 ERROR_VIO_INVALID_HANDLE
-;*438 ERROR_VIO_INVALID_LENGTH
-;*465 ERROR_VIO_DETACHED
+;  * 0 NO_ERROR
+;  * 421 ERROR_VIO_INVALID_PARMS
+;  * 436 ERROR_VIO_INVALID_HANDLE
+;  * 438 ERROR_VIO_INVALID_LENGTH
+;  * 465 ERROR_VIO_DETACHED
 ;
 ; @todo add vioconfiginfo length check
 ;
@@ -26,8 +26,8 @@
 		INCLUDE	HELPERS.INC
 		INCLUDE DOS.INC
 		INCLUDE BIOS.INC
-		INCLUDE BSEERR.INC
 INCL_VIO	EQU	1
+		INCLUDE BSEERR.INC
 		INCLUDE BSESUB.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
