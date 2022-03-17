@@ -140,9 +140,6 @@ OK_ROWS:
 
 		; ext_data_addr
 
-		MOV	AX, ERROR_VIO_INVALID_LENGTH
-		JMP	EXIT
-
 OK_EXIT:
 		XOR	AX,AX
 EXIT:
