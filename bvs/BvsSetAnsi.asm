@@ -3,7 +3,7 @@
 ;
 ;   @brief BvsSetAnsi DOS wrapper
 ;
-;   (c) osFree Project 2021, <http://www.osFree.org>
+;   (c) osFree Project 2008-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -37,14 +37,14 @@ INDICATOR	DW	?		;
 		@BVSSTART	BVSSETANSI
 
 		EXTERN	VIOCHECKHANDLE: PROC
-		MOV     BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
+		MOV	BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
 		CALL	VIOCHECKHANDLE
 		JNZ	EXIT
 
-		MOV     AX,[DS:BP].ARGS.INDICATOR
-		PUSH    CS
-		POP     DS
-		MOV     ANSI_STATE,AX           ; SAVE IT AWAY
+		MOV	AX,[DS:BP].ARGS.INDICATOR
+		PUSH	CS
+		POP	DS
+		MOV	ANSI_STATE,AX           ; SAVE IT AWAY
 
 		XOR	AX, AX                   ; ALL OK
 

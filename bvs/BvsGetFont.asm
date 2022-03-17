@@ -3,7 +3,7 @@
 ;
 ;   @brief BvsGetFont DOS wrapper
 ;
-;   (c) osFree Project 2021, <http://www.osFree.org>
+;   (c) osFree Project 2008-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -11,13 +11,13 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-;*0 NO_ERROR
-;*355 ERROR_VIO_MODE
-;*421 ERROR_VIO_INVALID_PARMS
-;*438 ERROR_VIO_INVALID_LENGTH
-;*465 ERROR_VIO_DETACHED
-;*467 ERROR_VIO_FONT
-;*494 ERROR_VIO_EXTENDED_SG
+;   * 0   NO_ERROR
+;   * 355 ERROR_VIO_MODE
+;   * 421 ERROR_VIO_INVALID_PARMS
+;   * 438 ERROR_VIO_INVALID_LENGTH
+;   * 465 ERROR_VIO_DETACHED
+;   * 467 ERROR_VIO_FONT
+;   * 494 ERROR_VIO_EXTENDED_SG
 ;
 ;*/
 
@@ -25,8 +25,8 @@
 		; Helpers
 		INCLUDE	HELPERS.INC
 		INCLUDE DOS.INC
-		INCLUDE BSEERR.INC
 INCL_SUB	EQU	1
+		INCLUDE BSEERR.INC
 		INCLUDE	BSESUB.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -40,13 +40,13 @@ REQUESTBLOCK	DD	?		;
 		MOV     BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
 		CALL	VIOCHECKHANDLE
 		JNZ	EXIT
-		                                                                   
-		;ask BIOS to return VGA bitmap fonts
-		mov			ax, 1130h
-		mov			bh, 6    ; @todo select table depending on cxCell cyCell
-		int			10h
 
-		XOR     AX,AX                    ; ALL IS OK
+		;ASK BIOS TO RETURN VGA BITMAP FONTS
+		MOV	AX, 1130H
+		MOV	BH, 6			; @TODO SELECT TABLE DEPENDING ON CXCELL CYCELL
+		INT	10H
+
+		XOR	AX,AX			; ALL IS OK
 
 EXIT:
 		@BVSEPILOG	BVSGETFONT

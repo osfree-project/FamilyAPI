@@ -17,8 +17,8 @@
 .8086
 		; Helpers
 		INCLUDE	HELPERS.INC
-		INCLUDE DOS.INC
-		INCLUDE BSEERR.INC
+		INCLUDE	BIOS.INC
+		INCLUDE	BSEERR.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
@@ -37,20 +37,20 @@ EXTERN		VIOGOTOXYH: PROC
 		CALL	VIOGOTOXYH
 		JNZ	EXIT
 
-		MOV     AX,0B800H               ; OFFSET FOR COLOR CARD
-		MOV     SI,DI                   ; GET THE ADDRESS AS SOURCE INDEX???
-		MOV     DS,AX                   ; DS:SI IS NOW SET UP
+		MOV	AX,0B800H               ; OFFSET FOR COLOR CARD
+		MOV	SI,DI                   ; GET THE ADDRESS AS SOURCE INDEX???
+		MOV	DS,AX                   ; DS:SI IS NOW SET UP
 
-		LES     DI,[DS:BP].ARGS.SLENGTH              ; GET LENGTH POINTER
-		MOV     CX,ES:[DI]              ; GET LENGTH
-		LES     DI,[DS:BP].ARGS.CHARSTR              ; GET THE POINTER IN ES:DI
+		LES	DI,[DS:BP].ARGS.SLENGTH              ; GET LENGTH POINTER
+		MOV	CX,ES:[DI]              ; GET LENGTH
+		LES	DI,[DS:BP].ARGS.CHARSTR              ; GET THE POINTER IN ES:DI
 
 F13_100:
-		MOVSB                           ; MOVE A BYTE
-		INC     DI                      ; GET PAST ATTRIBUTE
-		LOOP    F13_100                 ; DO THE NEXT ONE
+		MOVSB	; MOVE A BYTE
+		INC	DI                      ; GET PAST ATTRIBUTE
+		LOOP	F13_100                 ; DO THE NEXT ONE
 
-		XOR     AX,AX                    ; SUCCESSFUL RETURN
+		XOR	AX,AX                    ; SUCCESSFUL RETURN
 EXIT:
 		@BVSEPILOG	BVSREADCHARSTR
 
