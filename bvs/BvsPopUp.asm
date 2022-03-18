@@ -11,10 +11,10 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-;   *0   NO_ERROR
-;   *405 ERROR_VIO_NO_POPUP
-;   *406 ERROR_VIO_EXISTING_POPUP
-;   *483 ERROR_VIO_TRANSPARENT_POPUP;
+;   * 0   NO_ERROR
+;   * 405 ERROR_VIO_NO_POPUP
+;   * 406 ERROR_VIO_EXISTING_POPUP
+;   * 483 ERROR_VIO_TRANSPARENT_POPUP;
 ;*/
 
 .8086

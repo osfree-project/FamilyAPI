@@ -11,6 +11,12 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
+;   * 0   NO_ERROR
+;   * 355 ERROR_VIO_MODE
+;   * 358 ERROR_VIO_ROW
+;   * 359 ERROR_VIO_COL
+;   * 436 ERROR_VIO_INVALID_HANDLE
+;   * 465 ERROR_VIO_DETACHED
 ;*/
 
 .8086
