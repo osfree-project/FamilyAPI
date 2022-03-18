@@ -44,7 +44,7 @@ CHARSTR		DD	?		;String to be written
 		JCXZ	DONE
 NEXTITEM:
 		LODSB
-		@WrtTTY	AL, 0
+		@WrtTTY	AL
 		LOOP	NEXTITEM
 DONE:		
 		XOR	AX,AX

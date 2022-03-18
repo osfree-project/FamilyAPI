@@ -39,7 +39,7 @@ ROW		DD	?		;Starting row position for output
 		CALL	VIOCHECKHANDLE
 		JNZ	EXIT
 
-		@GetCur	0
+		@GetCur
 		MOV	AH,0
 		MOV	AL, DL
 		LDS	SI,[DS:BP].ARGS.COLUMN
