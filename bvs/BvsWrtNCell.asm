@@ -3,7 +3,7 @@
 ;
 ;   @brief BvsWrtNCell DOS wrapper
 ;
-;   (c) osFree Project 2021, <http://www.osFree.org>
+;   (c) osFree Project 2008-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -25,7 +25,7 @@
 .8086
 		; Helpers
 		INCLUDE	HELPERS.INC
-		INCLUDE DOS.INC
+		INCLUDE BIOS.INC
 		INCLUDE BSEERR.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -39,33 +39,17 @@ CELL		DD	?		;Character to be written
 		@BVSSTART	BVSWRTNCELL
 
 EXTERN		VIOGOTOXYH: PROC
-		MOV     BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
-		MOV     CX,[DS:BP].ARGS.ROW		; GET ROW
-		MOV     DX,[DS:BP].ARGS.COLUMN		; GET COLUMN
+		MOV	BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
+		MOV	CX,[DS:BP].ARGS.ROW		; GET ROW
+		MOV	DX,[DS:BP].ARGS.COLUMN		; GET COLUMN
 		CALL	VIOGOTOXYH
 		JNZ	EXIT
 
-		MOV     CX,[DS:BP].ARGS.CTIMES		; GET LENGTH
-		LDS     SI,[DS:BP].ARGS.CELL		; GET THE POINTER IN DS:SI
-		MOV     BH,0				; DISPLAY PAGE
-if 0
-		MOV     AH,2				; SET CURSOR CALL
-		PUSH    SI				; SAVE POINTER
-		INT     10H				; DX ALREADY SET, SO GO AHEAD
-		POP     SI				; GET POINTER BACK
-		INC     DL				; INCREMENT COLUMN COUNT
-		CMP     DL,79				; IS IT TOO HIGH
-		JLE     F19_10				; IT IS OK
-		SUB     DL,80				; SUBTRACT THE 80 COLUMNS
-		INC     DH				; INCREMENT THE ROW
-endif
-F19_10:
+		LDS	SI,[DS:BP].ARGS.CELL		; GET THE POINTER IN DS:SI
 		LODSW					; GET THE CHARACTER CELL IN AX
-		MOV	BL,AH
-		MOV     AH,9				; CALL TO WRITE CELL
-		INT     10H				; DO THE INTERRUPT
+		@PutChAtr AL, AH, 0, [DS:BP].ARGS.CTIMES
 
-		XOR     AX,AX				; SUCCESSFUL RETURN
+		XOR	AX,AX				; SUCCESSFUL RETURN
 
 EXIT:
 		@BVSEPILOG BVSWRTNCELL

@@ -3,7 +3,7 @@
 ;
 ;   @brief BvsSetMode DOS wrapper
 ;
-;   (c) osFree Project 2021, <http://www.osFree.org>
+;   (c) osFree Project 2008-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -11,12 +11,12 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-;* 0          NO_ERROR 
-;* 355        ERROR_VIO_MODE 
-;* 358        ERROR_VIO_ROW 
-;* 359        ERROR_VIO_COL 
-;* 436        ERROR_VIO_INVALID_HANDLE 
-;* 465        ERROR_VIO_DETACHED
+;   * 0          NO_ERROR 
+;   * 355        ERROR_VIO_MODE 
+;   * 358        ERROR_VIO_ROW 
+;   * 359        ERROR_VIO_COL 
+;   * 436        ERROR_VIO_INVALID_HANDLE 
+;   * 465        ERROR_VIO_DETACHED
 ;
 ;*/
 
@@ -24,8 +24,8 @@
 		; Helpers
 		INCLUDE	HELPERS.INC
 		INCLUDE DOS.INC
-		INCLUDE BSEERR.INC
 INCL_SUB	EQU	1
+		INCLUDE BSEERR.INC
 		INCLUDE	BSESUB.INC
 
 
@@ -33,7 +33,7 @@ _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@BVSPROLOG	BVSSETMODE
 VIOHANDLE	DW	?		;Video handle
-MODEDATA	DD	?		;Vide mode info
+MODEDATA	DD	?		;Video mode info
 		@BVSSTART	BVSSETMODE
 
 		EXTERN	VIOCHECKHANDLE: PROC

@@ -3,7 +3,7 @@
 ;
 ;   @brief BvsWrtTTY DOS wrapper
 ;
-;   (c) osFree Project 2021, <http://www.osFree.org>
+;   (c) osFree Project 2008-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -39,7 +39,7 @@
 
 		; Helpers
 		INCLUDE	HELPERS.INC
-		INCLUDE DOS.INC
+		INCLUDE BIOS.INC
 		INCLUDE BSEERR.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -50,7 +50,7 @@ CHARSTR		DD	?		;String to be written
 		@BVSSTART	BVSWRTTTY
 
 		EXTERN	VIOCHECKHANDLE: PROC
-		MOV     BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
+		MOV	BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
 		CALL	VIOCHECKHANDLE
 		JNZ	EXIT
 
@@ -59,7 +59,7 @@ CHARSTR		DD	?		;String to be written
 		JCXZ	DONE
 NEXTITEM:
 		LODSB
-		INT	29H
+		@WrtTTY	AL, 0
 		LOOP	NEXTITEM
 DONE:		
 		XOR	AX,AX

@@ -3,7 +3,7 @@
 ;
 ;   @brief BvsSetCurType DOS wrapper
 ;
-;   (c) osFree Project 2021, <http://www.osFree.org>
+;   (c) osFree Project 2008-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -11,14 +11,14 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-;* 0          NO_ERROR 
-;* 355        ERROR_VIO_MODE 
-;* 356        ERROR_VIO_WIDTH 
-;* 421        ERROR_VIO_INVALID_PARMS 
-;* 436        ERROR_VIO_INVALID_HANDLE 
-;* 465        ERROR_VIO_DETACHED
+;   * 0          NO_ERROR 
+;   * 355        ERROR_VIO_MODE 
+;   * 356        ERROR_VIO_WIDTH 
+;   * 421        ERROR_VIO_INVALID_PARMS 
+;   * 436        ERROR_VIO_INVALID_HANDLE 
+;   * 465        ERROR_VIO_DETACHED
 ;
-; @todo add params checks
+;   @todo add params checks
 ;
 ;*/
 
@@ -48,8 +48,7 @@ CURINFO		DD	?		;
 		MOV	CH,AL
 		MOV	AX,[DS:SI].VIOCURSORINFO.VIOCI_CEND
 		AND	AL,01FH
-		MOV	CL,AL
-		@SetCurSz CH, CL
+		@SetCurSz CH, AL
 		XOR	AX,AX
 EXIT:
 		@BVSEPILOG	BVSSETCURTYPE

@@ -3,7 +3,7 @@
 ;
 ;   @brief BvsWrtCharStr DOS wrapper
 ;
-;   (c) osFree Project 2021, <http://www.osFree.org>
+;   (c) osFree Project 2008-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -19,6 +19,7 @@
 ;  * 465        ERROR_VIO_DETACHED
 ;
 ; @todo most probably, attribute problems. Need some testing.
+; @todo does not work on ibm 5150
 ;
 ;*/
 
@@ -46,17 +47,17 @@ EXTERN		VIOGOTOXYH: PROC
 		CALL	VIOGOTOXYH
 		JNZ	EXIT
 
-		MOV     CX,[DS:BP].ARGS.SLENGTH		; GET LENGTH
+		MOV	CX,[DS:BP].ARGS.SLENGTH		; GET LENGTH
 		PUSH	BP
-		LES     BP,[DS:BP].ARGS.CHARSTR		; GET THE POINTER IN DS:SI
-		MOV     BH,0				; DISPLAY PAGE
-F19_10:
+		LES	BP,[DS:BP].ARGS.CHARSTR		; GET THE POINTER IN DS:SI
+		MOV	BH,0				; DISPLAY PAGE
+
 		MOV	AL, 1				; WRITE MODE
-		MOV     AH,13H				; CALL TO WRITE STR
-		INT     10H				; DO THE INTERRUPT
+		MOV	AH,13H				; CALL TO WRITE STR
+		INT	10H				; DO THE INTERRUPT
 		POP	BP
 
-		XOR     AX,AX				; SUCCESSFUL RETURN
+		XOR	AX,AX				; SUCCESSFUL RETURN
 
 EXIT:
 		@BVSEPILOG	BVSWRTCHARSTR
