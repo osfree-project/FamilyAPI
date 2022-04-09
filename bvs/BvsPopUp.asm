@@ -3,7 +3,7 @@
 ;
 ;   @brief BvsPopUp DOS wrapper
 ;
-;   (c) osFree Project 2008-2022, <http://www.osFree.org>
+;   (c) osFree Project 2002-2022, <http://www.osFree.org>
 ;   for licence see licence.txt in root directory, or project website
 ;
 ;   This is Family API implementation for DOS, used with BIND tools
@@ -20,7 +20,7 @@
 .8086
 		; Helpers
 		INCLUDE	HELPERS.INC
-		INCLUDE DOS.INC
+		INCLUDE	BIOS.INC
 		INCLUDE BSEERR.INC
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -35,6 +35,10 @@ OPTIONS		DD	?		;
 		MOV     BX,[DS:BP].ARGS.VIOHANDLE	; GET HANDLE
 		CALL	VIOCHECKHANDLE
 		JNZ	EXIT
+
+							; Save screen area
+		@SetMode				; Set 80x25 color text mode
+		@SetCurPos				; Set cursor to 0,0
 
 		XOR     AX,AX                    ; ALL IS OK
 
