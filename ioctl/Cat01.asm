@@ -21,8 +21,8 @@
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 SERTABLE1:
-	DD	IOSSETBAUD		; Function 41H Set Baud Rate
-	DD	IOSSETLINE		; Function 42H Set Line Control
+	DW	IOSSETBAUD		; Function 41H Set Baud Rate
+	DW	IOSSETLINE		; Function 42H Set Line Control
 
 _DATA	ENDS
 
@@ -34,15 +34,15 @@ _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 ; Category 1 Handler Serial Device Control
 ;--------------------------------------------------------
 
-IOSERIAL	PROC FAR
+IOSERIAL	PROC NEAR
 		MOV	SI, [DS:BP].ARGS.FUNCTION
 		SUB	SI, 41H		; 41H
 		JB	EXIT
 		CMP	SI, 1H		; 42H
 		JA	EXIT
 		SHL	SI, 1
-		SHL	SI, 1
-		CALL	FAR PTR ES:SERTABLE1[SI]
+;		SHL	SI, 1
+		CALL	WORD PTR ES:SERTABLE1[SI]
 EXIT:
 		RET
 IOSERIAL	ENDP

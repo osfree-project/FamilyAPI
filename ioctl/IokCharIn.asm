@@ -34,7 +34,7 @@
 ;record may not contain a character but a shift state change in the
 ;shift status field.
 
-IOKCHARIN	PROC	FAR
+IOKCHARIN	PROC	NEAR
 		LES	SI,[DS:BP].ARGS.DDATA
 		MOV	CX, [ES:SI]
 		JCXZ	@F

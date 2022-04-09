@@ -20,19 +20,19 @@
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 PRNTABLE1:
-	DD	IOPSETFRAME		; Function 41H Set Frame control
-	DD	RESERVED		; Function 42H Reserved
-	DD	RESERVED		; Function 43H Reserved
-	DD	IOPSETRETRY		; Function 44H Set Infinite Retry
-	DD	RESERVED		; Function 45H Reserved
-	DD	IOPINIT			; Function 46H Initialize printer
+	DW	IOPSETFRAME		; Function 41H Set Frame control
+	DW	RESERVED		; Function 42H Reserved
+	DW	RESERVED		; Function 43H Reserved
+	DW	IOPSETRETRY		; Function 44H Set Infinite Retry
+	DW	RESERVED		; Function 45H Reserved
+	DW	IOPINIT			; Function 46H Initialize printer
 
 PRNTABLE2:
-	DD	IOPGETFRAME		; Function 62H Get Frame Control
-	DD	RESERVED		; Function 63H Reserved
-	DD	IOPGETRETRY		; Function 64H Get Infinite Retry
-	DD	RESERVED		; Function 65H Reserved
-	DD	IOPGETSTATUS		; Function 66H Get Printer Status
+	DW	IOPGETFRAME		; Function 62H Get Frame Control
+	DW	RESERVED		; Function 63H Reserved
+	DW	IOPGETRETRY		; Function 64H Get Infinite Retry
+	DW	RESERVED		; Function 65H Reserved
+	DW	IOPGETSTATUS		; Function 66H Get Printer Status
 
 _DATA	ENDS
 
@@ -44,7 +44,7 @@ _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 ; Category 5 Handler
 ;--------------------------------------------------------
 
-IOPRINTER	PROC FAR
+IOPRINTER	PROC NEAR
 		MOV	SI, [DS:BP].ARGS.FUNCTION
 		SUB	SI, 41H		; 41H
 		JB	EXIT
@@ -57,13 +57,13 @@ IOPRINTER	PROC FAR
 		JMP	OK2
 OK1:
 		SHL	SI, 1
-		SHL	SI, 1
-		CALL	FAR PTR ES:PRNTABLE1[SI]
+;		SHL	SI, 1
+		CALL	WORD PTR ES:PRNTABLE1[SI]
 		JMP	EXIT
 OK2:
 		SHL	SI, 1
-		SHL	SI, 1
-		CALL	FAR PTR ES:PRNTABLE2[SI]
+;		SHL	SI, 1
+		CALL	WORD PTR ES:PRNTABLE2[SI]
 EXIT:
 		RET
 IOPRINTER	ENDP

@@ -28,7 +28,7 @@
 ;contain a character but a shift state change in the shift status field.
 ;
 
-IOKPEEK		PROC	FAR
+IOKPEEK		PROC	NEAR
 		LES	SI,[DS:BP].ARGS.DDATA
 		MOV	CX, [ES:SI]
 		MOV	AH,011H

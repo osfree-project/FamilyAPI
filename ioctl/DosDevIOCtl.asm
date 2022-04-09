@@ -43,17 +43,17 @@
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 CATTABLE:
-	DD	IOSERIAL	; Category 1 Serial Device Control
-	DD	RESERVED	; Category 2 Reserved
-	DD	RESERVED	; Category 3 Screen/Video control
-	DD	IOKEYBOARD	; Category 4 Keyboard Control
-	DD	IOPRINTER	; Category 5 Printer Control
-	DD	RESERVED	; Category 6 Light Pen Control
-	DD	IOMOUSE		; Category 7 Mouse Control
-	DD	IODISK		; Category 8 Logical Disk Control
-	DD	RESERVED	; Category 9 Physical Disk Control
-	DD	RESERVED	; Category 10 Character Device Monitor Control
-	DD	RESERVED	; Category 11 General Device Control
+	DW	IOSERIAL	; Category 1 Serial Device Control
+	DW	RESERVED	; Category 2 Reserved
+	DW	RESERVED	; Category 3 Screen/Video control
+	DW	IOKEYBOARD	; Category 4 Keyboard Control
+	DW	IOPRINTER	; Category 5 Printer Control
+	DW	RESERVED	; Category 6 Light Pen Control
+	DW	IOMOUSE		; Category 7 Mouse Control
+	DW	IODISK		; Category 8 Logical Disk Control
+	DW	RESERVED	; Category 9 Physical Disk Control
+	DW	RESERVED	; Category 10 Character Device Monitor Control
+	DW	RESERVED	; Category 11 General Device Control
 
 
 MAXCATEGORY	EQU	11
@@ -80,9 +80,9 @@ DDATA		DD	?
 		JA	EXIT
 		DEC	SI
 		SHL	SI, 1
-		SHL	SI, 1
+;		SHL	SI, 1
 		MOV	AX, ERROR_INVALID_FUNCTION
-		CALL	DWORD PTR ES:CATTABLE[SI]
+		CALL	WORD PTR ES:CATTABLE[SI]
 EXIT:
 		@EPILOG	DOSDEVIOCTL
 
@@ -99,7 +99,7 @@ EXIT:
 ; Category 7 Function 69H Reserved
 ;--------------------------------------------------------
 
-RESERVED	PROC FAR
+RESERVED	PROC NEAR
 		RET
 RESERVED	ENDP
 

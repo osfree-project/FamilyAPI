@@ -20,21 +20,21 @@
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 DSKTABLE1:
-	DD	IODLOCK			; Function 00H Lock Drive - not supported for versions below DOS 3.2
-	DD	IODUNLOCK		; Function 01H Unlock Drive - not supported for versions below DOS 3.2
-	DD	IODREDETERMINE		; Function 02H Redetermine Media - not supported for versions below DOS 3.2
-	DD	IODSETMAP		; Function 03H Set Logical Map - not supported for versions below DOS 3.2
+	DW	IODLOCK			; Function 00H Lock Drive - not supported for versions below DOS 3.2
+	DW	IODUNLOCK		; Function 01H Unlock Drive - not supported for versions below DOS 3.2
+	DW	IODREDETERMINE		; Function 02H Redetermine Media - not supported for versions below DOS 3.2
+	DW	IODSETMAP		; Function 03H Set Logical Map - not supported for versions below DOS 3.2
 DSKTABLE2:
-	DD	IODBLOCKREMOVABLE	; Function 20H Block Removable - not supported for versions below DOS 3.2
-	DD	IODGETMAP		; Function 21H Get Logical Map - not supported for versions below DOS 3.2
+	DW	IODBLOCKREMOVABLE	; Function 20H Block Removable - not supported for versions below DOS 3.2
+	DW	IODGETMAP		; Function 21H Get Logical Map - not supported for versions below DOS 3.2
 DSKTABLE3:
-	DD	IODSETPARAM		; Function 43H Set Device Parameters - not supported for DOS 2.X and DOS 3.X
-	DD	IODWRITETRACK		; Function 44H Write Track - not supported for DOS 2.X and DOS 3.X
-	DD	IODFORMATTRACK		; Function 45H Format Track - not supported for DOS 2.X and DOS 3.X
+	DW	IODSETPARAM		; Function 43H Set Device Parameters - not supported for DOS 2.X and DOS 3.X
+	DW	IODWRITETRACK		; Function 44H Write Track - not supported for DOS 2.X and DOS 3.X
+	DW	IODFORMATTRACK		; Function 45H Format Track - not supported for DOS 2.X and DOS 3.X
 DSKTABLE4:
-	DD	IODGETPARAM		; Function 63H Get Device Parameters - not supported for DOS 2.X and DOS 3.X
-	DD	IODREADTACK		; Function 64H Read Track - not supported for DOS 2.X and DOS 3.X
-	DD	IODVERIFYTRACK		; Function 65H Verify Track - not supported for DOS 2.X and DOS 3.X.
+	DW	IODGETPARAM		; Function 63H Get Device Parameters - not supported for DOS 2.X and DOS 3.X
+	DW	IODREADTACK		; Function 64H Read Track - not supported for DOS 2.X and DOS 3.X
+	DW	IODVERIFYTRACK		; Function 65H Verify Track - not supported for DOS 2.X and DOS 3.X.
 
 _DATA	ENDS
 
@@ -46,7 +46,7 @@ _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 ; Category 8 Handler
 ;--------------------------------------------------------
 
-IODISK	PROC FAR
+IODISK		PROC NEAR
 		MOV	SI, [DS:BP].ARGS.FUNCTION
 		CMP	SI, 00H		; 00H
 		JB	EXIT
@@ -66,26 +66,26 @@ IODISK	PROC FAR
 		JBE	OK4
 OK1:
 		SHL	SI, 1
-		SHL	SI, 1
-		CALL	FAR PTR ES:DSKTABLE1[SI]
+;		SHL	SI, 1
+		CALL	WORD PTR ES:DSKTABLE1[SI]
 		JMP	EXIT
 OK2:
 		SHL	SI, 1
-		SHL	SI, 1
-		CALL	FAR PTR ES:DSKTABLE2[SI]
+;		SHL	SI, 1
+		CALL	WORD PTR ES:DSKTABLE2[SI]
 		JMP	EXIT
 OK3:
 		SHL	SI, 1
-		SHL	SI, 1
-		CALL	FAR PTR ES:DSKTABLE3[SI]
+;		SHL	SI, 1
+		CALL	WORD PTR ES:DSKTABLE3[SI]
 		JMP	EXIT
 OK4:
 		SHL	SI, 1
-		SHL	SI, 1
-		CALL	FAR PTR ES:DSKTABLE4[SI]
+;		SHL	SI, 1
+		CALL	WORD PTR ES:DSKTABLE4[SI]
 EXIT:
 		RET
-IODISK	ENDP
+IODISK		ENDP
 
 		INCLUDE	IodLock.asm
 		INCLUDE	IodUnLock.asm
