@@ -6,7 +6,7 @@ PROJ      = kal
 TRGT      = $(PROJ).lib
 #32_BITS = 0
 ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
-srcfiles  = $(p)GlobalShared$(e) $(p)BadDynLink$(e) $(p)GInfoSeg$(e) $(p)LInfoSeg$(e) $(p)GlobalVars$(e) $(p)helpers$(e) $(p)SAS$(e)
+srcfiles  = $(p)globalshared$(e) $(p)BadDynLink$(e) $(p)GInfoSeg$(e) $(p)LInfoSeg$(e) $(p)GlobalVars$(e) $(p)helpers$(e) $(p)SAS$(e)
 JWASM     = 1
 
 TARGETS  = $(PATH)$(TRGT)
