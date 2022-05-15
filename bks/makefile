@@ -5,9 +5,9 @@ PROJ      = bks
 TRGT      = $(PROJ).lib
 #32_BITS = 0
 ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
-srcfiles  = $(p)bksmain$(e) $(p)bkscharin$(e) $(p)bkspeek$(e) $(p)bksflushbuffer$(e) $(p)bksgetstatus$(e) $(p)bkssetstatus$(e) &
-$(p)bksstringin$(e) $(p)bksopen$(e) $(p)bksclose$(e) $(p)bksgetfocus$(e) $(p)bksfreefocus$(e) $(p)bksgetcp$(e) &
-$(p)bkssetcp$(e) $(p)bksxlate$(e) $(p)bkssetcustxt$(e) $(p)bksgethwid$(e)
+srcfiles  = $(p)BksMain$(e) $(p)BksCharIn$(e) $(p)BksPeek$(e) $(p)BksFlushBuffer$(e) $(p)BksGetStatus$(e) $(p)BksSetStatus$(e) &
+$(p)BksStringIn$(e) $(p)BksOpen$(e) $(p)BksClose$(e) $(p)BksGetFocus$(e) $(p)BksFreeFocus$(e) $(p)BksGetCp$(e) &
+$(p)BksSetCp$(e) $(p)BksXlate$(e) $(p)BksSetCustXt$(e) $(p)BksGetHWId$(e)
 
 JWASM     = 1
 

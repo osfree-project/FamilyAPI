@@ -5,7 +5,7 @@ PROJ      = kbd
 TRGT      = $(PROJ).lib
 #32_BITS = 0
 ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
-srcfiles  = $(p)kbdroute$(e) $(p)debug$(e)
+srcfiles  = $(p)KbdRoute$(e) $(p)debug$(e)
 
 JWASM     = 1
 
