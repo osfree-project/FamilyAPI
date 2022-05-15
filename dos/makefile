@@ -5,21 +5,21 @@ PROJ      = dos
 TRGT      = $(PROJ).lib
 #32_BITS = 0
 ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
-srcfiles  = $(p)dosbeep$(e) $(p)dosqsysinfo$(e) $(p)dosdevconfig$(e) $(p)dosgetdatetime$(e) $(p)doserror$(e) &
-$(p)dosexecpgm$(e) $(p)dosexit$(e) $(p)dosexitlist$(e) $(p)dosgetenv$(e) $(p)dosgetpid$(e) $(p)dosportaccess$(e) &
-$(p)doscliaccess$(e) $(p)dosgetmachinemode$(e) $(p)dosgetversion$(e) $(p)dossleep$(e) $(p)dossetdatetime$(e) &
-$(p)dossetvec$(e) $(p)dosgetinfoseg$(e) $(p)dosholdsignal$(e) $(p)dossystrace$(e) $(p)dosgetstda$(e) &
-$(p)dosclosequeue$(e) $(p)dosclosesem$(e) $(p)doscreatesem$(e) $(p)doscreatequeue$(e) $(p)doscreatethread$(e) &
-$(p)doscwait$(e) $(p)dosentercritsec$(e) $(p)dosexitcritsec$(e) $(p)dosflagprocess$(e) $(p)dosgetprty$(e) &
-$(p)doskillprocess$(e) $(p)dosmakepipe$(e) $(p)dosmonclose$(e) $(p)dosmonopen$(e) $(p)dosmonread$(e) &
-$(p)dosmonreg$(e) $(p)dosmonwrite$(e) $(p)dosmuxsemwait$(e) $(p)dosopenqueue$(e) $(p)dosopensem$(e) &
-$(p)dospeekqueue$(e) $(p)dospfsactivate$(e) $(p)dospfscloseuser$(e) $(p)dospfsinit$(e) $(p)dospfsqueryact$(e) &
-$(p)dospfsverifyfont$(e) $(p)dosphysicaldisk$(e) $(p)dosptrace$(e) $(p)dospurgequeue$(e) $(p)dosqueryqueue$(e) &
-$(p)dosreadqueue$(e) $(p)dosresumethread$(e) $(p)dosscanenv$(e) $(p)dossearchpath$(e) $(p)dosselectsession$(e) &
-$(p)dossemclear$(e) $(p)dossemrequest$(e) $(p)dossemset$(e) $(p)dossemsetwait$(e) $(p)dossemwait$(e) &
-$(p)dossendsignal$(e) $(p)dossetprty$(e) $(p)dossetsession$(e) $(p)dosstartsession$(e) $(p)dosstopsession$(e) &
-$(p)dossuspendthread$(e) $(p)dostimerasync$(e) $(p)dostimerstart$(e) $(p)dostimerstop$(e) $(p)doswritequeue$(e) &
-$(p)doserrclass$(e) $(p)debug$(e)
+srcfiles  = $(p)DosBeep$(e) $(p)DosQSysInfo$(e) $(p)DosDevConfig$(e) $(p)DosGetDateTime$(e) $(p)DosError$(e) &
+$(p)DosExecPgm$(e) $(p)DosExit$(e) $(p)DosExitList$(e) $(p)DosGetEnv$(e) $(p)DosGetPID$(e) $(p)DosPortAccess$(e) &
+$(p)DosCLIAccess$(e) $(p)DosGetMachineMode$(e) $(p)DosGetVersion$(e) $(p)DosSleep$(e) $(p)DosSetDateTime$(e) &
+$(p)DosSetVec$(e) $(p)DosGetInfoSeg$(e) $(p)DosHoldSignal$(e) $(p)DosSysTrace$(e) $(p)DosGetSTDA$(e) &
+$(p)DosCloseQueue$(e) $(p)DosCloseSem$(e) $(p)DosCreateSem$(e) $(p)DosCreateQueue$(e) $(p)DosCreateThread$(e) &
+$(p)DosCWait$(e) $(p)DosEnterCritSec$(e) $(p)DosExitCritSec$(e) $(p)DosFlagProcess$(e) $(p)DosGetPrty$(e) &
+$(p)DosKillProcess$(e) $(p)DosMakePipe$(e) $(p)DosMonClose$(e) $(p)DosMonOpen$(e) $(p)DosMonRead$(e) &
+$(p)DosMonReg$(e) $(p)DosMonWrite$(e) $(p)DosMuxSemWait$(e) $(p)DosOpenQueue$(e) $(p)DosOpenSem$(e) &
+$(p)DosPeekQueue$(e) $(p)DosPFSActivate$(e) $(p)DosPFSCloseUser$(e) $(p)DosPFSInit$(e) $(p)DosPFSQueryAct$(e) &
+$(p)DosPFSVerifyFont$(e) $(p)DosPhysicalDisk$(e) $(p)DosPTrace$(e) $(p)DosPurgeQueue$(e) $(p)DosQueryQueue$(e) &
+$(p)DosReadQueue$(e) $(p)DosResumeThread$(e) $(p)DosScanEnv$(e) $(p)DosSearchPath$(e) $(p)DosSelectSession$(e) &
+$(p)DosSemClear$(e) $(p)DosSemRequest$(e) $(p)DosSemSet$(e) $(p)DosSemSetWait$(e) $(p)DosSemWait$(e) &
+$(p)DosSendSignal$(e) $(p)DosSetPrty$(e) $(p)DosSetSession$(e) $(p)DosStartSession$(e) $(p)DosStopSession$(e) &
+$(p)DosSuspendThread$(e) $(p)DosTimerAsync$(e) $(p)DosTimerStart$(e) $(p)DosTimerStop$(e) $(p)DosWriteQueue$(e) &
+$(p)DosErrClass$(e) $(p)debug$(e)
 
 JWASM     = 1
 

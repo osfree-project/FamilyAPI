@@ -26,9 +26,9 @@
 .8086
 
 		; Helpers
-		INCLUDE	HELPERS.inc
-		INCLUDE	BSEERR.inc
-		INCLUDE	GLOBALVARS.inc
+		INCLUDE	helpers.inc
+		INCLUDE	bseerr.inc
+		INCLUDE	GlobalVars.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 

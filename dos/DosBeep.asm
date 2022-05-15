@@ -23,10 +23,10 @@
 .8086
 
 		; Helpers
-		INCLUDE	HELPERS.INC
+		INCLUDE	helpers.inc
 
 		; Error codes
-		INCLUDE	BSEERR.INC
+		INCLUDE	bseerr.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 

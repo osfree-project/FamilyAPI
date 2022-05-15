@@ -5,8 +5,8 @@ PROJ      = nls
 TRGT      = $(PROJ).lib
 #32_BITS = 0
 ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
-srcfiles  = $(p)dosgetmessage$(e) $(p)doscasemap$(e) $(p)dossetctrycode$(e) $(p)dosgetcp$(e) $(p)dossetcp$(e) $(p)dosputmessage$(e) &
-$(p)dosputmessage$(e) $(p)dosinsmessage$(e) $(p)dosgetctryinfo$(e) $(p)dosgetdbcsev$(e) $(p)dossetproccp$(e) $(p)dosgetcollate$(e)
+srcfiles  = $(p)DosGetMessage$(e) $(p)DosCaseMap$(e) $(p)DosSetCtryCode$(e) $(p)DosGetCp$(e) $(p)DosSetCp$(e) $(p)DosPutMessage$(e) &
+$(p)DosInsMessage$(e) $(p)DosGetCtryInfo$(e) $(p)DosGetDBCSEv$(e) $(p)DosSetProcCp$(e) $(p)DosGetCollate$(e)
 
 JWASM     = 1
 

@@ -19,7 +19,7 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
-		INCLUDE	BSEERR.INC
+		INCLUDE	bseerr.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 

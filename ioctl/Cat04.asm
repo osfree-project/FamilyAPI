@@ -94,7 +94,7 @@ IOKEYBOARD	ENDP
 		INCLUDE	IokSetCPID.asm
 		INCLUDE	IokSetNotify.asm
 		INCLUDE	IokSetStatus.asm
-		INCLUDE	IokSetCustXT.asm
+		INCLUDE	IokSetCustXt.asm
 		INCLUDE IokOpen.asm
 		INCLUDE IokClose.asm
 		INCLUDE	IokGetCp.asm

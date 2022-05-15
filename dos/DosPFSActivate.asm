@@ -20,7 +20,7 @@
 .8086
 
 		; Helpers
-		INCLUDE	HELPERS.INC
+		INCLUDE	helpers.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 

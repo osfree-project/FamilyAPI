@@ -22,7 +22,7 @@
 
 		EXTERN	BVSMAIN: FAR		; SUBJECT TO MOVE TO DLL
 
-		INCLUDE	HELPERS.INC
+		INCLUDE	helpers.inc
 		INCL_VIO	EQU	1
 		include bsesub.inc
 

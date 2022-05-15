@@ -15,7 +15,7 @@
 ;
 ;*/
 
-		INCLUDE	MAC.INC
+		INCLUDE	mac.inc
 
 IFDEF INCL_SUB
 	INCL_KBD	EQU	1

@@ -12,7 +12,7 @@
 
 .8086
 
-		INCLUDE	HELPERS.INC
+		INCLUDE	helpers.inc
 		INCL_KBD	EQU	1
 		include bsesub.inc
 

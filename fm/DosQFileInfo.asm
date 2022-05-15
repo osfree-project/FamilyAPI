@@ -22,9 +22,9 @@
 .8086
 
 		; Helpers
-		INCLUDE	HELPERS.INC
-		INCLUDE DOS.INC
-		INCLUDE BSEERR.INC
+		INCLUDE	helpers.inc
+		INCLUDE	dos.inc
+		INCLUDE	bseerr.inc
 
 LEVEL1 struct
 filedate dw ?

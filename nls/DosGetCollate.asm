@@ -27,7 +27,7 @@
 		INCLUDE	bsedos.inc
 		INCLUDE	bseerr.inc
 		INCLUDE	dos.inc
-		INCLUDE	globalvars.inc
+		INCLUDE	GlobalVars.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 

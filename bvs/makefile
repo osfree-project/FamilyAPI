@@ -6,14 +6,14 @@ PROJ      = bvs
 TRGT      = $(PROJ).lib
 #32_BITS = 0
 ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
-srcfiles  = $(p)bvsmain$(e) $(p)bvsgetphysbuf$(e) $(p)bvsgetbuf$(e) $(p)bvsshowbuf$(e) $(p)bvsgetcurpos$(e) $(p)bvsgetcurtype$(e) &
-$(p)bvsgetmode$(e) $(p)bvssetcurpos$(e) $(p)bvssetcurtype$(e) $(p)bvssetmode$(e) $(p)bvsreadcharstr$(e) $(p)bvsreadcellstr$(e) &
-$(p)bvswrtnchar$(e) $(p)bvswrtnattr$(e) $(p)bvswrtncell$(e) $(p)bvswrtcharstr$(e) $(p)bvswrtcharstratt$(e) $(p)bvswrtcellstr$(e) &
-$(p)bvswrttty$(e) $(p)bvsscrollup$(e) $(p)bvsscrolldn$(e) $(p)bvsscrolllf$(e) $(p)bvsscrollrt$(e) $(p)bvssetansi$(e) &
-$(p)bvsgetansi$(e) $(p)bvsprtsc$(e) $(p)bvsscrlock$(e) $(p)bvsscrunlock$(e) $(p)bvssavredrawwait$(e) $(p)bvssavredrawundo$(e) &
-$(p)bvspopup$(e) $(p)bvsendpopup$(e) $(p)bvsprtsctoggle$(e) $(p)bvsmodewait$(e) $(p)bvsmodeundo$(e) $(p)bvsgetfont$(e) &
-$(p)bvsgetconfig$(e) $(p)bvssetcp$(e) $(p)bvsgetcp$(e) $(p)bvssetfont$(e) $(p)bvsgetstate$(e) $(p)bvssetstate$(e) &
-$(p)bvsshared$(e) $(p)bvsvars$(e)
+srcfiles  = $(p)BvsMain$(e) $(p)BvsGetPhysBuf$(e) $(p)BvsGetBuf$(e) $(p)BvsShowBuf$(e) $(p)BvsGetCurPos$(e) $(p)BvsGetCurType$(e) &
+$(p)BvsGetMode$(e) $(p)BvsSetCurPos$(e) $(p)BvsSetCurType$(e) $(p)BvsSetMode$(e) $(p)BvsReadCharStr$(e) $(p)BvsReadCellStr$(e) &
+$(p)BvsWrtNChar$(e) $(p)BvsWrtNAttr$(e) $(p)BvsWrtNCell$(e) $(p)BvsWrtCharStr$(e) $(p)BvsWrtCharStrAtt$(e) $(p)BvsWrtCellStr$(e) &
+$(p)BvsWrtTTY$(e) $(p)BvsScrollUp$(e) $(p)BvsScrollDn$(e) $(p)BvsScrollLf$(e) $(p)BvsScrollRt$(e) $(p)BvsSetAnsi$(e) &
+$(p)BvsGetAnsi$(e) $(p)BvsPrtSc$(e) $(p)BvsScrLock$(e) $(p)BvsScrUnLock$(e) $(p)BvsSavRedrawWait$(e) $(p)BvsSavRedrawUndo$(e) &
+$(p)BvsPopUp$(e) $(p)BvsEndPopUp$(e) $(p)BvsPrtScToggle$(e) $(p)BvsModeWait$(e) $(p)BvsModeUndo$(e) $(p)BvsGetFont$(e) &
+$(p)BvsGetConfig$(e) $(p)BvsSetCP$(e) $(p)BvsGetCP$(e) $(p)BvsSetFont$(e) $(p)BvsGetState$(e) $(p)BvsSetState$(e) &
+$(p)BvsShared$(e) $(p)BvsVars$(e)
 
 JWASM     = 1
 

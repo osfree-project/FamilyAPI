@@ -15,14 +15,14 @@
 .8086
 
 		; Helpers
-		INCLUDE	HELPERS.INC
-		INCLUDE	BSEDOS.INC
+		INCLUDE	helpers.inc
+		INCLUDE	bsedos.inc
 		INCL_MOU	EQU	1
-		INCLUDE	BSESUB.INC
-		INCLUDE	BSEERR.INC
+		INCLUDE	bsesub.inc
+		INCLUDE	bseerr.inc
 
 		;
-		INCLUDE	GLOBALVARS.INC
+		INCLUDE	GlobalVars.inc
 
 ; Screen group controls block
 SGCB	STRUC

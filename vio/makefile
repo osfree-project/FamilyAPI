@@ -5,7 +5,7 @@ PROJ      = vio
 TRGT      = $(PROJ).lib
 #32_BITS = 0
 ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
-srcfiles  = $(p)vioroute$(e) $(p)debug$(e)
+srcfiles  = $(p)VioRoute$(e) $(p)debug$(e)
 
 JWASM     = 1
 

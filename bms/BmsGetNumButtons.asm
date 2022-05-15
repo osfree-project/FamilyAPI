@@ -19,9 +19,9 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
-		INCLUDE	BSEERR.INC
+		INCLUDE	bseerr.inc
 		INCL_MOU	EQU	1
-		INCLUDE	BSESUB.INC
+		INCLUDE	bsesub.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 

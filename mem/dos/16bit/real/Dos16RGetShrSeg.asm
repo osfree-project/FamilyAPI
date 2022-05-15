@@ -27,8 +27,8 @@
 .8086
 
 		; Helpers
-		INCLUDE	HELPERS.INC
-		INCLUDE	BSEERR.INC
+		INCLUDE	helpers.inc
+		INCLUDE	bseerr.inc
 
 
 _DATA		SEGMENT BYTE PUBLIC 'DATA'

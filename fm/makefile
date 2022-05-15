@@ -5,13 +5,13 @@ PROJ      = fm
 TRGT      = $(PROJ).lib
 #32_BITS = 0
 ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
-srcfiles  = $(p)dosbufreset$(e) $(p)doschdir$(e) $(p)dosmkdir$(e) $(p)dosclose$(e) $(p)dosduphandle$(e) $(p)dosfirst$(e) &
-$(p)dosfilelocks$(e) $(p)dosmove$(e) $(p)dosnewsize$(e) $(p)dosopen$(e) $(p)dosqcurdir$(e) $(p)dosqcurdisk$(e) &
-$(p)dosqfileinfo$(e) $(p)dosqfsinfo$(e) $(p)dosrmdir$(e) $(p)dosqverify$(e) $(p)dosqfilemode$(e) $(p)dosqhandtype$(e) &
-$(p)dosread$(e) $(p)doschgfileptr$(e) $(p)dossetfileinfo$(e) $(p)dossetfilemode$(e) $(p)dosselectdisk$(e) &
-$(p)dossetverify$(e) $(p)doswrite$(e) $(p)dosdelete$(e) $(p)dossetmaxfh$(e) $(p)dossetfhandstate$(e) &
-$(p)dossetfsinfo$(e) $(p)doswriteasync$(e) $(p)dosqfhandstate$(e) $(p)dosreadasync$(e) $(p)dosenumattribute$(e) &
-$(p)doseditname$(e) $(p)dosmkdir2$(e) $(p)dosopen2$(e) $(p)dossetpathinfo$(e) $(p)dosqpathinfo$(e)
+srcfiles  = $(p)DosBufReset$(e) $(p)DosChDir$(e) $(p)DosMkDir$(e) $(p)DosClose$(e) $(p)DosDupHandle$(e) $(p)dosfirst$(e) &
+$(p)DosFileLocks$(e) $(p)DosMove$(e) $(p)DosNewSize$(e) $(p)DosOpen$(e) $(p)DosQCurDir$(e) $(p)DosQCurDisk$(e) &
+$(p)DosQFileInfo$(e) $(p)DosQFsInfo$(e) $(p)DosRmDir$(e) $(p)DosQVerify$(e) $(p)DosQFileMode$(e) $(p)DosQHandType$(e) &
+$(p)DosRead$(e) $(p)DosChgFilePtr$(e) $(p)DosSetFileInfo$(e) $(p)DosSetFileMode$(e) $(p)DosSelectDisk$(e) &
+$(p)DosSetVerify$(e) $(p)DosWrite$(e) $(p)DosDelete$(e) $(p)DosSetMaxFH$(e) $(p)DosSetFHandState$(e) &
+$(p)DosSetFsInfo$(e) $(p)DosWriteAsync$(e) $(p)DosQFHandState$(e) $(p)DosReadAsync$(e) $(p)DosEnumAttribute$(e) &
+$(p)DosEditName$(e) $(p)DosMkDir2$(e) $(p)DosOpen2$(e) $(p)DosSetPathInfo$(e) $(p)DosQPathInfo$(e)
 JWASM     = 1
 
 TARGETS  = $(PATH)$(TRGT)
