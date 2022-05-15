@@ -4,7 +4,7 @@
 PROJ      = bms
 TRGT      = $(PROJ).lib
 #32_BITS = 0
-ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
 srcfiles  = $(p)BmsMain$(e) $(p)BmsGetNumButtons$(e) $(p)BmsGetNumMickeys$(e) $(p)BmsGetDevStatus$(e) $(p)BmsGetNumQueel$(e) &
 $(p)BmsReadEventQue$(e) $(p)BmsGetScaleFact$(e) $(p)BmsGetEventMask$(e) $(p)BmsSetScaleFact$(e) $(p)BmsSetEventMask$(e) &
 $(p)BmsGetHotKey$(e) $(p)BmsSetHotKey$(e) $(p)BmsOpen$(e) $(p)BmsClose$(e) $(p)BmsGetPtrShape$(e) $(p)BmsSetPtrShape$(e) &

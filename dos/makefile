@@ -4,7 +4,7 @@
 PROJ      = dos
 TRGT      = $(PROJ).lib
 #32_BITS = 0
-ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
 srcfiles  = $(p)dosbeep$(e) $(p)dosqsysinfo$(e) $(p)dosdevconfig$(e) $(p)dosgetdatetime$(e) $(p)doserror$(e) &
 $(p)dosexecpgm$(e) $(p)dosexit$(e) $(p)dosexitlist$(e) $(p)dosgetenv$(e) $(p)dosgetpid$(e) $(p)dosportaccess$(e) &
 $(p)doscliaccess$(e) $(p)dosgetmachinemode$(e) $(p)dosgetversion$(e) $(p)dossleep$(e) $(p)dossetdatetime$(e) &

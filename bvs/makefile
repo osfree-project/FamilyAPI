@@ -5,7 +5,7 @@
 PROJ      = bvs
 TRGT      = $(PROJ).lib
 #32_BITS = 0
-ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
 srcfiles  = $(p)bvsmain$(e) $(p)bvsgetphysbuf$(e) $(p)bvsgetbuf$(e) $(p)bvsshowbuf$(e) $(p)bvsgetcurpos$(e) $(p)bvsgetcurtype$(e) &
 $(p)bvsgetmode$(e) $(p)bvssetcurpos$(e) $(p)bvssetcurtype$(e) $(p)bvssetmode$(e) $(p)bvsreadcharstr$(e) $(p)bvsreadcellstr$(e) &
 $(p)bvswrtnchar$(e) $(p)bvswrtnattr$(e) $(p)bvswrtncell$(e) $(p)bvswrtcharstr$(e) $(p)bvswrtcharstratt$(e) $(p)bvswrtcellstr$(e) &
