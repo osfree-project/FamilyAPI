@@ -1,13 +1,19 @@
-#echo Building Base Keyboard Subsystem
-#echo Base Keyboard Subsystem build finished
+#
+# Makefile for Watcom/LIBC interface layer
 
-PROJ=bks
+PROJ      = bks
+TRGT      = $(PROJ).lib
+#32_BITS = 0
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
+srcfiles  = $(p)bksmain$(e) $(p)bkscharin$(e) $(p)bkspeek$(e) $(p)bksflushbuffer$(e) $(p)bksgetstatus$(e) $(p)bkssetstatus$(e) &
+$(p)bksstringin$(e) $(p)bksopen$(e) $(p)bksclose$(e) $(p)bksgetfocus$(e) $(p)bksfreefocus$(e) $(p)bksgetcp$(e) &
+$(p)bkssetcp$(e) $(p)bksxlate$(e) $(p)bkssetcustxt$(e) $(p)bksgethwid$(e)
 
-OBJS=bksmain.obj bkscharin.obj bkspeek.obj bksflushbuffer.obj bksgetstatus.obj bkssetstatus.obj bksstringin.obj bksopen.obj bksclose.obj bksgetfocus.obj &
-bksfreefocus.obj bksgetcp.obj bkssetcp.obj bksxlate.obj bkssetcustxt.obj bksgethwid.obj
+JWASM     = 1
 
-EXPORT=BKSMAIN.1 RESIDENT
+TARGETS  = $(PATH)$(TRGT)
 
+!include $(%ROOT)/mk/libsdos.mk
 
-!include <..\dll.mk>
-
+$(TARGETS): $(OBJS)
+ @$(MAKE) $(MAKEOPT) library=$(TARGETS) library

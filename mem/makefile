@@ -1,9 +1,14 @@
-ALL: .SYMBOLIC
-	@cd dos
-	@$(MAKE) -h
-	@cd ..
+#
+# A main Makefile for OS/3 boot sequence project
+# (c) osFree project,
+# valerius, 2006/10/30
+#
 
-clean: .SYMBOLIC
-	@cd dos
-	@$(MAKE) -h clean
-	@cd ..
+# First directory must be SHARED which provides shared libs
+
+DIRS = dos
+
+!include $(%ROOT)/mk/all.mk
+
+#TARGETS=subdirs
+#TARGET=all

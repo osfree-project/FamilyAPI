@@ -1,53 +1,31 @@
-#echo Building DOS subsystem
-#echo DOS subsystem build finished
+#
+# Makefile for Watcom/LIBC interface layer
 
-PROJ=dos
+PROJ      = dos
+TRGT      = $(PROJ).lib
+#32_BITS = 0
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
+srcfiles  = $(p)dosbeep$(e) $(p)dosqsysinfo$(e) $(p)dosdevconfig$(e) $(p)dosgetdatetime$(e) $(p)doserror$(e) &
+$(p)dosexecpgm$(e) $(p)dosexit$(e) $(p)dosexitlist$(e) $(p)dosgetenv$(e) $(p)dosgetpid$(e) $(p)dosportaccess$(e) &
+$(p)doscliaccess$(e) $(p)dosgetmachinemode$(e) $(p)dosgetversion$(e) $(p)dossleep$(e) $(p)dossetdatetime$(e) &
+$(p)dossetvec$(e) $(p)dosgetinfoseg$(e) $(p)dosholdsignal$(e) $(p)dossystrace$(e) $(p)dosgetstda$(e) &
+$(p)dosclosequeue$(e) $(p)dosclosesem$(e) $(p)doscreatesem$(e) $(p)doscreatequeue$(e) $(p)doscreatethread$(e) &
+$(p)doscwait$(e) $(p)dosentercritsec$(e) $(p)dosexitcritsec$(e) $(p)dosflagprocess$(e) $(p)dosgetprty$(e) &
+$(p)doskillprocess$(e) $(p)dosmakepipe$(e) $(p)dosmonclose$(e) $(p)dosmonopen$(e) $(p)dosmonread$(e) &
+$(p)dosmonreg$(e) $(p)dosmonwrite$(e) $(p)dosmuxsemwait$(e) $(p)dosopenqueue$(e) $(p)dosopensem$(e) &
+$(p)dospeekqueue$(e) $(p)dospfsactivate$(e) $(p)dospfscloseuser$(e) $(p)dospfsinit$(e) $(p)dospfsqueryact$(e) &
+$(p)dospfsverifyfont$(e) $(p)dosphysicaldisk$(e) $(p)dosptrace$(e) $(p)dospurgequeue$(e) $(p)dosqueryqueue$(e) &
+$(p)dosreadqueue$(e) $(p)dosresumethread$(e) $(p)dosscanenv$(e) $(p)dossearchpath$(e) $(p)dosselectsession$(e) &
+$(p)dossemclear$(e) $(p)dossemrequest$(e) $(p)dossemset$(e) $(p)dossemsetwait$(e) $(p)dossemwait$(e) &
+$(p)dossendsignal$(e) $(p)dossetprty$(e) $(p)dossetsession$(e) $(p)dosstartsession$(e) $(p)dosstopsession$(e) &
+$(p)dossuspendthread$(e) $(p)dostimerasync$(e) $(p)dostimerstart$(e) $(p)dostimerstop$(e) $(p)doswritequeue$(e) &
+$(p)doserrclass$(e) $(p)debug$(e)
 
-ALL: ../lib/$(PROJ).lib ..\dll\$(PROJ)calls.dll
+JWASM     = 1
 
-OBJS=dosbeep.obj dosqsysinfo.obj dosdevconfig.obj dosgetdatetime.obj doserror.obj &
-dosexecpgm.obj dosexit.obj dosexitlist.obj dosgetenv.obj dosgetpid.obj dosportaccess.obj &
-doscliaccess.obj dosgetmachinemode.obj dosgetversion.obj dossleep.obj dossetdatetime.obj dossetvec.obj dosgetinfoseg.obj &
-dosholdsignal.obj dossystrace.obj dosgetstda.obj dosclosequeue.obj dosclosesem.obj &
-doscreatesem.obj doscreatequeue.obj doscreatethread.obj doscwait.obj dosentercritsec.obj &
-dosexitcritsec.obj dosflagprocess.obj dosgetprty.obj doskillprocess.obj &
-dosmakepipe.obj dosmonclose.obj dosmonopen.obj dosmonread.obj dosmonreg.obj dosmonwrite.obj &
-dosmuxsemwait.obj dosopenqueue.obj dosopensem.obj dospeekqueue.obj dospfsactivate.obj &
-dospfscloseuser.obj dospfsinit.obj dospfsqueryact.obj dospfsverifyfont.obj dosphysicaldisk.obj &
-dosptrace.obj dospurgequeue.obj dosqueryqueue.obj dosreadqueue.obj dosresumethread.obj &
-dosscanenv.obj dossearchpath.obj dosselectsession.obj dossemclear.obj dossemrequest.obj &
-dossemset.obj dossemsetwait.obj dossemwait.obj dossendsignal.obj dossetprty.obj dossetsession.obj &
-dosstartsession.obj dosstopsession.obj dossuspendthread.obj dostimerasync.obj &
-dostimerstart.obj dostimerstop.obj doswritequeue.obj doserrclass.obj debug.obj
+TARGETS  = $(PATH)$(TRGT)
 
-#dossetsighandler.obj dosfreemodule.obj dosgetmodule.obj dosgetprocaddr.obj
+!include $(%ROOT)/mk/libsdos.mk
 
-..\dll\$(PROJ)calls.dll: ..\lib\$(PROJ).lib
-	@echo LINK $@
-	@wlink.exe op q @<<
-    option osname='OS/2 16-bit'
-    format os2 dll ^
-     option   map, nod
-     name     ..\dll\$(PROJ)calls
-     file     ..\lib\$(PROJ).lib
-     file     ..\lib\kal.lib
-	file  ..\lib\mem.lib
-	file ..\lib\fm.lib 
-	file ..\lib\nls.lib 
-	file ..\lib\ioctl.lib
-	import VioWrtTTY VIOCALLS.19
-<<
-
-../lib/$(PROJ).lib:  $(OBJS) 
-	@echo LIB $@
-	@wlib -q -fo $@ $(OBJS)
-
-.asm.obj: .AUTODEPEND
-	@echo ASM $<
-	@jwasm.exe -Fl -q -I../macrolib;../include $*.asm
-
-clean: .SYMBOLIC
-	if exist *.obj del *.obj
-	if exist *.err del *.err
-	if exist *.lst del *.lst
-	if exist *.map del *.map
+$(TARGETS): $(OBJS)
+ @$(MAKE) $(MAKEOPT) library=$(TARGETS) library

@@ -1,22 +1,20 @@
-#echo Building 16-bit real mode memory subsystem
-#echo 16-bit real mode memory subsystem build finished
+# $Id: makefile,v 1.3 2004/08/21 14:49:03 prokushev Exp $
+#
+# Makefile for Watcom/LIBC interface layer
 
-ALL: ..\..\..\..\lib\mem16r.lib
+PROJ      = mem16r
+TRGT      = $(PROJ).lib
+#32_BITS = 0
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)..$(SEP)..$(SEP)..$(SEP)macrolib;$(MYDIR)..$(SEP)..$(SEP)..$(SEP)..$(SEP)include
+srcfiles  = $(p)Dos16RAllocHuge$(e) $(p)Dos16RAllocSeg$(e) $(p)Dos16RAllocShrSeg$(e) $(p)Dos16RCreateCSAlias$(e) $(p)Dos16RFreeSeg$(e) &
+$(p)Dos16RGetHugeShift$(e) $(p)Dos16RGetShrSeg$(e) $(p)Dos16RMemAvail$(e) $(p)Dos16RReallocSeg$(e) $(p)Dos16RSizeSeg$(e) &
+$(p)Dos16RReallocHuge$(e)
 
-OBJS=Dos16RAllocHuge.obj Dos16RAllocSeg.obj Dos16RAllocShrSeg.obj Dos16RCreateCSAlias.obj &
-Dos16RFreeSeg.obj Dos16RGetHugeShift.obj Dos16RGetShrSeg.obj Dos16RMemAvail.obj Dos16RReallocSeg.obj &
-Dos16RSizeSeg.obj Dos16RReallocHuge.obj
+JWASM     = 1
 
-..\..\..\..\lib\mem16r.lib: $(OBJS)
-	@echo LIB $@
-	@wlib -q -fo $@ $(OBJS)
+TARGETS  = $(PATH)$(TRGT)
 
-.asm.obj: .AUTODEPEND
-	@echo ASM $<
-	@jwasm.exe -q -I..\..\..\..\macrolib;..\..\..\..\include $*.asm
+!include $(%ROOT)/mk/libsdos.mk
 
-clean: .SYMBOLIC
-	if exist *.obj del *.obj
-	if exist *.err del *.err
-	if exist *.lst del *.lst
-	if exist *.map del *.map
+$(TARGETS): $(OBJS)
+ @$(MAKE) $(MAKEOPT) library=$(TARGETS) library

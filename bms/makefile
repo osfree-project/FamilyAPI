@@ -1,14 +1,21 @@
-#echo Building Base Mouse Subsystem
-#echo Base Mouse Subsystem build finished
+#
+# Makefile for Watcom/LIBC interface layer
 
-PROJ=bms
+PROJ      = bms
+TRGT      = $(PROJ).lib
+#32_BITS = 0
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
+srcfiles  = $(p)bmsmain$(e) $(p)bmsgetnumbuttons$(e) $(p)bmsgetnummickeys$(e) $(p)bmsgetdevstatus$(e) $(p)bmsgetnumqueel$(e) &
+$(p)bmsreadeventque$(e) $(p)bmsgetscalefact$(e) $(p)bmsgeteventmask$(e) $(p)bmssetscalefact$(e) $(p)bmsseteventmask$(e) &
+$(p)bmsgethotkey$(e) $(p)bmssethotkey$(e) $(p)bmsopen$(e) $(p)bmsclose$(e) $(p)bmsgetptrshape$(e) $(p)bmssetptrshape$(e) &
+$(p)bmsdrawptr$(e) $(p)bmsremoveptr$(e) $(p)bmsgetptrpos$(e) $(p)bmssetptrpos$(e) $(p)bmsinitreal$(e) $(p)bmsflushque$(e) &
+$(p)bmssetdevstatus$(e)
 
-OBJS=bmsmain.obj bmsgetnumbuttons.obj bmsgetnummickeys.obj bmsgetdevstatus.obj bmsgetnumqueel.obj bmsreadeventque.obj bmsgetscalefact.obj &
-bmsgeteventmask.obj bmssetscalefact.obj bmsseteventmask.obj bmsgethotkey.obj bmssethotkey.obj bmsopen.obj bmsclose.obj bmsgetptrshape.obj &
-bmssetptrshape.obj bmsdrawptr.obj bmsremoveptr.obj bmsgetptrpos.obj bmssetptrpos.obj bmsinitreal.obj bmsflushque.obj bmssetdevstatus.obj
+JWASM     = 1
 
-EXPORT=BMSMAIN.1 RESIDENT
+TARGETS  = $(PATH)$(TRGT)
 
+!include $(%ROOT)/mk/libsdos.mk
 
-!include <..\dll.mk>
-
+$(TARGETS): $(OBJS)
+ @$(MAKE) $(MAKEOPT) library=$(TARGETS) library

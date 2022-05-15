@@ -1,22 +1,18 @@
-#echo Building DOS subsystem
-#echo DOS subsystem build finished
+#
+# Makefile for Watcom/LIBC interface layer
 
-PROJ=nls
+PROJ      = nls
+TRGT      = $(PROJ).lib
+#32_BITS = 0
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
+srcfiles  = $(p)dosgetmessage$(e) $(p)doscasemap$(e) $(p)dossetctrycode$(e) $(p)dosgetcp$(e) $(p)dossetcp$(e) $(p)dosputmessage$(e) &
+$(p)dosputmessage$(e) $(p)dosinsmessage$(e) $(p)dosgetctryinfo$(e) $(p)dosgetdbcsev$(e) $(p)dossetproccp$(e) $(p)dosgetcollate$(e)
 
-ALL: ../lib/$(PROJ).lib
+JWASM     = 1
 
-OBJS=dosgetmessage.obj doscasemap.obj dossetctrycode.obj dosgetcp.obj dossetcp.obj dosputmessage.obj dosputmessage.obj dosinsmessage.obj dosgetctryinfo.obj dosgetdbcsev.obj dossetproccp.obj dosgetcollate.obj
+TARGETS  = $(PATH)$(TRGT)
 
-../lib/$(PROJ).lib:  $(OBJS) 
-	@echo LIB $@
-	@wlib -q -fo $@ $(OBJS)
+!include $(%ROOT)/mk/libsdos.mk
 
-.asm.obj: .AUTODEPEND
-	@echo ASM $<
-	@jwasm.exe -Fl -q -I../macrolib;../include $*.asm
-
-clean: .SYMBOLIC
-	if exist *.obj del *.obj
-	if exist *.err del *.err
-	if exist *.lst del *.lst
-	if exist *.map del *.map
+$(TARGETS): $(OBJS)
+ @$(MAKE) $(MAKEOPT) library=$(TARGETS) library

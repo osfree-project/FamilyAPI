@@ -1,21 +1,14 @@
-#echo Building memory subsystem
-#echo Memory subsystem build finished
-ALL: build ..\..\lib\mem.lib
+#
+# A main Makefile for OS/3 boot sequence project
+# (c) osFree project,
+# valerius, 2006/10/30
+#
 
-build: .SYMBOLIC
-	@cd 16bit
-	@$(MAKE) -h
-	@cd ..
+# First directory must be SHARED which provides shared libs
 
-..\..\lib\mem.lib: ..\..\lib\mem16.lib
-	@echo LIB $@
-	@wlib -q -fo $@ ..\..\lib\mem16.lib
+DIRS = 16bit
 
-.asm.obj: .AUTODEPEND
-	@echo ASM $<
-	@jwasm.exe -q -I..\..\..\include $*.asm
+!include $(%ROOT)/mk/all.mk
 
-clean: .SYMBOLIC
-	@cd 16bit
-	@$(MAKE) -h clean
-	@cd ..
+#TARGETS=subdirs
+#TARGET=all

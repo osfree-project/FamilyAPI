@@ -1,19 +1,17 @@
-#echo Building Core Subsystem
-#echo Core Subsystem build finished
-ALL: ../lib/kal.lib
+# $Id: makefile,v 1.3 2004/08/21 14:49:03 prokushev Exp $
+#
+# Makefile for Watcom/LIBC interface layer
 
-OBJS=globalshared.obj baddynlink.obj ginfoseg.obj linfoseg.obj globalvars.obj helpers.obj sas.obj
+PROJ      = kal
+TRGT      = $(PROJ).lib
+#32_BITS = 0
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
+srcfiles  = $(p)globalshared$(e) $(p)baddynlink$(e) $(p)ginfoseg$(e) $(p)linfoseg$(e) $(p)globalvars$(e) $(p)helpers$(e) $(p)sas$(e)
+JWASM     = 1
 
-../lib/kal.lib: $(OBJS)
-	@echo LIB $@
-	@wlib -q -fo $@ $(LIBS) $(OBJS)
+TARGETS  = $(PATH)$(TRGT)
 
-.asm.obj: .AUTODEPEND
-	@echo ASM $<
-	@jwasm.exe -q -I../macrolib;../include $*.asm
+!include $(%ROOT)/mk/libsdos.mk
 
-clean: .SYMBOLIC
-	if exist *.obj del *.obj
-	if exist *.err del *.err
-	if exist *.lst del *.lst
-	if exist *.map del *.map
+$(TARGETS): $(OBJS)
+ @$(MAKE) $(MAKEOPT) library=$(TARGETS) library

@@ -1,41 +1,17 @@
-#echo Building Mouse subsystem
-#echo Mouse subsystem build finished
+#
+# Makefile for Watcom/LIBC interface layer
 
-PROJ=mou
+PROJ      = mou
+TRGT      = $(PROJ).lib
+#32_BITS = 0
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include;$(MYDIR)..$(SEP)macrolib
+srcfiles  = $(p)mouroute$(e) $(p)debug$(e)
 
-OBJS=mouroute.obj debug.obj
+JWASM     = 1
 
-EXPORT=MOUGETPTRSHAPE.1 RESIDENT,    &
-          MOUSETPTRSHAPE.2 RESIDENT,    &
-          MOUGETNUMMICKEYS.3 RESIDENT,  &
-          MOUGETHOTKEY.4 RESIDENT,      &
-          MOUSHELLINIT.5 RESIDENT,      &
-          MOUGETSCALEFACT.6 RESIDENT,   &
-          MOUFLUSHQUE.7 RESIDENT,       &
-          MOUGETNUMBUTTONS.8 RESIDENT,  &
-          MOUCLOSE.9 RESIDENT,          &
-          MOUSETHOTKEY.10 RESIDENT,     &
-          MOUSETSCALEFACT.11 RESIDENT,  &
-		MOUFREE.12 RESIDENT,			&
-          MOUGETNUMQUEEL.13 RESIDENT,   &
-#         MOUDEREGISTER.14 RESIDENT,    &
-          MOUGETEVENTMASK.15 RESIDENT,  &
-          MOUSETEVENTMASK.16 RESIDENT,  &
-          MOUOPEN.17 RESIDENT,          &
-          MOUREMOVEPTR.18 RESIDENT,     &
-          MOUGETPTRPOS.19 RESIDENT,     &
-          MOUREADEVENTQUE.20 RESIDENT,  &
-          MOUSETPTRPOS.21 RESIDENT,     &
-          MOUGETDEVSTATUS.22 RESIDENT,  &
-          MOUSYNCH.23 RESIDENT,         &
-          MOUSETDEVSTATUS.25 RESIDENT,  &
-          MOUDRAWPTR.26 RESIDENT,       &
-          MOUINITREAL.27 RESIDENT
-#          MOUREGISTER.24 RESIDENT,      &
-#          MOUGETTHRESHOLD.29 RESIDENT,  &
-#          MOUSETTHRESHOLD.30 RESIDENT
+TARGETS  = $(PATH)$(TRGT)
 
-IMPORT=bmscalls.lib import VIOWRTTTY VIOCALLS.19, DOSOPEN DOSCALLS.70, DOSCLOSE DOSCALLS.59, DOSGETINFOSEG DOSCALLS.8, DOSLOADMODULE DOSCALLS.44, DOSGETPROCADDR DOSCALLS.45, DOSFREEMODULE DOSCALLS.46
+!include $(%ROOT)/mk/libsdos.mk
 
-!include <..\dll.mk>
-
+$(TARGETS): $(OBJS)
+ @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
