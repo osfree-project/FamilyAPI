@@ -1,5 +1,3 @@
-This is archived project. Check osFree project for actual version.
-
 # Family API
 
 Shared API for DOS and OS/2 to produce binary dual mode applications which can be run without recompilation
