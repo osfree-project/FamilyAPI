@@ -8,21 +8,21 @@
 
 DIRS = dpmi real
 
-#!include $(%ROOT)/mk/all.mk
-
 PROJ      = mem16
 TRGT      = $(PROJ).lib
-#32_BITS = 0
 ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)..$(SEP)..$(SEP)macrolib -I=$(MYDIR)..$(SEP)..$(SEP)..$(SEP)include
 srcfiles  = $(p)DosAllocHuge$(e) $(p)DosAllocSeg$(e) $(p)DosAllocShrSeg$(e) $(p)DosCreateCSAlias$(e) $(p)DosFreeSeg$(e) &
 $(p)DosGetHugeShift$(e) $(p)DosGetShrSeg$(e) $(p)DosMemAvail$(e) $(p)DosReallocSeg$(e) $(p)DosSubAlloc$(e) $(p)DosSubFree$(e) &
 $(p)DosSubSet$(e) $(p)DosReallocHuge$(e) $(p)DosSizeSeg$(e)
-
+LIBS = $(%ROOT)build$(SEP)lib$(SEP)mem16p.lib $(%ROOT)build$(SEP)lib$(SEP)mem16r.lib
 JWASM     = 1
 
 TARGETS  = $(PATH)$(TRGT)
 
 !include $(%ROOT)/mk/libsdos.mk
 
-$(TARGETS): $(OBJS)
+$(TARGETS): $(OBJS) $(LIBS)
  @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
+
+
+
