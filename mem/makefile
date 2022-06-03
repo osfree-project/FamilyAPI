@@ -1,14 +1,22 @@
 #
-# A main Makefile for OS/3 boot sequence project
+# A main Makefile for 
 # (c) osFree project,
-# valerius, 2006/10/30
 #
-
-# First directory must be SHARED which provides shared libs
 
 DIRS = dos
 
-!include $(%ROOT)/mk/all.mk
+PROJ      = mem
+TRGT      = $(PROJ).lib
+ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)..$(SEP)..$(SEP)macrolib -I=$(MYDIR)..$(SEP)..$(SEP)..$(SEP)include
+LIBS = $(%ROOT)build$(SEP)lib$(SEP)mem16.lib
+JWASM     = 1
 
-#TARGETS=subdirs
-#TARGET=all
+TARGETS  = $(PATH)$(TRGT)
+
+!include $(%ROOT)/mk/libsdos.mk
+
+$(TARGETS): $(OBJS) $(LIBS)
+ @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
+
+
+
