@@ -3,8 +3,12 @@
 
 PROJ      = dos
 TRGT      = $(PROJ).lib
-#32_BITS = 0
+
+32_BITS = 0
+
 ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
+ADD_COPT  = -0 -ms -i=$(%WATCOM)$(SEP)h -i=$(%WATCOM)$(SEP)h$(SEP)os21x
+
 srcfiles  = $(p)DosBeep$(e) $(p)DosQSysInfo$(e) $(p)DosDevConfig$(e) $(p)DosGetDateTime$(e) $(p)DosError$(e) &
 $(p)DosExecPgm$(e) $(p)DosExit$(e) $(p)DosExitList$(e) $(p)DosGetEnv$(e) $(p)DosGetPID$(e) $(p)DosPortAccess$(e) &
 $(p)DosCLIAccess$(e) $(p)DosGetMachineMode$(e) $(p)DosGetVersion$(e) $(p)DosSleep$(e) $(p)DosSetDateTime$(e) &
@@ -19,7 +23,7 @@ $(p)DosReadQueue$(e) $(p)DosResumeThread$(e) $(p)DosScanEnv$(e) $(p)DosSearchPat
 $(p)DosSemClear$(e) $(p)DosSemRequest$(e) $(p)DosSemSet$(e) $(p)DosSemSetWait$(e) $(p)DosSemWait$(e) &
 $(p)DosSendSignal$(e) $(p)DosSetPrty$(e) $(p)DosSetSession$(e) $(p)DosStartSession$(e) $(p)DosStopSession$(e) &
 $(p)DosSuspendThread$(e) $(p)DosTimerAsync$(e) $(p)DosTimerStart$(e) $(p)DosTimerStop$(e) $(p)DosWriteQueue$(e) &
-$(p)DosErrClass$(e) $(p)debug$(e)
+$(p)DosErrClass$(e) $(p)debug$(e) $(p)DosCopy$(e)
 
 JWASM     = 1
 

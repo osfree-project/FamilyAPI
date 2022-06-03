@@ -470,7 +470,7 @@ TEST tst_dosallocseg(void) {
     ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
     rc = DosAllocSeg(BYTES_IN_LAST_SEGMENT,  /* # of bytes in last segment */
                     &Selector,              /* The 1st selector allocated */
-                    SEG_GETTABLE|SEG_GETTABLE|SEG_DISCARDABLE);            /* Allocation flags */
+                    SEG_GIVEABLE|SEG_GETTABLE|SEG_DISCARDABLE);            /* Allocation flags */
     ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
     rc=DosFreeSeg(Selector);
     ASSERT_EQ_FMT(NO_ERROR, rc, "%d");
