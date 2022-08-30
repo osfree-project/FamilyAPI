@@ -19,6 +19,9 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
+		; MacroLib
+		INCLUDE	bios.inc
+		; OS/2
 		INCLUDE	bseerr.inc
 		INCL_KBD	EQU	1
 		INCLUDE	bsesub.inc
@@ -55,8 +58,7 @@ RESERVED	DD	?		;
 ; 1	data streaming supported
 ; 0	reserved
 
-		MOV	AX, 0C0H
-		INT	15H
+		@GetROMConfig
 		JC	NOID
 		TEST	BYTE PTR [ES:BX+6], 1000000b
 		JZ	NOID
@@ -71,13 +73,11 @@ RESERVED	DD	?		;
 ; 1	INT 16/AX=0304h supported
 ; 0	INT 16/AX=0300h supported
 
-		MOV	AX, 09H
-		INT	16H
+		@GetKbdFuncs
 		TEST	AL, 10000b
 		JZ	NOID
 		
-		MOV	AX, 0AH
-		INT	16H
+		@GetKbdId
 		MOV	[DS:SI].KBDHWID.KBD_ID, BX
 		XOR	AX,AX
 		JMP	EXIT
