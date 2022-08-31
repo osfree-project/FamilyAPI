@@ -45,7 +45,10 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
-		INCLUDE	dos.inc
+		; MacroLib
+		INCLUDE bios.inc
+		INCLUDE dos.inc
+		; OS/2
 		INCLUDE	bseerr.inc
 		INCL_KBD	EQU	1
 		INCLUDE	bsesub.inc

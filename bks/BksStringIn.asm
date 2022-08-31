@@ -19,6 +19,10 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
+		; MacroLib
+		INCLUDE bios.inc
+		INCLUDE dos.inc
+		; OS/2
 		INCLUDE	bseerr.inc
 		INCL_KBD	EQU	1
 		INCLUDE	bsesub.inc
@@ -31,6 +35,10 @@ IOWAIT		DW	?
 BLENGTH		DD	?
 CHARBUFFER	DD	?
 		@BKSSTART	BKSSTRINGIN
+		XOR	BX, BX
+		MOV	AX, ERROR_KBD_INVALID_HANDLE
+		CMP	BX, WORD PTR [DS:BP].ARGS.KBDHANDLE
+		JNZ	EXIT
 
 ;buff        db  26        ;MAX NUMBER OF CHARACTERS ALLOWED (25).
 ;            db  ?         ;NUMBER OF CHARACTERS ENTERED BY USER.
@@ -41,6 +49,7 @@ CHARBUFFER	DD	?
 ;		MOV AH, 0AH
 ;		MOV DX, OFFSET BUFF
 ;		INT 21H                 
+EXIT:
 
 		@BKSEPILOG	BKSSTRINGIN
 

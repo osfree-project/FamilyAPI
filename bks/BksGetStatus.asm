@@ -19,11 +19,14 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
+		; MacroLib
+		INCLUDE bios.inc
+		INCLUDE dos.inc
+		; OS/2
 		INCLUDE	bseerr.inc
 		INCL_KBD	EQU	1
 		INCLUDE	bsesub.inc
 
-        
 _TEXT	segment byte public 'CODE'
 
 		@BKSPROLOG	BKSGETSTATUS
@@ -38,10 +41,35 @@ STATDATA	DD	?		;
 		LDS	SI,[DS:BP].ARGS.STATDATA
 		CMP	WORD PTR [DS:SI].KBDINFO.KBST_CB,10
 		JNE	@F
+		XOR	BX, BX
+		MOV	AX, ERROR_KBD_INVALID_HANDLE
+		CMP	BX, WORD PTR [DS:BP].ARGS.KBDHANDLE
+		JNZ	@F
 
 IF		1
-		MOV	AH,012H
-		INT	016H
+		@GetROMConfig
+		JC	NOENH
+		TEST	BYTE PTR [ES:BX+6], 1000000b
+		JZ	NOENH
+
+;Bit(s)	Description
+; 7	reserved
+; 6	INT 16/AH=20h-22h supported (122-key keyboard support)
+; 5	INT 16/AH=10h-12h supported (enhanced keyboard support)
+; 4	INT 16/AH=0Ah supported
+; 3	INT 16/AX=0306h supported
+; 2	INT 16/AX=0305h supported
+; 1	INT 16/AX=0304h supported
+; 0	INT 16/AX=0300h supported
+
+		@GetKbdFuncs
+		TEST	AL, 100000b
+		JZ	NOENH
+		@KbdStatusEnh
+		JMP	@F
+NOENH:
+		@KbdStatusEnh
+@@:
 ELSE
 ; pseudo code here. Subject to write full code
 		DB	"KBD$"

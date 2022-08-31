@@ -19,6 +19,10 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
+		; MacroLib
+		INCLUDE bios.inc
+		INCLUDE dos.inc
+		; OS/2
 		INCLUDE	bseerr.inc
 		INCL_KBD	EQU	1
 		INCLUDE	bsesub.inc
@@ -29,7 +33,12 @@ _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 Structure	DD	?
 KbdHandle	DW	?
 		@BKSSTART	BKSSETSTATUS
+		XOR	BX, BX
+		MOV	AX, ERROR_KBD_INVALID_HANDLE
+		CMP	BX, WORD PTR [DS:BP].ARGS.KBDHANDLE
+		JNZ	EXIT
 ; code here
+EXIT:
 		@BKSEPILOG	BKSSETSTATUS
 
 _TEXT		ENDS
