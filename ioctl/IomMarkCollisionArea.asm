@@ -3,35 +3,38 @@
 ;--------------------------------------------------------
 ;
 ;Purpose
-;Category 7 -
-;Function 58H
-;Restricts the Mouse from Pointer Drawing in Specified Area(s) of the
+
+;;Restricts the Mouse from Pointer Drawing in Specified Area(s) of the
 ;Screen
+;
 ;Parameter Packet Format
-;Fie Id
-;Left Row Position
-;Left Column Position
-;Right Row Position
-;Right Column Position
+;
+;Field			Length
+;Left Row Position	WORD
+;Left Column Position	WORD
+;Right Row Position	WORD
+;Right Column Position	WORD
+;
 ;Data Packet Format
 ;None
+;
 ;Returns
 ;None
+;
 ;Remarks
-;Length
-;WORD
-;WORD
-;WORD
-;WORD
+;
 ;This function requires one caller specified parameter. This parameter
 ;is an address pointing to a 8-byte structured buffer. This buffer
 ;defines the collision area that will be protected from being overwritten
 ;by system pointer draw operations.
+;
 ;Values must be specified in either character or pixel values,
 ;depending on the current mode setting of the display.
+;
 ;The data packet is a far pointer to an area in application storage
 ;where a collision area definition record will be read by the mouse
 ;device driver.
+;
 ;If the entire screen is specified, this function disables pointer drawing
 ;for the session.
 ;

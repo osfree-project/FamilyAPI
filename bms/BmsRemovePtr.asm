@@ -19,22 +19,29 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
-		; MacroLib
-		INCLUDE	mouse.inc
 		; OS/2
 		INCLUDE bseerr.inc
+		INCLUDE bsedos.inc
+
+NOPTRRECT struc
+ mourt_row  dw  ? ;upper left row coordinates
+ mourt_col  dw  ? ;upper left column coordinates
+ mourt_cRow dw  ?
+ mourt_cCol dw  ?
+NOPTRRECT ends
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@BMSPROLOG	BMSREMOVEPTR
 MOUHANDLE	DW	?		;MOUSE HANDLE
-PTRAREA		DD	?		;
+PTRAREA		DD	?		;EXCLUDE REGION
 		@BMSSTART	BMSREMOVEPTR
-		XOR	BX, BX
 		MOV	AX, ERROR_MOUSE_INVALID_HANDLE
-		CMP	BX, WORD PTR [DS:BP].ARGS.MOUHANDLE
+		CMP	WORD PTR [DS:BP].ARGS.MOUHANDLE, 0
 		JNZ	EXIT
-; code here
+
+		@DosDevIOCtl	, [DS:BP].ARGS.PTRAREA, MOU_MARKCOLLISIONAREA, IOCTL_POINTINGDEVICE, [DS:BP].ARGS.MOUHANDLE
+
 EXIT:
 		@BMSEPILOG	BMSREMOVEPTR
 
