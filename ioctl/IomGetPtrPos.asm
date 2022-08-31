@@ -3,8 +3,10 @@
 ;--------------------------------------------------------
 ;
 ;Indicates the Current Pointer Screen Position
+;
 ;Parameter Packet Format
 ;None
+;
 ;Data Packet Format
 ;Field			Length
 ;Row Position		WORD
@@ -15,11 +17,14 @@
 ;Row coordinate pointer screen position.
 ;Column Position
 ;Column coordinate pointer screen position.
+;
 ;The coordinate values are display mode dependent. Pixel values
 ;are returned if the display is in graphics mode. Character position
 ;values are returned if the display is in text mode.
+;
 ;Returns
 ;None
+;
 ;Remarks
 ;This call does not require input parameters. The data packet is a far
 ;pointer to a structure in application storage where the mouse device

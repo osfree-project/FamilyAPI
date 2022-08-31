@@ -19,22 +19,28 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
-		; MacroLib
-		INCLUDE	mouse.inc
 		; OS/2
 		INCLUDE bseerr.inc
+		INCLUDE bsedos.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
+PTRLOC  struc
+  moupl_row  dw  ? ;pointer row coordinate screen position
+  moupl_col  dw  ? ;pointer column coordinate screen position
+PTRLOC  ends
+
 		@BMSPROLOG	BMSGETPTRPOS
 MOUHANDLE	DW	?		;MOUSE HANDLE
-PTRPOS		DD	?		;
+PTRPOS		DD	?		;POINTER POSITION
 		@BMSSTART	BMSGETPTRPOS
 		XOR	BX, BX
 		MOV	AX, ERROR_MOUSE_INVALID_HANDLE
 		CMP	BX, WORD PTR [DS:BP].ARGS.MOUHANDLE
 		JNZ	EXIT
-; code here
+
+		@DosDevIOCtl	[DS:BP].ARGS.PTRPOS, , MOU_GETPTRPOS, IOCTL_POINTINGDEVICE, [DS:BP].ARGS.MOUHANDLE
+
 EXIT:
 		@BMSEPILOG	BMSGETPTRPOS
 
