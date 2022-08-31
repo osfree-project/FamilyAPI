@@ -31,6 +31,11 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
+		; MacroLib
+		INCLUDE	mouse.inc
+		INCLUDE	dos.inc
+		; OS/2
+		INCLUDE bseerr.inc
 
 MOUEVENTINFO struc
   mouev_fs   dw  ?  ;State of mouse at time event was reported
@@ -46,16 +51,20 @@ MOUHANDLE	DW	?		;MOUSE HANDLE
 READTYPE	DD	?		;
 BUFFER		DD	?		;
 		@BMSSTART	BMSREADEVENTQUE
-		MOV	AX, 0002H
-		INT	33H
+		XOR	BX, BX
+		MOV	AX, ERROR_MOUSE_INVALID_HANDLE
+		CMP	BX, WORD PTR [DS:BP].ARGS.MOUHANDLE
+		JNZ	EXIT
+
+		@MouStatus
 		LES	SI, [DS:BP].ARGS.BUFFER
 		MOV	[ES:SI].MOUEVENTINFO.mouev_row, DX
 		MOV	[ES:SI].MOUEVENTINFO.mouev_col, CX
 		MOV	[ES:SI].MOUEVENTINFO.mouev_fs, BX
-		mov	AH,2Ch		;get time (possibly better to get it with int 1A)
-		int	21h
+		@GetTime
 		mov	WORD PTR [ES:SI].MOUEVENTINFO.mouev_time,CX
 		mov	WORD PTR [ES:SI].MOUEVENTINFO.mouev_time+2,DX
+EXIT:
 		@BMSEPILOG	BMSREADEVENTQUE
 
 _TEXT		ENDS
