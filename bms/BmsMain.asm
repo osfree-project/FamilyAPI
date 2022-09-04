@@ -93,7 +93,7 @@ BMSMAIN		PROC FAR
 		MOV	ES, SI
 		MOV	SI, [DS:BP].stackframe.moufunc
 		SHL	SI, 1
-		CALL	WORD PTR es:bmstable[SI]
+		CALL	WORD PTR ES:bmstable[SI]
 		MOV	SP,BP
 		POP	ES
 		POP	SI

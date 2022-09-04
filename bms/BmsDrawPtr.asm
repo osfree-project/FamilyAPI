@@ -13,18 +13,6 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-;INT 33 - MS MOUSE v1.0+ - SHOW MOUSE CURSOR
-;
-;	AX = 0001h
-;SeeAlso: AX=0002h,INT 16/AX=FFFEh,INT 62/AX=007Bh,INT 6F/AH=06h"F_TRACK_ON"
-;
-; @todo mouse presence check
-;
-;0 NO_ERROR
-;385 ERROR_MOUSE_NO_DEVICE
-;466 ERROR_MOU_DETACHED
-;501 ERROR_MOUSE_NO_CONSOLE
-;505 ERROR_MOU_EXTENDED_SG;
 ;*/
 
 .8086

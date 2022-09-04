@@ -24,6 +24,9 @@
 ; switch has been completed and the pointer may now be drawn.
 ; It is intended to use by the session manager.
 ;
+;
+; @todo Think about Task Switcher API support here
+;
 
 IOMALLOWPTRDRAW	PROC	NEAR
 		RET

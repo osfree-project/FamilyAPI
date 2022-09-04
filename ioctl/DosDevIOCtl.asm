@@ -35,6 +35,9 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
+		; MacroLib
+		INCLUDE mouse.inc
+		; OS/2
 		INCLUDE	bseerr.inc
 		INCLUDE	bsedos.inc
 		INCL_SUB	EQU	1

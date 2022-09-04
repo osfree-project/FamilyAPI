@@ -4,7 +4,7 @@
 ;
 ; Brief
 ;
-; Get th current mouse event mask
+; Get current mouse event mask
 ;
 ; Parameter packet
 ;

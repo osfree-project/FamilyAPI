@@ -52,11 +52,8 @@ IOMSETPTRPOS		PROC	NEAR
 			JNZ	EXIT
 			
 			LES	BX, [DS:BP].ARGS.PARMLIST
-			MOV	DX, [ES:BX]
-			MOV	CX, [ES:BX+2]
 
-			MOV	AX, 04H
-			INT	33H
+			@MouSetPos [ES:BX+2], [ES:BX]
 
 			XOR	AX, AX
 EXIT:

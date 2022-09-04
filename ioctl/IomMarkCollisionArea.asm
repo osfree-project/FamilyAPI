@@ -2,9 +2,9 @@
 ; Category 7 Function 58 Mark collision area
 ;--------------------------------------------------------
 ;
-;Purpose
-
-;;Restricts the Mouse from Pointer Drawing in Specified Area(s) of the
+;Brief
+;
+;Restricts the Mouse from Pointer Drawing in Specified Area(s) of the
 ;Screen
 ;
 ;Parameter Packet Format
@@ -46,6 +46,9 @@
 ;Note:	mouse cursor is hidden in the specified region, and needs to be
 ;	  explicitly turned on again
 ;SeeAlso: AX=0001h,AX=0002h,AX=0007h,AX=0010h"Genius MOUSE",AX=0031h
+;
+;@todo use STRUCT for Param packet
+;
 
 IOMMARKCOLLISIONAREA	PROC	NEAR
 			MOV	AX, ERROR_INVALID_PARAMETER
@@ -56,13 +59,8 @@ IOMMARKCOLLISIONAREA	PROC	NEAR
 			JNZ	EXIT
 			
 			LES	BX, [DS:BP].ARGS.PARMLIST
-			MOV	DX, [ES:BX]
-			MOV	CX, [ES:BX+2]
-			MOV	DI, [ES:BX+4]
-			MOV	SI, [ES:BX+6]
 
-			MOV	AX, 10H
-			INT	33H
+			@MouRegion [ES:BX+2], [ES:BX], [ES:BX+6], [ES:BX+4]
 
 			XOR	AX, AX
 EXIT:

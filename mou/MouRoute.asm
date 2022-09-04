@@ -100,9 +100,6 @@ _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 
 ;-- move to SG structure (name it control block?) --
 SG	SGCB <?, ?, 0>
-;AMSPROC			DD	?	; AMSMAIN far address
-;AMSHANDLE		DW	?	; AMSHANDLE module handle
-;MOUFUNCTIONMASK		DD	0	; MOU FUNCTIONS REDIRECTION MASK
 ;-- move to SG structure (name it control block?) --
 
 MOUSEFLAG	DW	0		; Is mouse device driver presented
