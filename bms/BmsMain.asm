@@ -25,20 +25,6 @@ INCL_MOU	EQU	1
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
-; This structure must be in sync with BMSPROLOG macro in helpers.inc
-stackframe      STRUC                   ;Parameter Stack Area
-oldes		dw	?
-oldsi		dw	?
-oldbp		dw	?
-mouroutip       dw      ?               ;MOUROUTE return offset
-mouroutcs       dw      ?               ;MOUROUTE return selector
-mouroutds       dw      ?               ;MOUROUTE data selector
-mouip           dw      ?               ;MOUxxx return offset
-moufunc         dw      ?               ;MOUxxx Function code
-userip          dw      ?               ;User return offset
-usercs          dw      ?               ;User return segment
-stackframe      ENDS
-
 ; BMSMAIN expects in AX function code
 ;
 BMSMAIN		PROC FAR
