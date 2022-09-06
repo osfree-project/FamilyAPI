@@ -315,7 +315,7 @@ MOUROUTE	PROC	NEAR
 		JNZ	BMS		; Skip if AMS not registered
 ;Call alternate mouse subsystem if function routed
 		PUSH	DS		; caller data segment
-		XOR	AX,AX
+;		XOR	AX,AX
 		MOV	AX, SEG _DATA
 		MOV	ES, AX
 		CALL	DWORD PTR [ES:SG.AMSPROC]
@@ -338,7 +338,9 @@ BMS:
 		PUSH	DS		; caller data segment
 		MOV	AX, SEG _DATA
 		MOV	ES, AX
-		XOR	AX,AX
+;		MOV	AX,AX
+		; Need to set AX to FC_*
+		; Need to set stack frame correctly
 		CALL	DWORD PTR ES:BMSPROC
 		POP	DS
 
