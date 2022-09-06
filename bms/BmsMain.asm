@@ -17,6 +17,14 @@
 
 .8086
 
+		; Helpers
+		INCLUDE	helpers.inc
+		; OS/2
+		INCLUDE bseerr.inc
+INCL_MOU	EQU	1
+		INCLUDE bsesub.inc
+
+
 EXTERN	BMSGETNUMBUTTONS: PROC
 EXTERN	BMSGETNUMMICKEYS: PROC
 EXTERN	BMSGETDEVSTATUS	: PROC
@@ -41,7 +49,7 @@ EXTERN	BMSFLUSHQUE	: PROC
 EXTERN	BMSSETDEVSTATUS	: PROC
 
 
-_DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
+_TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 bmstable:
 	DW	BmsGetNumButtons	;00H
@@ -66,9 +74,6 @@ bmstable:
 	DW	BmsInitReal		;13H
 	DW	BmsFlushQue		;14H
 	DW	BmsSetDevStatus		;15H
-_DATA	ENDS
-
-_TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 ; This structure must be in sync with BMSPROLOG macro in helpers.inc
 stackframe      STRUC                   ;Parameter Stack Area
@@ -89,11 +94,17 @@ BMSMAIN		PROC FAR
 		PUSH	SI
 		PUSH	ES
 		MOV	BP, SP
-		MOV	SI, SEG _DATA
-		MOV	ES, SI
-		MOV	SI, [DS:BP].stackframe.moufunc
-		SHL	SI, 1
-		CALL	WORD PTR ES:bmstable[SI]
+		MOV	BX, [DS:BP].stackframe.moufunc
+		CMP	BX, FC_MOUOPEN
+		JE	SWITCH
+		CMP	BX, FC_MOUCLOSE
+		JE	SWITCH
+		CMP	BX, FC_MOUINITREAL
+		JE	SWITCH
+		@MouSynch 1
+SWITCH:
+		SHL	BX, 1
+		CALL	WORD PTR CS:bmstable[BX]
 		MOV	SP,BP
 		POP	ES
 		POP	SI

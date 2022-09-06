@@ -1,5 +1,5 @@
 #
-# Makefile for Watcom/LIBC interface layer
+# Makefile for Base Mouse Subsystem
 
 PROJ      = bms
 TRGT      = $(PROJ).lib
@@ -29,6 +29,7 @@ srcfiles  = &
 	$(p)BmsInitReal$(e) &
 	$(p)BmsFlushQue$(e) &
 	$(p)BmsSetDevStatus$(e)
+
 
 JWASM     = 1
 
