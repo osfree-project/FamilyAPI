@@ -4,7 +4,7 @@
 PROJ      = bks
 TRGT      = $(PROJ).lib
 #32_BITS = 0
-ADD_ASMOPT  = -I=$(%OS2TK)$(SEP)inc -I=$(MYDIR)..$(SEP)macrolib
+ADD_ASMOPT  = -I=$(%OS2TK)$(SEP)inc -I=$(MYDIR)..$(SEP)..$(SEP)macrolib
 srcfiles  = $(p)BksMain$(e)
 
 JWASM     = 1

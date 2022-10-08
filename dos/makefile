@@ -6,7 +6,7 @@ TRGT      = $(PROJ).lib
 
 32_BITS = 0
 
-ADD_ASMOPT  = -I=$(%OS2TK)$(SEP)inc -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
+ADD_ASMOPT  = -I=$(%OS2TK)$(SEP)inc -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)..$(SEP)macrolib
 ADD_COPT  = -0 -ms -i=$(%WATCOM)$(SEP)h -i=$(%WATCOM)$(SEP)h$(SEP)os21x
 
 srcfiles  = $(p)DosBeep$(e) $(p)DosQSysInfo$(e) $(p)DosDevConfig$(e) $(p)DosGetDateTime$(e) $(p)DosError$(e) &

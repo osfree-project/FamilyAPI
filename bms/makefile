@@ -3,7 +3,7 @@
 
 PROJ      = bms
 TRGT      = $(PROJ).lib
-ADD_ASMOPT  = -I=$(%OS2TK)$(SEP)inc -I=$(MYDIR)..$(SEP)macrolib
+ADD_ASMOPT  = -I=$(%OS2TK)$(SEP)inc -I=$(MYDIR)..$(SEP)..$(SEP)macrolib
 srcfiles  = $(p)BmsMain$(e)
 
 JWASM     = 1
