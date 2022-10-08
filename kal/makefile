@@ -8,6 +8,7 @@ ADD_ASMOPT  = -I=$(%OS2TK)$(SEP)inc -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SE
 srcfiles  = $(p)globalshared$(e) $(p)BadDynLink$(e) $(p)GInfoSeg$(e) $(p)LInfoSeg$(e) $(p)GlobalVars$(e) $(p)helpers$(e) $(p)SAS$(e)
 JWASM     = 1
 
+
 TARGETS  = $(PATH)$(TRGT)
 
 !include $(%ROOT)/mk/libsdos.mk
