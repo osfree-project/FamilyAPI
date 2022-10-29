@@ -328,7 +328,7 @@ USHORT CopyTree(PSZ pszSrc, PSZ pszDst, ULONG ulOptions, ULONG ulNeedDel)
         {
             CopyTree(pHelp->src, pHelp->dst, ulOptions, ulNeedDel );
         }
-        DosFreeSeg(pHelp);
+        DosFreeSeg((SEL)pHelp);
     }
 
     /* Copy the files in actual directory */
@@ -427,7 +427,8 @@ USHORT APIENTRY DosCopy(PSZ pszOld, PSZ pszNew, USHORT a, ULONG ulOptions)
   USHORT fileAttr;
   USHORT rc;
 
-  #define DCPY_MASK ~(DCPY_EXISTING | DCPY_APPEND | DCPY_FAILEAS )
+//  #define DCPY_MASK ~(DCPY_EXISTING | DCPY_APPEND | DCPY_FAILEAS )
+  #define DCPY_MASK ~(DCPY_EXISTING | DCPY_APPEND )
 
   //log("%s enter\n", __FUNCTION__);
   //log("pszOld=%s\n", pszOld);
