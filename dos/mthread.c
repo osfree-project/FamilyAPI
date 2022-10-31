@@ -30,6 +30,7 @@
 #include "mem.h"
 #include "mthread.h"
 
+#include "os2.h"
 
 void ctrlbrk(int (*fptr)(void))
 {
@@ -107,9 +108,9 @@ typedef struct {
   unsigned priority;  /* priority: 1,2,3,4 or 5 */
   enum ThreadStatus status;
   unsigned semaphore; /* blocking semaphore */
-  void *pOwnStack;
+  void far *pOwnStack;
   PThreadFunc pFunc; /* pointer to the thread function */
-  void *pArg;   /* pointer argument passed to the thread function */
+  void far *pArg;   /* pointer argument passed to the thread function */
   void *pMsg;
   unsigned msgSize;
   unsigned long wakeUpTime;  /* time to wake the sleeping thread up */
@@ -447,12 +448,12 @@ static void TidyUp(void)
   for(i=0; i<MAX_THREADS; i++) {
     if(threads[i].pOwnStack != NULL) {
 //      free(threads[i].pOwnStack);
-      GlobalDosFree(threads[i].pOwnStack);
+      DosFreeSeg(SELECTOROF(threads[i].pOwnStack));
       threads[i].pOwnStack = NULL;
     }
     if(threads[i].pArg != NULL) {
 //      free(threads[i].pArg);
-      GlobalDosFree(threads[i].pArg);
+      DosFreeSeg(SELECTOROF(threads[i].pArg));
       threads[i].pArg = NULL;
     }
     threads[i].status = INVALID;
@@ -498,7 +499,7 @@ void ThreadShell(void)
   MTEndThread();
 }
 
-static void CopyMem(char *pDest, char *pSource, unsigned nBytes)
+static void CopyMem(char far *pDest, char *pSource, unsigned nBytes)
 {
 
   unsigned i;
@@ -514,7 +515,7 @@ int MTAddNewThread(PThreadFunc pThreadFunc, unsigned priority,
 {
   RegsOnStack *pRegs;
   unsigned threadID, i;
-  void *pNewStack, *pArgMem;
+  PSEL sNewStack, sArgMem;
 
   if (bMTInitialised){
     MTWait(semaCRunTimeLib);
@@ -535,34 +536,34 @@ int MTAddNewThread(PThreadFunc pThreadFunc, unsigned priority,
     }
     /* allocate a new stack for the thread.*/
 //    pNewStack = malloc(THREAD_STACK_SIZE + sizeof(RegsOnStack));
-    pNewStack = GlobalDosAlloc(THREAD_STACK_SIZE + sizeof(RegsOnStack));
-    if (pNewStack==NULL){
+    DosAllocSeg(THREAD_STACK_SIZE + sizeof(RegsOnStack), sNewStack, 0);
+    if (*sNewStack==NULL){
       MTLeaveCritical();
       MTSignal(semaCRunTimeLib);
       return 0;  /* failed */
     }
     if (sizeArg && pArg) {
 //      pArgMem = malloc(sizeArg);
-      pArgMem = GlobalDosAlloc(sizeArg);
-      if (pArgMem==NULL){
+      DosAllocSeg(sizeArg, sArgMem, 0);
+      if (*sArgMem==NULL){
 //        free(pNewStack);
-        GlobalDosFree(pNewStack);
+        DosFreeSeg(*sNewStack);
         MTLeaveCritical();
         MTSignal(semaCRunTimeLib);
         return 0;  /* failed */
       }
-      CopyMem(pArgMem, pArg, sizeArg);
+      CopyMem(MAKEP(sArgMem, 0), pArg, sizeArg);
     }
     else {
-      pArgMem=NULL;
+      sArgMem=NULL;
     }
-    threads[threadID].pOwnStack = pNewStack;
+    threads[threadID].pOwnStack = MAKEP(*sNewStack, 0);
     pRegs = (RegsOnStack *) threads[threadID].pOwnStack +
             THREAD_STACK_SIZE - sizeof(RegsOnStack);
     threads[threadID].sp = FP_OFF((RegsOnStack far *) pRegs);
     threads[threadID].ss = FP_SEG((RegsOnStack far *) pRegs);
     threads[threadID].pFunc = pThreadFunc;
-    threads[threadID].pArg = pArgMem;
+    threads[threadID].pArg = MAKEP(*sArgMem, 0);
     pRegs->cs = FP_SEG(ThreadShell);
     pRegs->ip = FP_OFF(ThreadShell);
 
@@ -658,12 +659,12 @@ void MTKillThread(unsigned threadID)
     threads[threadID].status = TERMINATED;
     if(threads[threadID].pOwnStack)
 //      free(threads[threadID].pOwnStack);
-      GlobalDosFree(threads[threadID].pOwnStack);
+      DosFreeSeg(SELECTOROF(threads[threadID].pOwnStack));
     threads[threadID].pOwnStack = NULL;
     threads[threadID].ss=0;
     if(threads[threadID].pArg)
 //      free(threads[threadID].pArg);
-      GlobalDosFree(threads[threadID].pArg);
+      DosFreeSeg(SELECTOROF(threads[threadID].pArg));
     threads[threadID].pArg = NULL;
     MTLeaveCritical();
     MTSignal(semaCRunTimeLib);
