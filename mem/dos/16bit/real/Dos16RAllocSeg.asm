@@ -23,6 +23,9 @@
 
 .8086
 
+		; MacroLib
+		INCLUDE dos.inc
+
 		; Helpers
 		INCLUDE	helpers.inc
 		INCLUDE	bseerr.inc
@@ -49,8 +52,7 @@ WSIZE		DW	?
 		JNE	@F
 		MOV	BX,01000H
 @@:	
-		MOV	AH,048H
-		INT	21H
+		@GetBlok
 		JB	EXIT
 		LES	BX,[DS:BP].ARGS.SELECTOR
 		MOV	[ES:BX],AX

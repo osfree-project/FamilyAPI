@@ -25,6 +25,9 @@
 
 .8086
 
+		; MacroLib
+		INCLUDE dos.inc
+
 		; Helpers
 		INCLUDE	helpers.inc
 		INCLUDE	bseerr.inc
@@ -72,8 +75,7 @@ ALLOC1:
 		ADD	BX,AX
 		JC	ERROREXIT		; Memory overflow
 
-		MOV	AH,48H
-		INT	21H
+		@GetBlok
 		JC	EXIT			; Exit, if error
 
 		LDS	BX,[DS:BP].ARGS.SELECTOR

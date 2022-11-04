@@ -28,9 +28,12 @@
 
 .8086
 
-		INCLUDE	helpers.inc
-		INCLUDE	bseerr.inc
+		; MacroLib
 		INCLUDE	dos.inc
+		; Helpers
+		INCLUDE	helpers.inc
+		; OS/2
+		INCLUDE	bseerr.inc
 
 PUBLIC	SHRSEG
 _DATA		SEGMENT BYTE PUBLIC 'DATA'

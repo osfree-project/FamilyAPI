@@ -27,6 +27,7 @@
 		INCLUDE	dos.inc
 		; Helpers
 		INCLUDE	helpers.inc
+		; OS/2
 		INCLUDE	bseerr.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
