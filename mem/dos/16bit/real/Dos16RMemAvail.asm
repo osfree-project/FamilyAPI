@@ -29,9 +29,10 @@
 
 .8086
 
+		; MacroLib
+		INCLUDE	dos.inc
 		; Helpers
 		INCLUDE	helpers.inc
-		INCLUDE	dos.inc
 		INCLUDE	bseerr.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
@@ -39,9 +40,7 @@ _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 		@PROLOG	DOS16RMEMAVAIL
 MAXAVAIL	DD	?
 		@START	DOS16RMEMAVAIL
-		MOV	BX,0FFFFH		; Impossible thing because maximun number of 64kb segments is 16 (1024kb memory in real mode)
-		MOV	AH, 48H
-		INT	21H
+		@GetBlok 0FFFFH		; Impossible thing because maximun number of 64kb segments is 16 (1024kb memory in real mode)
 		LES	DI, [DS:BP].ARGS.MAXAVAIL
 		XOR	AX, AX
 		CLC
