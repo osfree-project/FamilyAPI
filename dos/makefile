@@ -29,7 +29,7 @@ JWASM     = 1
 
 TARGETS  = $(PATH)$(TRGT)
 
-!include $(%ROOT)/mk/libsdos.mk
+!include $(%ROOT)tools/mk/libsdos.mk
 
 $(TARGETS): $(OBJS)
  @$(MAKE) $(MAKEOPT) library=$(TARGETS) library

@@ -11,7 +11,7 @@ LIBS = $(%ROOT)build$(SEP)lib$(SEP)kal.lib $(%ROOT)build$(SEP)lib$(SEP)bvs.lib $
        $(%ROOT)build$(SEP)lib$(SEP)kbd.lib $(%ROOT)build$(SEP)lib$(SEP)fm.lib $(%ROOT)build$(SEP)lib$(SEP)nls.lib &
        $(%ROOT)build$(SEP)lib$(SEP)ioctl.lib $(%ROOT)build$(SEP)lib$(SEP)dos.lib $(%ROOT)build$(SEP)lib$(SEP)mem.lib
 
-!include $(%ROOT)/mk/libsdos.mk
+!include $(%ROOT)tools/mk/libsdos.mk
 
 $(PATH)$(PROJ).lib: $(LIBS)
  @$(MAKE) $(MAKEOPT) library=$(PATH)$(PROJ).lib library
