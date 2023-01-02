@@ -13,8 +13,6 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-; @todo In protected mode use DPMI function?
-;
 ;*/
 
 .8086

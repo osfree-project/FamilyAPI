@@ -28,6 +28,7 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
+		; OS/2
 		INCLUDE	bseerr.inc
 
 

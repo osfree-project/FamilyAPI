@@ -23,10 +23,12 @@
 
 .8086
 
+		; MacroLib
+		INCLUDE	dos.inc
 		; Helpers
 		INCLUDE	helpers.inc
+		; OS/2
 		INCLUDE	bseerr.inc
-		INCLUDE	dos.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
@@ -44,8 +46,7 @@ WSIZE		DW	?
 		JNE	@F
 		MOV	BX,01000H
 @@:	
-		MOV	AH,04AH
-		INT	21H
+		@ModBlok
 		JB	EXIT
 		LES	BX,[DS:BP].ARGS.SELECTOR
 		MOV	[ES:BX],AX

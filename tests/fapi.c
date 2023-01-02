@@ -5,6 +5,8 @@
 
 TEST tst_viowrttty(void) {
 	USHORT rc;
+	rc=VioWrtTTY(NULL, 0, 0);
+	ASSERT_EQ_FMT(0, rc, "%d");
 	rc=VioWrtTTY("", 0, 0);
 	ASSERT_EQ_FMT(0, rc, "%d");
 	rc=VioWrtTTY("cba", 3, 1);
@@ -595,20 +597,15 @@ SUITE(vio) {
 GREATEST_MAIN_DEFS();
 
 int main(int argc, char **argv) {
-	USHORT          Row;           /* Row return data */
-	USHORT          Column; 
-    GREATEST_MAIN_BEGIN();      /* command-line options, initialization. */
+	GREATEST_MAIN_BEGIN();      /* command-line options, initialization. */
 
-    VioGetCurPos(&Row, &Column, 10);
-
-    /* Tests can also be gathered into test suites. */
-    VioSetCurPos(24, 0, 0);
+	VioSetCurPos(24, 0, 0);
 //    RUN_SUITE(vio);
-    VioSetCurPos(24, 0, 0);
-    RUN_SUITE(dos);
-    RUN_SUITE(kbd);
-    RUN_SUITE(mou);
-    RUN_SUITE(nls);
+	VioSetCurPos(24, 0, 0);
+	RUN_SUITE(dos);
+	RUN_SUITE(kbd);
+	RUN_SUITE(mou);
+	RUN_SUITE(nls);
 
-    GREATEST_MAIN_END();        /* display results */
+	GREATEST_MAIN_END();        /* display results */
 }

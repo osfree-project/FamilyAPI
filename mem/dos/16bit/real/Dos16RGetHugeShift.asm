@@ -19,6 +19,7 @@
 
 		; Helpers
 		INCLUDE	helpers.inc
+
 _GINFOSEG	SEGMENT BYTE PUBLIC 'GDATA' USE16
 EXTERN gis_cHugeShift:BYTE
 _GINFOSEG	ENDS

@@ -17,9 +17,10 @@
 
 .8086
 
+		; MacroLib
+		INCLUDE	dos.inc
 		; Helpers
 		INCLUDE	helpers.inc
-		INCLUDE	dos.inc
 
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 

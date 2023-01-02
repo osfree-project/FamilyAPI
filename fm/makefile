@@ -4,7 +4,7 @@
 PROJ      = fm
 TRGT      = $(PROJ).lib
 #32_BITS = 0
-ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
+ADD_ASMOPT  = -I=$(%OS2TK)$(SEP)inc -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)..$(SEP)macrolib
 srcfiles  = $(p)DosBufReset$(e) $(p)DosChDir$(e) $(p)DosMkDir$(e) $(p)DosClose$(e) $(p)DosDupHandle$(e) $(p)dosfirst$(e) &
 $(p)DosFileLocks$(e) $(p)DosMove$(e) $(p)DosNewSize$(e) $(p)DosOpen$(e) $(p)DosQCurDir$(e) $(p)DosQCurDisk$(e) &
 $(p)DosQFileInfo$(e) $(p)DosQFsInfo$(e) $(p)DosRmDir$(e) $(p)DosQVerify$(e) $(p)DosQFileMode$(e) $(p)DosQHandType$(e) &

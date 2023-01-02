@@ -1,33 +1,19 @@
 #
-# Makefile for Watcom/LIBC interface layer
+# Makefile for Base Keyboard Subsystem
 
 PROJ      = bks
 TRGT      = $(PROJ).lib
 #32_BITS = 0
-ADD_ASMOPT  = -I=$(MYDIR)..$(SEP)include -I=$(MYDIR)..$(SEP)macrolib
-srcfiles  = &
-	$(p)BksMain$(e) &
-	$(p)BksCharIn$(e) &
-	$(p)BksPeek$(e) &
-	$(p)BksFlushBuffer$(e) &
-	$(p)BksGetStatus$(e) &
-	$(p)BksSetStatus$(e) &
-	$(p)BksStringIn$(e) &
-	$(p)BksOpen$(e) &
-	$(p)BksClose$(e) &
-	$(p)BksGetFocus$(e) &
-	$(p)BksFreeFocus$(e) &
-	$(p)BksGetCp$(e) &
-	$(p)BksSetCp$(e) &
-	$(p)BksXlate$(e) &
-	$(p)BksSetCustXt$(e) &
-	$(p)BksGetHWId$(e)
+ADD_ASMOPT  = -I=$(%OS2TK)$(SEP)inc -I=$(MYDIR)..$(SEP)..$(SEP)macrolib
+srcfiles  = $(p)BksMain$(e)
 
 JWASM     = 1
 
 TARGETS  = $(PATH)$(TRGT)
 
 !include $(%ROOT)tools/mk/libsdos.mk
+
+.asm: $(ROOT)shared$(SEP)bks
 
 $(TARGETS): $(OBJS)
  @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
