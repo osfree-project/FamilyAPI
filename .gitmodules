@@ -1,3 +1,6 @@
 [submodule "macrolib"]
 	path = macrolib
 	url = https://github.com/osfree-project/MacroLib
+[submodule "shared"]
+	path = shared
+	url = https://github.com/osfree-project/SUB
