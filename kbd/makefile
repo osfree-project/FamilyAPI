@@ -13,7 +13,7 @@ TARGETS  = $(PATH)$(TRGT)
 
 !include $(%ROOT)tools/mk/libsdos.mk
 
-.asm: $(ROOT)shared$(SEP)kbd
+.asm: ..$(SEP)shared$(SEP)kbd
 
 $(TARGETS): $(OBJS)
  @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
