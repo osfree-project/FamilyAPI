@@ -2,7 +2,7 @@
 
 		include helpers.inc
 
-EXTERN	VioWrtTTY: Far
+EXTERN	pascal VioWrtTTY: Far 
 
 _DATA		SEGMENT BYTE PUBLIC 'DATA' USE16
 

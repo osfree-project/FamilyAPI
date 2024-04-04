@@ -14,7 +14,7 @@ ADD_ASMOPT  = -I=$(%OS2TK)$(SEP)inc -I=$(MYDIR)..$(SEP)..$(SEP)..$(SEP)macrolib 
 srcfiles  = $(p)DosAllocHuge$(e) $(p)DosAllocSeg$(e) $(p)DosAllocShrSeg$(e) $(p)DosCreateCSAlias$(e) $(p)DosFreeSeg$(e) &
 $(p)DosGetHugeShift$(e) $(p)DosGetShrSeg$(e) $(p)DosMemAvail$(e) $(p)DosReallocSeg$(e) $(p)DosSubAlloc$(e) $(p)DosSubFree$(e) &
 $(p)DosSubSet$(e) $(p)DosReallocHuge$(e) $(p)DosSizeSeg$(e)
-LIBS = $(%ROOT)build$(SEP)lib$(SEP)mem16p.lib $(%ROOT)build$(SEP)lib$(SEP)mem16r.lib
+LIBS = $(OBJS) $(%ROOT)build$(SEP)lib$(SEP)mem16p.lib $(%ROOT)build$(SEP)lib$(SEP)mem16r.lib
 JWASM     = 1
 
 TARGETS  = $(PATH)$(TRGT)
