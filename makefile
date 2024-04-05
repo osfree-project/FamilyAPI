@@ -5,12 +5,13 @@
 
 PROJ = fapi
 TRGT = $(PROJ).lib
-DIRS = kal mem bvs bms bks vio mou kbd fm nls ioctl dos
+DIRS = kal mem bvs bms bks vio mou kbd fm nls ioctl dos mm
 LIBSDIR = $(%ROOT)build$(SEP)lib$(SEP)
 LIBS = $(LIBSDIR)kal.lib $(LIBSDIR)bvs.lib $(LIBSDIR)bms.lib &
        $(LIBSDIR)bks.lib $(LIBSDIR)vio.lib $(LIBSDIR)mou.lib &
        $(LIBSDIR)kbd.lib $(LIBSDIR)fm.lib  $(LIBSDIR)nls.lib &
-       $(LIBSDIR)ioctl.lib $(LIBSDIR)dos.lib $(LIBSDIR)mem.lib
+       $(LIBSDIR)ioctl.lib $(LIBSDIR)dos.lib $(LIBSDIR)mem.lib &
+	   $(LIBSDIR)mm.lib
 DEST = os2tk45$(SEP)lib$(SEP)
 # additions to install target
 INSTALL_ADD = 1
@@ -31,6 +32,6 @@ $(PATH)$(PROJ).lib: $(LIBS)
 install_add: $(ROOT)build$(SEP)bin$(SEP)host$(SEP)$(hostos)$(SEP)os2tk45$(SEP)lib$(SEP)$(PROJ).lib
 
 $(HOSTDIR)$(PROJ).lib: $(PATH)$(PROJ).lib
- $(MDHIER) $(HOSTDIR)
+ $(verbose)$(MDHIER) $(HOSTDIR)
  @$(SAY) INST     $^. $(LOG)
  $(verbose)$(CP) $< $^@ $(BLACKHOLE)
