@@ -32,9 +32,6 @@ $(PATH)$(PROJ).ext: .symbolic
  @%create $^@
  @%append $^@ >$(PROJ).asm
  @%append $^@ <$(%ROOT)build$(SEP)bin$(SEP)os2$(SEP)system$(SEP)oso001.msg
- @%append $^@ DOS0002
- @%append $^@ DOS0206
- @%append $^@ DOS0316
  @%append $^@ DOS0317
  @%append $^@ DOS0318
  @%append $^@ DOS0319

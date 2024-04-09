@@ -4,7 +4,8 @@
 
 	include msg.inc
 	include dos.inc
-	
+
+	if 0
 	public	printmsg
 printmsg	proc    near
 	lodsw
@@ -14,5 +15,6 @@ printmsg	proc    near
 	pop	dx
 	ret
 printmsg	endp
+	endif
 
 	end
