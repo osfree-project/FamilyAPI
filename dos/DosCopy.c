@@ -60,7 +60,7 @@
                                                    we must automatically
                                                    detect size of buffer */
 
-USHORT CopyFile(PSZ pszSrc, PSZ pszDst, ULONG ulOptions)
+USHORT InternalCopyFile(PSZ pszSrc, PSZ pszDst, ULONG ulOptions)
 {
   USHORT rc;
   HFILE  hSrc;
@@ -184,7 +184,7 @@ USHORT CopyFile(PSZ pszSrc, PSZ pszDst, ULONG ulOptions)
 
 /*#
  * NAME
- *      CheckPath
+ *      InternalCheckPath
  * CALL
  *      CheckPath(path,create)
  * PARAMETER
@@ -199,7 +199,7 @@ USHORT CopyFile(PSZ pszSrc, PSZ pszDst, ULONG ulOptions)
  * REMARKS
  */
 int
-CheckPath(char *path,int create)
+InternalCheckPath(char *path,int create)
 {
     char   dir[CCHMAXPATH];
     struct stat stbuf;
@@ -248,7 +248,7 @@ CheckPath(char *path,int create)
         NO_ERROR               OK
 
  */
-USHORT CopyTree(PSZ pszSrc, PSZ pszDst, ULONG ulOptions, ULONG ulNeedDel)
+USHORT InternalCopyTree(PSZ pszSrc, PSZ pszDst, ULONG ulOptions, ULONG ulNeedDel)
 {
     FILEFINDBUF  findBuffer;
     HDIR         hSearch;
@@ -320,13 +320,13 @@ USHORT CopyTree(PSZ pszSrc, PSZ pszDst, ULONG ulOptions, ULONG ulNeedDel)
     for( pHelp = pDirList = pDirListRoot; pDirList ; pHelp = pDirList )
     {
         pDirList = pDirList->next;
-        if( (i=CheckPath(pHelp->dst, 1)) )      /* create destination path */
+        if( (i=InternalCheckPath(pHelp->dst, 1)) )      /* create destination path */
         {
             result = i;
         }
         else
         {
-            CopyTree(pHelp->src, pHelp->dst, ulOptions, ulNeedDel );
+            InternalCopyTree(pHelp->src, pHelp->dst, ulOptions, ulNeedDel );
         }
         DosFreeSeg((SEL)pHelp);
     }
@@ -346,7 +346,7 @@ USHORT CopyTree(PSZ pszSrc, PSZ pszDst, ULONG ulOptions, ULONG ulNeedDel)
 
             _fstrncpy( nsp, findBuffer.achName, CCHMAXPATH );
             _fstrncpy( ndp, findBuffer.achName, CCHMAXPATH );
-            i = CopyFile( pszSrc, pszDst, ulOptions );
+            i = InternalCopyFile( pszSrc, pszDst, ulOptions );
 
             // Delete original file,
             // if needed
@@ -454,9 +454,9 @@ USHORT APIENTRY DosCopy(PSZ pszOld, PSZ pszNew, USHORT a, ULONG ulOptions)
   if (fileAttr & FILE_DIRECTORY)
   {
     // DCPY_APPEND flag not valid in directory copy
-    rc = CopyTree(pszOld, pszNew, ulOptions & ~DCPY_APPEND, 0);
+    rc = InternalCopyTree(pszOld, pszNew, ulOptions & ~DCPY_APPEND, 0);
   } else {
-    rc = CopyFile(pszOld, pszNew, ulOptions); // @todo pass options
+    rc = InternalCopyFile(pszOld, pszNew, ulOptions); // @todo pass options
   };
 
 DOSCOPY_EXIT:
