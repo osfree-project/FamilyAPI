@@ -34,6 +34,8 @@
 		INCLUDE	helpers.inc
 		INCLUDE	dos.inc
 
+error_code  equ      0002h
+
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@PROLOG	DOSSETVERIFY
@@ -41,8 +43,16 @@ VERIFYSETTING	DW	?
 		@START	DOSSETVERIFY
 		XOR	DL, DL
 		MOV	AX, [DS:BP].ARGS.VERIFYSETTING
+		CMP	AL,1                  ; for validity
+		JG	error
 		VERIFY  AL
+
 		XOR	AX, AX
+		jmp	exit            ; return
+
+error:		mov      ax,error_code         ; set error return code
+exit:
+
 		@EPILOG	DOSSETVERIFY
 
 _TEXT		ENDS
