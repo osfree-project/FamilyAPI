@@ -25,8 +25,7 @@ _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 defdrive	db	?	; Save area for default drive -->RW
 
-	    extrn    dosqcurdir:far
-	    extrn    dosdevconfig:far
+	    extrn    DOSDEVCONFIG:far
 
 buffer	segment word public 'buffer'
 drive	dw	?	      ; driver number
@@ -59,7 +58,7 @@ DRIVENUMBER	DD	?
 	    sub      ax,ax		 ; reserved parm
 	    push     ax
 
-	    call     dosdevconfig	 ; get number of drives
+	    call     DOSDEVCONFIG	 ; get number of drives
 
 	    cmp      dsket,0		 ; if none, jump
 	    je	     nodisk
