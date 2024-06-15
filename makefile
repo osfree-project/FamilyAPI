@@ -19,7 +19,7 @@ INSTALL_ADD = 1
 !ifeq %OS WIN64
 hostos=win32
 !else
-hostos=$(%OS)
+hostos=$(%HOST)
 !endif
 
 !include $(%ROOT)tools/mk/libsdos.mk
