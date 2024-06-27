@@ -18,23 +18,33 @@
 		INCL_VIO	EQU	1
 include	bsesub.inc
 
+; Local byte
 @LOCALB		MACRO	NAME
 DELTA		=	DELTA+1
 NAME		CATSTR	<[BP->,%DELTA,<]>
 		ENDM
 
+; Local word
 @LOCALW		MACRO	NAME
 DELTA		=	DELTA+2
 NAME		CATSTR	<[BP->,%DELTA,<]>
 		ENDM
 
+; Local dowble word
 @LOCALD		MACRO	NAME
 DELTA		=	DELTA+4
 NAME		CATSTR	<[BP->,%DELTA,<]>
 		ENDM
 
+; Local structure
 @LOCALS		MACRO	NAME, STRCT
 DELTA		=	DELTA+SIZE STRCT
+NAME		CATSTR	<[BP->,%DELTA,<]>
+		ENDM
+
+; Local byte array
+@LOCALA		MACRO	NAME, SIZ
+DELTA		=	DELTA+SIZ
 NAME		CATSTR	<[BP->,%DELTA,<]>
 		ENDM
 

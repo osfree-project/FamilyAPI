@@ -47,7 +47,7 @@
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		; External functions
-EXTERN		DosScanEnv: FAR
+EXTERN		Pascal	DosScanEnv: FAR
 		
 		; Extracted messages
 EXTERN		_TXT_MSG_MR_CANT_FORMAT: FAR
@@ -65,6 +65,7 @@ DATALENGTH	DW	?
 DATAAREA	DD	?
 IVCOUNT		DW	?
 IVTABLE		DD	?
+@LOCALW		InstanceSeg		; Instance DS segment
 		@START	DOSTRUEGETMESSAGE
 
 		; Save instance segment
@@ -176,7 +177,6 @@ InsertIVItem:
 		POP	SI
 		JMP	Continue
 
-InstanceSeg	DW	0			; Instance segment
 
 		; Copy extracted messages to message buffer
 BADMSGID:
@@ -243,7 +243,7 @@ DOSGETMESSAGE:
 		XOR       AX,AX			; Message segment
 		PUSH      AX
 		PUSH      CS
-		PUSH      BP			; Move exchange return address and Message segment
+		PUSH      BP			; Exchange return address and Message segment
 		MOV       BP,SP
 		XCHG      AX,WORD PTR 6H[BP]
 		XCHG      AX,WORD PTR 2H[BP]
