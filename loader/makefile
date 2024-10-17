@@ -5,12 +5,15 @@
 #
 
 PROJ = loader
-TRGT = $(PROJ).exe
+TRGT = $(PROJ).lib
 DESC = Binded Familty API loader
 #defines object file names in format $(p)objname$(e)
-srcfiles = $(p)loader$(e) $(p)ginterf$(e) $(p)file$(e) $(p)strings$(e)
+srcfiles = $(p)loader$(e) $(p)ginterf$(e) $(p)file$(e) $(p)strings$(e) 
 # defines additional options for C compiler
-#ADD_COPT = -I$(%OS2TK)$(SEP)h #-p
+ADD_COPT = -i=$(%WATCOM)$(SEP)h$(SEP)os21x #-p
 
 
-!include $(%ROOT)tools/mk/appsdos.mk
+!include $(%ROOT)tools/mk/libsdos.mk
+
+$(TARGETS): $(OBJS) $(LIBS)
+ @$(MAKE) $(MAKEOPT) library=$(TARGETS) library

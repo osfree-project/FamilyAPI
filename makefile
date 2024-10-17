@@ -3,15 +3,16 @@
 #
 
 
-PROJ = fapi
+PROJ = api
 TRGT = $(PROJ).lib
-DIRS = kal mem bvs bms bks vio mou kbd fm nls ioctl dos mm
+DIRS = kal mem bvs bms bks vio mou kbd fm nls ioctl dos mm loader
 LIBSDIR = $(%ROOT)build$(SEP)lib$(SEP)
 LIBS = $(LIBSDIR)kal.lib $(LIBSDIR)bvs.lib $(LIBSDIR)bms.lib &
        $(LIBSDIR)bks.lib $(LIBSDIR)vio.lib $(LIBSDIR)mou.lib &
        $(LIBSDIR)kbd.lib $(LIBSDIR)fm.lib  $(LIBSDIR)nls.lib &
        $(LIBSDIR)ioctl.lib $(LIBSDIR)dos.lib $(LIBSDIR)mem.lib &
-	   $(LIBSDIR)mm.lib
+	   $(LIBSDIR)mm.lib &
+	   $(LIBSDIR)loader.lib
 DEST = os2tk45$(SEP)lib$(SEP)
 # additions to install target
 INSTALL_ADD = 1
