@@ -4,8 +4,6 @@
 
 
 TRGT = $(PROJ).lib
-DIRS = kal mem bvs bms bks vio mou kbd fm nls ioctl dos mm $(EXTRA)
-LIBSDIR = $(%ROOT)build$(SEP)lib$(SEP)
 LIBS = $(LIBSDIR)kal.lib $(LIBSDIR)bvs.lib $(LIBSDIR)bms.lib &
        $(LIBSDIR)bks.lib $(LIBSDIR)vio.lib $(LIBSDIR)mou.lib &
        $(LIBSDIR)kbd.lib $(LIBSDIR)fm.lib  $(LIBSDIR)nls.lib &

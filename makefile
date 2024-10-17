@@ -7,6 +7,6 @@
 # api is a library for dynamic linking
 # They must come first because all tools here depends on them.
 
-DIRS = fapi api
+DIRS = kal kal mem bvs bms bks vio mou kbd fm nls ioctl dos mm loader fapi api
 
 !include $(%ROOT)tools/mk/all.mk

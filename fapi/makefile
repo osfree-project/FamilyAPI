@@ -4,6 +4,6 @@
 
 
 PROJ = fapi
-EXTRA=
+LIBSDIR = $(%ROOT)build$(SEP)lib$(SEP)
 EXTRALIB=
 !include ../api.mk

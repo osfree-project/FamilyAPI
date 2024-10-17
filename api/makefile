@@ -4,6 +4,6 @@
 
 
 PROJ = api
-EXTRA=loader
+LIBSDIR = $(%ROOT)build$(SEP)lib$(SEP)
 EXTRALIB=$(LIBSDIR)loader.lib
 !include ../api.mk
