@@ -5,4 +5,5 @@
 
 PROJ = fapi
 EXTRA=
+EXTRALIB=
 !include ../api.mk

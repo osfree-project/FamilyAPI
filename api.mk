@@ -10,8 +10,7 @@ LIBS = $(LIBSDIR)kal.lib $(LIBSDIR)bvs.lib $(LIBSDIR)bms.lib &
        $(LIBSDIR)bks.lib $(LIBSDIR)vio.lib $(LIBSDIR)mou.lib &
        $(LIBSDIR)kbd.lib $(LIBSDIR)fm.lib  $(LIBSDIR)nls.lib &
        $(LIBSDIR)ioctl.lib $(LIBSDIR)dos.lib $(LIBSDIR)mem.lib &
-	   $(LIBSDIR)mm.lib &
-	   $(LIBSDIR)loader.lib
+	   $(LIBSDIR)mm.lib $(EXTRALIB)
 DEST = os2tk45$(SEP)lib$(SEP)
 # additions to install target
 INSTALL_ADD = 1
