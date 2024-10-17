@@ -1,38 +1,12 @@
 #
-# (c) osFree project,
+# A main Makefile for FamilyApp project
+# (c) osFree project.
 #
 
+# fapi is a library for static linking
+# api is a library for dynamic linking
+# They must come first because all tools here depends on them.
 
-PROJ = api
-TRGT = $(PROJ).lib
-DIRS = kal mem bvs bms bks vio mou kbd fm nls ioctl dos mm loader
-LIBSDIR = $(%ROOT)build$(SEP)lib$(SEP)
-LIBS = $(LIBSDIR)kal.lib $(LIBSDIR)bvs.lib $(LIBSDIR)bms.lib &
-       $(LIBSDIR)bks.lib $(LIBSDIR)vio.lib $(LIBSDIR)mou.lib &
-       $(LIBSDIR)kbd.lib $(LIBSDIR)fm.lib  $(LIBSDIR)nls.lib &
-       $(LIBSDIR)ioctl.lib $(LIBSDIR)dos.lib $(LIBSDIR)mem.lib &
-	   $(LIBSDIR)mm.lib &
-	   $(LIBSDIR)loader.lib
-DEST = os2tk45$(SEP)lib$(SEP)
-# additions to install target
-INSTALL_ADD = 1
+DIRS = fapi api
 
-!ifeq %OS WIN64
-hostos=win32
-!else
-hostos=$(%HOST)
-!endif
-
-!include $(%ROOT)tools/mk/libsdos.mk
-
-HOSTDIR = $(ROOT)build$(SEP)bin$(SEP)host$(SEP)$(hostos)$(SEP)os2tk45$(SEP)lib$(SEP)
-
-$(PATH)$(PROJ).lib: $(LIBS)
- @$(MAKE) $(MAKEOPT) library=$(PATH)$(PROJ).lib library
-
-install_add: $(ROOT)build$(SEP)bin$(SEP)host$(SEP)$(hostos)$(SEP)os2tk45$(SEP)lib$(SEP)$(PROJ).lib
-
-$(HOSTDIR)$(PROJ).lib: $(PATH)$(PROJ).lib
- $(verbose)$(MDHIER) $(HOSTDIR)
- @$(SAY) INST     $^. $(LOG)
- $(verbose)$(CP) $< $^@ $(BLACKHOLE)
+!include $(%ROOT)tools/mk/all.mk
