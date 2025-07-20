@@ -112,6 +112,7 @@
 .8086
 		INCLUDE	dos.inc
 		INCLUDE	bseerr.inc
+		INCLUDE	helpers.inc
 		INCLUDE	GlobalVars.inc
 
 _GINFOSEG SEGMENT PARA PUBLIC 'GDATA' USE16
@@ -299,7 +300,7 @@ EXIT:
 		RET
 GLOBALINIT	ENDP
 
-HOOKINT08:	PROC
+HOOKINT08	PROC
 		;MOV AX,CS
 		;MOV DS,AX ;initialize ds using cs value
 
@@ -316,9 +317,9 @@ HOOKINT08:	PROC
 		MOV AL,08H ;store new cs:ip for int 8h
 		INT 21H  ;new cs:ip=ds:dx
 
-HOOKINT08:	ENDP
+HOOKINT08	ENDP
 
-INT08H: PROC
+INT08H PROC
 
 		PUSH AX  ;push all the registers into stack
 		PUSH BX
@@ -351,7 +352,7 @@ INT08H: PROC
 		OLD_IP DW 00 ;will be used to store the location of the orginal 
 		OLD_CS DW 00 ;address of interrupt vector
 
-HOOK08H:	ENDP
+INT08H	ENDP
 
 ;*************************************************************************
 ;
@@ -532,7 +533,7 @@ CHECK_PATH_LENGTH ENDP
 ;
 ;*************************************************************************
 CONVERT_DOS_ERROR PROC NEAR
-	CMP	DOS3API, FFFFH
+	CMP	DOS3API, 0FFFFH
 	JNE	DOS2_ERRORS         ; Handle DOS 2.x errors
     
 	; Extended error info for DOS 3.0+
