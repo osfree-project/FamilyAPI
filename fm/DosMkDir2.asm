@@ -92,7 +92,7 @@ ERROR_CHECK:
 		JMP	SUCCESS                      ; Jump on success
 
 ERROR_HANDLING:
-		CALL CONVERT_DOS_ERROR           ; Map DOS error to OS/2 code
+;		CALL CONVERT_DOS_ERROR           ; Map DOS error to OS/2 ErrorClass
 		JMP	EXIT
 
 INVNAME:
