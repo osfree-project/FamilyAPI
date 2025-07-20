@@ -96,7 +96,7 @@ MEMORYBUFFER	DD	?
 		LODSW
 		STOSW
         AND		AX, AX
-		JZ		EXIT
+		JZ		EXIT	; End of table
 		DEC		CX
 		JNZ		@B
 

@@ -42,7 +42,7 @@
 ;
 ;*/
 ;
-; @todo Add args check and 8.3 filename check
+; @todo Add 8.3 filename check
 ;
 .8086
 
@@ -55,8 +55,8 @@
 _TEXT	SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@PROLOG	DOSCHDIR
-DIRNAME		DD	?
-RESERVED	DD	?
+RESERVED	DD	?		; [BP+6]
+DIRNAME		DD	?		; [BP+10]
 		@START	DOSCHDIR
 		
 		MOV	AX,ERROR_INVALID_PARAMETER
@@ -85,13 +85,7 @@ RESERVED	DD	?
 		MOV	AX, ERROR_FILENAME_EXCED_RANGE
 		JC	EXIT                           ; Jump if invalid format
 	
-		CMP	LFNAPI, 0FFFFH
-		JZ	LFN
-		CHANGE_DIR [DS:BP].ARGS.DIRNAME
-		JMP	ERRCHK
-LFN:
-		LFN_CHANGE_DIR [DS:BP].ARGS.DIRNAME
-ERRCHK:
+		@VdmChDir [DS:BP].ARGS.DIRNAME
 		JC	EXIT			; Error
 		XOR	AX, AX
 EXIT:
