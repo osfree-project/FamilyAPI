@@ -75,6 +75,15 @@ RESERVED	DD	?
 		LES	DI, [DS:BP].ARGS.DIRNAME
 		CMP BYTE PTR ES:[DI], 0
 		JZ EXIT
+
+		; Check path length
+		PUSH DS
+		; DS:SI = path
+		LDS		BX, [DS:BP].ARGS.DIRNAME
+		CALL	CHECK_PATH_LENGTH
+		POP	DS
+		MOV	AX, ERROR_FILENAME_EXCED_RANGE
+		JC	EXIT                           ; Jump if invalid format
 	
 		CMP	LFNAPI, 0FFFFH
 		JZ	LFN
