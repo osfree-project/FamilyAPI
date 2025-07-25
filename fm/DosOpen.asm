@@ -155,7 +155,7 @@ ERROR:
 		CMP	DOS3API,0FFFFH
 		JB	@F
 		XOR	BX,BX
-		GET_ERROR
+;		CALL CONVERT_DOS_ERROR           ; Map DOS error to OS/2 ErrorClass
 @@:	
 		POP	DS
 		POP	ES
