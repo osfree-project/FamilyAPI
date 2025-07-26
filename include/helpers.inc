@@ -83,8 +83,6 @@ NAME		PROC	FAR
 		MOV	AX, LSIZE
 		CALL	@INIT_STACK
 		ENDIF
-		CALL	GLOBALINIT
-
 		ENDM
 
 ;------------------------------------------------------------

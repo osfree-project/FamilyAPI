@@ -537,9 +537,10 @@ CONVERT_DOS_ERROR PROC NEAR
 	JNE	DOS2_ERRORS         ; Handle DOS 2.x errors
     
 	; Extended error info for DOS 3.0+
-	MOV	AH, 59h           ; Get extended error information
-	XOR	BX, BX
-	INT	21h
+	GET_ERROR
+;	MOV	AH, 59h           ; Get extended error information
+;	XOR	BX, BX
+;	INT	21h
 	
 	JMP	FILLERRCLASS
 
