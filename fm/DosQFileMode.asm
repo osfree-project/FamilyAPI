@@ -49,7 +49,7 @@ FILENAME			DD	?	; [BP+14]
 
 		; Check filename
 		LDS		SI,[BP].ARGS.FILENAME
-		CALL	CHECK_8_3_FORMAT
+		CALL	CHECK_PATH_FORMAT
 		JC		EXIT
 		
 		@VdmChangeMode	[BP].ARGS.FILENAME, 0
@@ -60,7 +60,7 @@ FILENAME			DD	?	; [BP+14]
 		XOR		AX,AX
 	 	JMP		EXIT
 @@:
-;		CALL CONVERT_DOS_ERROR           ; Map DOS error to OS/2 ErrorClass
+		CALL CONVERT_DOS_ERROR           ; Map DOS error to OS/2 ErrorClass
 EXIT:
 		@EPILOG	DOSQFILEMODE
 

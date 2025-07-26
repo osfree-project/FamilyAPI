@@ -367,8 +367,17 @@ INT08H	ENDP
 ; @return     CF = 1 if invalid format, 0 if valid
 ;
 ;*************************************************************************
-CHECK_8_3_FORMAT PROC
+CHECK_PATH_FORMAT PROC
     @PUSHA
+		; Check is not NULL
+		MOV		BX, DS
+		OR		BX, SI
+		JZ		INVALID_FORMAT
+
+		; Check is not empty ASCIIZ
+		CMP		BYTE PTR DS:[SI], 0
+		JZ		INVALID_FORMAT
+
     MOV	DI, SI              ; ES:DI = start of path (DS=ES assumed)
 
     ; Find last path component
@@ -486,7 +495,7 @@ FORMAT_OK:
     CLC                      ; Clear error flag
 @@: @POPA
     RET
-CHECK_8_3_FORMAT ENDP
+CHECK_PATH_FORMAT ENDP
 
 ;*************************************************************************
 ;
@@ -538,10 +547,6 @@ CONVERT_DOS_ERROR PROC NEAR
     
 	; Extended error info for DOS 3.0+
 	GET_ERROR
-;	MOV	AH, 59h           ; Get extended error information
-;	XOR	BX, BX
-;	INT	21h
-	
 	JMP	FILLERRCLASS
 
 DOS2_ERRORS:

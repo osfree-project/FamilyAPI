@@ -59,35 +59,21 @@ RESERVED	DD	?		; [BP+6]
 DIRNAME		DD	?		; [BP+10]
 		@START	DOSCHDIR
 		
-		MOV	AX,ERROR_INVALID_PARAMETER
+		MOV		AX,ERROR_INVALID_PARAMETER
 
-		; Check is 0
-		MOV	BX, WORD PTR [DS:BP].ARGS.RESERVED
-		OR	BX, WORD PTR [DS:BP].ARGS.RESERVED+2
-		JNZ	EXIT
-
-		; Check is not NULL
-		MOV BX, WORD PTR [DS:BP].ARGS.DIRNAME
-		OR BX, WORD PTR [DS:BP].ARGS.DIRNAME+2
-		JZ EXIT
-
-		; Check is not empty ASCIIZ
-		LES	DI, [DS:BP].ARGS.DIRNAME
-		CMP BYTE PTR ES:[DI], 0
-		JZ EXIT
+		; Check reserved is 0
+		MOV		BX, WORD PTR [BP].ARGS.RESERVED
+		OR		BX, WORD PTR [BP].ARGS.RESERVED+2
+		JNZ		EXIT
 
 		; Check path length
-		PUSH DS
-		; DS:SI = path
-		LDS		BX, [DS:BP].ARGS.DIRNAME
-		CALL	CHECK_PATH_LENGTH
-		POP	DS
-		MOV	AX, ERROR_FILENAME_EXCED_RANGE
-		JC	EXIT                           ; Jump if invalid format
+		LDS		SI, [BP].ARGS.DIRNAME
+		CALL	CHECK_PATH_FORMAT
+		JC		EXIT                           ; Jump if invalid format
 	
-		@VdmChDir [DS:BP].ARGS.DIRNAME
-		JC	EXIT			; Error
-		XOR	AX, AX
+		@VdmChDir	[BP].ARGS.DIRNAME
+		JC		EXIT			; Error
+		XOR		AX, AX
 EXIT:
 		@EPILOG	DOSCHDIR
 
