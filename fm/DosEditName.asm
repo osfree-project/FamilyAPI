@@ -35,6 +35,46 @@ SourceString   DD  ?       ;!< Pointer to source filename
 EditLevel       DW  ?       ;!< Operation flags 
         @START DOSEDITNAME
 
+		CMP		DOS1020API, 0FFFFH
+		JNE		NOVDM
+
+		; EditLevel
+		MOV		AX, [BP].ARGS.EditLevel
+		PUSH	AX
+		
+		; SourceString
+		LES		DI, [BP].ARGS.SourceString
+		PUSH	ES
+		PUSH	DI
+		
+		; EditString
+		LES		DI, [BP].ARGS.EditString
+		PUSH	ES
+		PUSH	DI
+		
+		; TargetBuf
+		LES		DI, [BP].ARGS.TargetBuf
+		PUSH	ES
+		PUSH	DI
+		
+		; TargetBufLen
+		MOV		AX, [BP].ARGS.TargetBufLen
+		PUSH	AX
+
+		; ES:DI - Pointer to args frame
+		PUSH	SS
+		POP		ES
+		MOV		DI, SP
+
+		; Call VDM DosEditName
+		MOV		AX, 06400h
+		MOV		CX, 0636Ch
+		MOV		BX, 000BFH
+		INT		21H
+		
+		JMP	EXIT
+
+NOVDM:
         ; Проверка уровня редактирования
         MOV AX, [BP].ARGS.EditLevel
         CMP AX, 1

@@ -84,8 +84,11 @@ _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 ;
 ;*************************************************************************
 		@PROLOG	DOSMKDIR
-DIRNAME		DD	?    ; Pointer to directory path
 RESERVED	DD	?    ; Reserved parameter (must be 0)
+DIRNAME		DD	?    ; Pointer to directory path
+@LOCALW         TmpBP
+@LOCALW		TmpCS
+@LOCALW		TmpIP
 		@START	DOSMKDIR
 
 		;---------------------------------------------------------------
@@ -94,28 +97,23 @@ RESERVED	DD	?    ; Reserved parameter (must be 0)
 		MOV	AX,ERROR_INVALID_PARAMETER    ; Default error code
     
 		; Check reserved parameter == 0
-		MOV	BX, WORD PTR [DS:BP].ARGS.RESERVED
-		OR	BX, WORD PTR [DS:BP].ARGS.RESERVED+2
+		MOV	BX, WORD PTR [BP].ARGS.RESERVED
+		OR	BX, WORD PTR [BP].ARGS.RESERVED+2
 		JNZ	EXIT                    ; Jump if not zero
 
-		POP	UserBp                  ; Pop from stack frame
-		POP	UserCS
-		POP	UserIP
+		POP	TmpBP                  ; Pop from stack frame
+		POP	TmpCS
+		POP	TmpIP
 		PUSH	BX			; Add Reserved=0. EA=0 becase DOSMKDIR is NULL
 		PUSH	BX
 		CALL	FAR PTR DOSMKDIR2       ; Call DosMkDir2
 
-		PUSH	UserIP                  ; Restore stack frame
-		PUSH	UserCS
-		MOV	BP,UserBp
+		PUSH	TmpIP                  ; Restore stack frame
+		PUSH	TmpCS
+		MOV	BP,TmpBP
 
 EXIT:
 		@EPILOG	DOSMKDIR                 ; Function epilogue
-
-;@todo: put in local vars
-UserBp		DW	?
-UserCS		DW	?
-UserIP		DW	?
 
 _TEXT		ENDS
 		END

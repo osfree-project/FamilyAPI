@@ -27,9 +27,9 @@
 _TEXT		SEGMENT BYTE PUBLIC 'CODE' USE16
 
 		@PROLOG	DOSMKDIR2
-DIRNAME		DD	?    ; Pointer to directory path
-EABUF		DD	?    ; Pointer to extended attributes
 RESERVED	DD	?    ; Reserved parameter (must be 0)
+EABUF		DD	?    ; Pointer to extended attributes
+DIRNAME		DD	?    ; Pointer to directory path
 		@START	DOSMKDIR2
 		;---------------------------------------------------------------
 		; Parameter validation
@@ -37,13 +37,13 @@ RESERVED	DD	?    ; Reserved parameter (must be 0)
 		MOV	AX,ERROR_INVALID_PARAMETER    ; Default error code
     
 		; Check reserved parameter == 0
-		MOV	BX, WORD PTR [DS:BP].ARGS.RESERVED
-		OR	BX, WORD PTR [DS:BP].ARGS.RESERVED+2
+		MOV	BX, WORD PTR [BP].ARGS.RESERVED
+		OR	BX, WORD PTR [BP].ARGS.RESERVED+2
 		JNZ	EXIT                          ; Jump if not zero
 
 		; Check directory name pointer validity
-		MOV	BX, WORD PTR [DS:BP].ARGS.DIRNAME
-		MOV	SI, WORD PTR [DS:BP].ARGS.DIRNAME+2
+		MOV	BX, WORD PTR [BP].ARGS.DIRNAME
+		MOV	SI, WORD PTR [BP].ARGS.DIRNAME+2
 		OR	BX, SI                        ; Check for NULL pointer
 		JZ	EXIT                          ; Exit if NULL
     
@@ -51,16 +51,13 @@ RESERVED	DD	?    ; Reserved parameter (must be 0)
 		JNE	@F				; Use standard if no LFN
     
 		; Check path length
-		PUSH DS
 		; DS:SI = path
 		MOV	DS, BX
-		CALL	CHECK_PATH_LENGTH
-		POP	DS
-		MOV	AX, ERROR_FILENAME_EXCED_RANGE
+		CALL	CHECK_PATH_FORMAT
 		JNE	EXIT                      ; Error if null not found
 
 		; Use LFN version if available
-		LFN_MAKE_DIR [DS:BP].ARGS.DIRNAME
+		LFN_MAKE_DIR [BP].ARGS.DIRNAME
 		JMP	ERROR_CHECK
 
 @@:		; @todo RBIL says this function works under Win98 realmode MS-DOS (7.20)
@@ -77,11 +74,11 @@ RESERVED	DD	?    ; Reserved parameter (must be 0)
 		; Validate 8.3 filename format
 		PUSH	ES
 		POP	DS                           ; DS:SI = directory path
-		CALL	CHECK_8_3_FORMAT            ; Validate filename format
+		CALL	CHECK_PATH_FORMAT            ; Validate filename format
 		MOV	AX, ERROR_INVALID_PARAMETER
 		JC	EXIT                           ; Jump if invalid format
     
-		MAKE_DIR [DS:BP].ARGS.DIRNAME    ; Create directory
+		MAKE_DIR [BP].ARGS.DIRNAME    ; Create directory
 		JMP	ERROR_CHECK
 
 ;*************************************************************************
@@ -94,7 +91,7 @@ ERROR_CHECK:
 		JMP	SUCCESS                      ; Jump on success
 
 ERROR_HANDLING:
-;		CALL CONVERT_DOS_ERROR           ; Map DOS error to OS/2 ErrorClass
+		CALL CONVERT_DOS_ERROR           ; Map DOS error to OS/2 ErrorClass
 		JMP	EXIT
 
 SUCCESS:
