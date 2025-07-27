@@ -13,8 +13,6 @@
 ;
 ;   @author Yuri Prokushev (yuri.prokushev@gmail.com)
 ;
-; @todo Check for DOS 7+ because uses specific API
-;
 ;*/
 
 .8086
