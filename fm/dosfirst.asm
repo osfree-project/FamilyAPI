@@ -1,11 +1,14 @@
 
 		.8086
 
-	public	DOSFINDFIRST
-	public	DOSFINDFIRST2
-	public	SETFINDBUF
-	public	DOSFINDNEXT
-	public	DOSFINDCLOSE
+		; Helpers
+		INCLUDE	helpers.inc
+		INCLUDE	dos.inc
+		INCLUDE	bseerr.inc
+		INCLUDE	GlobalVars.inc
+
+		public	SETFINDBUF
+		public	FindBuffer
 
 _DATA 	segment byte public 'DATA'
 FindBuffer 	db 43 dup (0)
@@ -13,151 +16,101 @@ _DATA 	ends
 
 _TEXT	segment byte public 'CODE' USE16
 
-DOSFINDFIRST2 proc
-DOSFINDFIRST2 endp
 
-DOSFINDFIRST proc
-		push	bp
-        mov		bp,sp
-        sub		sp,4
-		push	DS
-		push	ES
-		push	SI
-		push	DI
-		push	BX
-		push	CX
-		push	DX
-		mov	AX,[BP+6]
-		les	BX,[BP+0Ah]
-		xor	AX,AX
-		xchg AX,ES:[BX]
-		cmp	AX,1
-		mov	AX,057h
-		jne	exit
-		lds	SI,[BP+16h]
-		cmp	word ptr [SI],1
-		jne	@F
-		mov	DX,seg FindBuffer	;use default buffer
-		mov	BX,offset FindBuffer
-		jmp defbuff
-@@:
-		mov	BX,3		;alloc another 43 byte buffer
-		mov	AH,048h
-		int	21h
-		mov	DX,AX
-		mov	AX,071h
-		jb	exit
-		mov	[SI],DX
-		xor	BX,BX
-defbuff:
-		mov	[BP-4],BX
-		mov	[BP-2],DX
-		lds	DX,[BP-4]
-		mov	AH,01Ah		;set DTA
-		int	21h
-		lds	DX,[BP+1Ah]
-		mov	CX,[BP+14h]
-		mov	AH,04Eh		;dos findfirst
-		int	21h
-		jb	exit
-		lds	SI,[BP-4]
-		les	DI,[BP+10h]
-		mov	CX,[BP+0Eh]
-		call near ptr SETFINDBUF
-		les	BX,[BP+0Ah]
-		mov	word ptr ES:[BX],1
-		xor	AX,AX
+;--------------------------------------------------------------
+;/*!
+;   @brief      Поиск первого файла, соответствующего маске
+;   @details    Ищет первый файл, соответствующий указанной маске и атрибутам,
+;               и инициализирует поисковый handle
+;
+;   @param[in]  FileAttribute   Атрибуты файла для поиска
+;   @param[in]  pFileName       Указатель на строку с маской поиска
+;   @param[out] pSearchBuf      Указатель на буфер для результатов поиска
+;   @param[in]  cbSearchBuf     Размер буфера результатов
+;   @param[out] pulSearchHandle Указатель на handle поиска
+;   @param[in]  ulReserved      Указатель на флаг типа буфера
+; (0-системный, 1-пользовательский)
+;
+;   @return     AX = 0 при успехе, код ошибки при сбое
+;   @retval     NO_ERROR                 Успешное выполнение
+;   @retval     ERROR_INVALID_PARAMETER  Неверный handle
+;   @retval     ERROR_OUT_OF_MEMORY      Недостаточно памяти для буфера
+;   @retval     ERROR_FILE_NOT_FOUND     Файл не найден
+;
+;   @remark     Для поиска используется DTA (Disk Transfer Area)
+;*/
+	@PROLOG DOSFINDFIRST
+ulReserved      DD  ?   ; [bp+6]
+SearchCount		DD	?	; [bp+10]
+cbSearchBuf     DW  ?   ; [bp+14]
+pSearchBuf      DD  ?   ; [bp+16]
+FileAttribute   DW  ?   ; [bp+20]
+pulSearchHandle DD  ?   ; [bp+12]
+pFileName       DD  ?   ; [bp+26]
+	@START DOSFINDFIRST
+
+
+		; Проверка handle
+    les bx, [bp].ARGS.pulSearchHandle
+    xor ax, ax
+    xchg ax, es:[bx]          ; Проверка handle
+    cmp ax, 1
+    jne error_handle
+	
+		; Выбор буфера	(@todo проверка на ffffh)
+    lds si, [bp].ARGS.pulSearchHandle ; Указатель на тип буфера
+    cmp word ptr [si], 1
+    jne alloc_buffer
+    mov dx, seg FindBuffer    ; Буфер по умолчанию
+    mov bx, offset FindBuffer
+    jmp setdta
+
+alloc_buffer:
+    mov bx, 3                 ; 3 параграфа = 48 байт
+    mov ah, 48h               ; Функция выделения памяти
+    int 21h
+    jnc store_segment
+    mov ax, 071h              ; Ошибка выделения памяти
+    jmp exit
+
+store_segment:
+    mov [si], ax              ; Сохраняем сегмент
+    xor bx, bx                ; Смещение 0
+
+setdta:
+    mov word ptr [bp-4], bx   ; Локальная: смещение DTA
+    mov word ptr [bp-2], dx   ; Локальная: сегмент DTA
+    lds dx, dword ptr [bp-4]  ; Установка DTA
+    mov ah, 1Ah
+    int 21h
+
+    ; Вызов FindFirst
+    lds dx, [bp].ARGS.pFileName   ; Маска поиска
+    mov cx, [bp].ARGS.FileAttribute; Атрибуты файла
+    mov ah, 4Eh
+    int 21h
+    jnc copy_results
+    mov ax, 04Fh                  ; Ошибка поиска
+    jmp exit
+
+copy_results:
+    lds si, dword ptr [bp-4]      ; Результаты поиска
+    les di, [bp].ARGS.pSearchBuf  ; Буфер назначения
+    mov cx, [bp].ARGS.cbSearchBuf ; Размер буфера
+    call SETFINDBUF
+
+    ; Успешное завершение
+    les bx, [bp].ARGS.pulSearchHandle
+    mov word ptr es:[bx], 1       ; Возвращаем handle=1 (@todo А разве не хэндл???)
+    xor ax, ax
+    jmp exit
+
+error_handle:
+    mov ax, ERROR_INVALID_PARAMETER
+
 exit:
-		pop	DX
-		pop	CX
-		pop	BX
-		pop	DI
-		pop	SI
-		pop	ES
-		pop	DS
-		;leave
-                mov     sp, bp
-                pop     bp
-		retf	018h
-DOSFINDFIRST endp
+    @EPILOG DOSFINDFIRST
 
-DOSFINDNEXT proc
-		push bp
-        mov bp,sp
-		push	DS
-		push	ES
-		push	SI
-		push	DI
-		push	BX
-		push	CX
-		push	DX
-		les	BX,[BP+6]
-		xor	AX,AX
-		xchg AX,ES:[BX]
-		cmp	AX,1
-		mov	AX,057h
-		jne	exit
-		mov	AX,[BP+010h]
-		xor	DX,DX
-		cmp	AX,1
-		jne	@F
-		mov	AX,seg FindBuffer
-		mov	DX,offset FindBuffer
-@@:	
-		mov	DS,AX
-		mov	AH,01Ah
-		int	21h
-		mov	AH,04Fh
-		int	21h
-		jb	exit
-		mov	SI,DX
-		les	DI,[BP+0Ch]
-		mov	CX,[BP+0Ah]
-		call	near ptr SETFINDBUF
-		les	BX,[BP+6]
-		mov	word ptr ES:[BX],1
-		xor	AX,AX
-exit:
-		pop	DX
-		pop	CX
-		pop	BX
-		pop	DI
-		pop	SI
-		pop	ES
-		pop	DS
-;		leave
-                mov     sp, bp
-                pop     bp
-		retf	0Ch
-DOSFINDNEXT endp
-
-DOSFINDCLOSE proc
-		push bp
-        mov bp,sp
-		push	ES
-		push	BX
-		push	CX
-		push	DX
-		xor	DX,DX
-		mov	AX,[BP+6]
-		cmp	AX,1
-		je	@F
-		mov	ES,AX
-		mov	AH,049h
-		int	21h
-		jae	@F
-		mov	DX,6
-@@:	
-		xchg AX,DX
-		pop	DX
-		pop	CX
-		pop	BX
-		pop	ES
-;		leave
-                mov     sp, bp
-                pop     bp
-		retf	2
-DOSFINDCLOSE endp
 
 SETFINDBUF proc
 		mov	AX,[SI+16h]
