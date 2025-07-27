@@ -58,11 +58,11 @@ FILESTATUS struc
 FILESTATUS ends
 
 		@PROLOG	DOSQPATHINFO
-RESERVED	DD	?	;Reserved (must be zero)
-PATHNAME        DD	?	;File or directory path name string
-PATHINFOLEVEL   DW	?	;Data required
-PATHINFOBUF     DD	?	;Data buffer (returned)
-PATHINFOBUFSIZE DW	?	;Data buffer size
+RESERVED	DD	?	; [BP+6] Reserved (must be zero)
+PATHINFOBUFSIZE DW	?	; [BP+10] Data buffer size
+PATHINFOBUF     DD	?	; [BP+12] Data buffer (returned)
+PATHINFOLEVEL   DW	?	; [BP+16] Data required
+PATHNAME        DD	?	; [BP+18] File or directory path name string
 		@START	DOSQPATHINFO
 		
 		; Get current DTA
@@ -73,27 +73,27 @@ PATHINFOBUFSIZE DW	?	;Data buffer size
 		; Check Reserved = 0
 		MOV	AX, ERROR_INVALID_PARAMETER
 
-		MOV	BX, WORD PTR [DS:BP].ARGS.RESERVED
-		OR	BX, WORD PTR [DS:BP].ARGS.RESERVED+2
+		MOV	BX, WORD PTR [BP].ARGS.RESERVED
+		OR	BX, WORD PTR [BP].ARGS.RESERVED+2
 		JNE	EXIT
 
 		; Check pathname pointer
-		CMP	BX, WORD PTR [DS:BP].ARGS.PATHNAME
+		CMP	BX, WORD PTR [BP].ARGS.PATHNAME
 		JNE	PATHNAMEOK
-		CMP	BX, WORD PTR [DS:BP].ARGS.PATHNAME+2
+		CMP	BX, WORD PTR [BP].ARGS.PATHNAME+2
 		JE	EXIT
 PATHNAMEOK:		
 
 		; Check buffer pointer
-		CMP	BX, WORD PTR [DS:BP].ARGS.PATHINFOBUF
+		CMP	BX, WORD PTR [BP].ARGS.PATHINFOBUF
 		JNE	BUFFOK
-		CMP	BX, WORD PTR [DS:BP].ARGS.PATHINFOBUF+2
+		CMP	BX, WORD PTR [BP].ARGS.PATHINFOBUF+2
 		JE	EXIT
 BUFFOK:
 
 		; Check InfoLevel = 1
 		MOV	AX, ERROR_INVALID_LEVEL
-		CMP	WORD PTR [DS:BP].ARGS.PATHINFOLEVEL, 1
+		CMP	WORD PTR [BP].ARGS.PATHINFOLEVEL, 1
 		JNE	EXIT
 
 		;Set our DTA
@@ -106,7 +106,7 @@ BUFFOK:
 ;DS:DX -> ASCIZ file specification (may include path and wildcards)
 
 		;Find path (readonly+hidden+system+directory+archive)
-		LDS	DX, [DS:BP].ARGS.PATHNAME
+		LDS	DX, [BP].ARGS.PATHNAME
 		MOV	CX, 1+2+4+16+32
 		@GetFirst
 		MOV	AX, ERROR_PATH_NOT_FOUND
@@ -114,7 +114,7 @@ BUFFOK:
 
 		;Copy data
 		; Buffer[15] - attributes
-		LES	BX, [DS:BP].ARGS.PATHINFOBUF
+		LES	BX, [BP].ARGS.PATHINFOBUF
 		XOR	AX, AX
 		MOV	AL, [Buffer+15]
 		MOV	[ES:BX].FILESTATUS.fsts_attrFile, AX
