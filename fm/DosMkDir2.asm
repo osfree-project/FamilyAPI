@@ -16,6 +16,20 @@
 ;
 ;*/
 
+
+;INT 21 - OS/2 v1.1+ Family API - DosSetPathInfo
+;
+;	AX = 5703h
+;	BX = FFFFh
+;	CX = size of information buffer
+;	DX = level of information
+;	DS:SI -> filename
+;	ES:DI -> information buffer
+;Return: CF clear if successful
+;	CF set on error
+;	    AX = error code
+;SeeAlso: AX=5702h/BX=FFFFh,AX=5703h"OS/2"
+
 .8086
 
 		; Helpers
@@ -39,28 +53,23 @@ DIRNAME		DD	?    ; Pointer to directory path
 		; Check reserved parameter == 0
 		MOV	BX, WORD PTR [BP].ARGS.RESERVED
 		OR	BX, WORD PTR [BP].ARGS.RESERVED+2
-		JNZ	EXIT                          ; Jump if not zero
+		JNZ	ERROR                          ; Jump if not zero
 
 		; Check directory name pointer validity
 		MOV	BX, WORD PTR [BP].ARGS.DIRNAME
 		MOV	SI, WORD PTR [BP].ARGS.DIRNAME+2
 		OR	BX, SI                        ; Check for NULL pointer
-		JZ	EXIT                          ; Exit if NULL
+		JZ	ERROR                         ; Exit if NULL
     
-		CMP	LFNAPI, 0FFFFH			; Check LFN support
-		JNE	@F				; Use standard if no LFN
-    
-		; Check path length
-		; DS:SI = path
-		MOV	DS, BX
+		LDS	SI, [BP].ARGS.DIRNAME
 		CALL	CHECK_PATH_FORMAT
-		JNE	EXIT                      ; Error if null not found
+		JC	ERROR                      ; Error if null not found
 
-		; Use LFN version if available
-		LFN_MAKE_DIR [BP].ARGS.DIRNAME
-		JMP	ERROR_CHECK
+		@VdmMkDir [BP].ARGS.DIRNAME
+		JC	ERROR
 
-@@:		; @todo RBIL says this function works under Win98 realmode MS-DOS (7.20)
+		if 0
+		; @todo RBIL says this function works under Win98 realmode MS-DOS (7.20)
 		; but I don't know nothing about 7.20. Need to check.
 		MOV	AX, 43FFh
 		PUSH	BP
@@ -70,28 +79,10 @@ DIRNAME		DD	?    ; Pointer to directory path
 		INT	21h
 		POP	BP
 		JNC	ERROR_CHECK
+		endif
 
-		; Validate 8.3 filename format
-		PUSH	ES
-		POP	DS                           ; DS:SI = directory path
-		CALL	CHECK_PATH_FORMAT            ; Validate filename format
-		MOV	AX, ERROR_INVALID_PARAMETER
-		JC	EXIT                           ; Jump if invalid format
-    
-		MAKE_DIR [BP].ARGS.DIRNAME    ; Create directory
-		JMP	ERROR_CHECK
-
-;*************************************************************************
-;
-; Common error handling
-;
-;*************************************************************************
-ERROR_CHECK:
-		JC	ERROR_HANDLING               ; Jump on error
-		JMP	SUCCESS                      ; Jump on success
-
-ERROR_HANDLING:
-		CALL CONVERT_DOS_ERROR           ; Map DOS error to OS/2 ErrorClass
+ERROR:
+		CALL	CONVERT_DOS_ERROR           ; Map DOS error to OS/2 ErrorClass
 		JMP	EXIT
 
 SUCCESS:

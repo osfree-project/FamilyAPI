@@ -36,14 +36,11 @@
 ;          not changed, only the current directory on that drive
 ;        changing the current directory also changes the directory in which
 ;          FCB file calls operate
-;        under the FlashTek X-32 DOS extender, the pointer is in DS:EDX
-;SeeAlso: AH=47h,AX=713Bh,INT 2F/AX=1105h
+;SeeAlso: AH=47h,AX=713Bh
 ;
 ;
 ;*/
-;
-; @todo Add 8.3 filename check
-;
+
 .8086
 
 		; Helpers
@@ -59,14 +56,14 @@ RESERVED	DD	?		; [BP+6]
 DIRNAME		DD	?		; [BP+10]
 		@START	DOSCHDIR
 		
-		MOV		AX,ERROR_INVALID_PARAMETER
+		MOV		AX, ERROR_INVALID_PARAMETER
 
 		; Check reserved is 0
 		MOV		BX, WORD PTR [BP].ARGS.RESERVED
 		OR		BX, WORD PTR [BP].ARGS.RESERVED+2
 		JNZ		EXIT
 
-		; Check path length
+		; Check path format
 		LDS		SI, [BP].ARGS.DIRNAME
 		CALL	CHECK_PATH_FORMAT
 		JC		EXIT                           ; Jump if invalid format
