@@ -8,6 +8,7 @@
 		INCLUDE	GlobalVars.inc
 
 		PUBLIC	SETFINDBUF
+		PUBLIC	FindBuffer
 
 	
 _DATA 	segment byte public 'DATA'
