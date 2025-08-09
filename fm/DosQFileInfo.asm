@@ -55,7 +55,7 @@ HANDLE      DW  ?       ; [BP+6]
         @START  DOSQFILEINFO
 
 		CMP		DOS1020API, 0FFFFH
-		JB		OLDDOS
+		JNE		OLDDOS
 
 ;INT 21 - OS/2 v1.1+ Family API - DosQFileInfo
 ;

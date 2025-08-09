@@ -118,12 +118,15 @@ FILEHANDLE	DW	?	; [BP+6]
 		JE	DISKRESET			; YES, flush all files
 		DEC	BX
 		CMP	DOS33API, 0FFFFH
-		JAE	DOS33				; 3.3+ support flush directly
+		JE	DOS33				; 3.3+ support flush directly
 		CMP	DOS3API, 0FFFFH
 		JE	DOS3
 DISKRESET:
-		RESET_DISK		; @todo After this call we also need to close all files to flush directory entries
+		@VdmResetDisk		; @todo Here is some question. LFN version resets current disk.
+
+		;RESET_DISK		; @todo After this call we also need to close all files to flush directory entries
 		;LFN_RESET_DISK disk	; @todo Here we need to process all disks
+
 		JMP	DONE
 DOS3:
 		XDUP	[BP].ARGS.FILEHANDLE

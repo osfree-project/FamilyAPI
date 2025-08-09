@@ -12,7 +12,7 @@ $(p)DosRead$(e) $(p)DosChgFilePtr$(e) $(p)DosSetFileInfo$(e) $(p)DosSetFileMode$
 $(p)DosSetVerify$(e) $(p)DosWrite$(e) $(p)DosDelete$(e) $(p)DosSetMaxFH$(e) $(p)DosSetFHandState$(e) &
 $(p)DosSetFsInfo$(e) $(p)DosWriteAsync$(e) $(p)DosQFHandState$(e) $(p)DosReadAsync$(e) $(p)DosEnumAttribute$(e) &
 $(p)DosEditName$(e) $(p)DosMkDir2$(e) $(p)DosOpen2$(e) $(p)DosSetPathInfo$(e) $(p)DosQPathInfo$(e) $(p)DosFindFirst2$(e) &
-$(p)DosFindNext$(e) $(p)DosFindClose$(e)
+$(p)DosFindNext$(e) $(p)DosFindClose$(e) $(p)DosShutdown$(e)
 JWASM     = 1
 
 TARGETS  = $(PATH)$(TRGT)
