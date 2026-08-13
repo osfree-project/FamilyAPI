@@ -69,38 +69,38 @@ IVTABLE		DD	?
 		@START	DOSTRUEGETMESSAGE
 
 		; Save instance segment
-		MOV	CS:[InstanceSeg], DS
+		MOV	[InstanceSeg], DS
 		; Set direction
 		CLD
 
 		;@DispCh '1'
-
+		
 		; **Parameters check block without error message copied to message buffer**
 		
 		; Check message buffer ponter
 		MOV	AX,ERROR_INVALID_PARAMETER
 		XOR	BX, BX
 
-		CMP	BX, WORD PTR [DS:BP].ARGS.DATAAREA
+		CMP	BX, WORD PTR [BP].ARGS.DATAAREA
 		JNE	DATAAREAOK
 		;@DispCh '2'
-		CMP	BX, WORD PTR [DS:BP].ARGS.DATAAREA+2
+		CMP	BX, WORD PTR [BP].ARGS.DATAAREA+2
 		JE	EXIT
 DATAAREAOK:
 
 		;@DispCh '3'
 
 		; Check buffer size
-		CMP	BX, WORD PTR [DS:BP].ARGS.DATALENGTH
+		CMP	BX, WORD PTR [BP].ARGS.DATALENGTH
 		JE	EXIT
 
 		;@DispCh '4'
 
 		; Check filename pointer
-		CMP	BX, WORD PTR [DS:BP].ARGS.FILENAME
+		CMP	BX, WORD PTR [BP].ARGS.FILENAME
 		JNE	FILENAMEOK
-		@DispCh '5'
-		CMP	BX, WORD PTR [DS:BP].ARGS.FILENAME+2
+		;@DispCh '5'
+		CMP	BX, WORD PTR [BP].ARGS.FILENAME+2
 		JE	EXIT		; @todo Skip file, only segment search
 FILENAMEOK:
 		;@DispCh '6'
@@ -108,7 +108,7 @@ FILENAMEOK:
 		; Parameters check block with error message copied to message buffer
 
 		; Set destination buffer
-		LES	DI, [DS:BP].ARGS.DATAAREA
+		LES	DI, [BP].ARGS.DATAAREA
 
 		; @todo Search message segment
 
@@ -118,16 +118,18 @@ FILENAMEOK:
 		;PUSH	DWORD EnvVarName    ; COMSPEC
 		;PUSH	DWORD ResultPointer	; Value
 		;CALL	DosScanEnv
-		; Second open in current directory (APPEND allow search in anothe paths)
+		; Second open in current directory (APPEND allow search in another paths)
 		
-		MOV	CX, [DS:BP].ARGS.DATALENGTH
+		MOV	CX, [BP].ARGS.DATALENGTH
 
 		; Check IVCOUNT value is less 9
 		MOV	AX, ERROR_MR_INV_IVCOUNT
-		CMP	WORD PTR [DS:BP].ARGS.IVCOUNT, 9
+		CMP	WORD PTR [BP].ARGS.IVCOUNT, 9
 		JG	BADIVCOUNTEXIT
 
 		; Copy string and insert IVT items
+
+		JMP BADMSGID
 
 OutMsg:		
 		; Output message size counter
@@ -138,18 +140,18 @@ Continue:
 		CMP	BX, CX			; ARGS.DATALENGTH
 		JG	BUFOUTEXIT
 
-		CMP	BYTE PTR [DS:SI], '%'
-		JE	InsertIVItem
+		CMP	BYTE PTR [SI], '%'
+;		JE	InsertIVItem
 
 
 		push ax
-		MOV	AL, BYTE PTR [DS:SI]
+		MOV	AL, BYTE PTR [SI]
 		@DispCh AL
 		pop ax
 		
 		MOVSB
 
-		CMP	BYTE PTR [DS:SI], 0
+		CMP	BYTE PTR [SI], 0
 		JE	EXIT
 
 		JMP	Continue
@@ -159,17 +161,17 @@ InsertIVItem:
 		@DispCh 'X'
 		pop ax
 		; Check is IVT present
-		CMP	[DS:BP].ARGS.IVCOUNT, 0
+		CMP	[BP].ARGS.IVCOUNT, 0
 		JE	Continue
 
 		; Substitute parameter
 		PUSH	SI
 		INC	SI
-		MOV	AL, BYTE PTR [DS:SI]
+		MOV	AL, BYTE PTR [SI]
 		SUB	AL, '1'
 		XOR	AH, AH
 		SHL	AX, 1
-		LDS	SI, [DS:BP].ARGS.IVTABLE
+		LDS	SI, [BP].ARGS.IVTABLE
 		ADD	SI, AX
 		
 		; copy here
@@ -208,7 +210,7 @@ OKEXIT:
 		XOR	AX, AX
 EXIT:		
 		; Restore instance segment
-		MOV	DS, CS:[InstanceSeg]
+		MOV	DS, [InstanceSeg]
 		@EPILOG	DOSTRUEGETMESSAGE
 
 
@@ -245,10 +247,10 @@ DOSGETMESSAGE:
 		PUSH      CS
 		PUSH      BP			; Exchange return address and Message segment
 		MOV       BP,SP
-		XCHG      AX,WORD PTR 6H[BP]
-		XCHG      AX,WORD PTR 2H[BP]
-		XCHG      AX,WORD PTR 8H[BP]
-		MOV       WORD PTR 4H[BP],AX
+		XCHG      AX,WORD PTR [BP+6]
+		XCHG      AX,WORD PTR [BP+2]
+		XCHG      AX,WORD PTR [BP+8]
+		MOV       WORD PTR [BP+4],AX
 		POP       BP
 		JMP       FAR PTR DOSTRUEGETMESSAGE
 MSGSEGDATA:
