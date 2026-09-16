@@ -14,5 +14,5 @@ TARGETS  = $(PATH)$(TRGT)
 
 .asm: ..$(SEP)shared$(SEP)bms
 
-$(TARGETS): $(OBJS)
- @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
+#$(TARGETS): $(OBJS)
+# @$(MAKE) $(MAKEOPT) library=$(TARGETS) library

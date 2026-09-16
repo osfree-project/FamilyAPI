@@ -21,8 +21,8 @@ TARGETS  = $(PATH)$(TRGT)
 
 !include $(%ROOT)tools/mk/libsdos.mk
 
-$(TARGETS): $(OBJS) $(LIBS)
- @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
+#$(TARGETS): $(OBJS) $(LIBS)
+# @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
 
 
 

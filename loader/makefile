@@ -15,5 +15,5 @@ ADD_COPT = -i=$(%WATCOM)$(SEP)h$(SEP)os21x #-p
 
 !include $(%ROOT)tools/mk/libsdos.mk
 
-$(TARGETS): $(OBJS) $(LIBS)
- @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
+#$(TARGETS): $(OBJS) $(LIBS)
+# @$(MAKE) $(MAKEOPT) library=$(TARGETS) library

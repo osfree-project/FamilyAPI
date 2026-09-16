@@ -23,8 +23,8 @@ hostos=$(%HOST)
 
 HOSTDIR = $(ROOT)build$(SEP)bin$(SEP)host$(SEP)$(hostos)$(SEP)os2tk45$(SEP)lib$(SEP)
 
-$(PATH)$(PROJ).lib: $(LIBS)
- @$(MAKE) $(MAKEOPT) library=$(PATH)$(PROJ).lib library
+#$(PATH)$(PROJ).lib: $(LIBS)
+# @$(MAKE) $(MAKEOPT) library=$(PATH)$(PROJ).lib library
 
 install_add: $(ROOT)build$(SEP)bin$(SEP)host$(SEP)$(hostos)$(SEP)os2tk45$(SEP)lib$(SEP)$(PROJ).lib
 

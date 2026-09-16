@@ -81,5 +81,5 @@ IopSetRetry.asm &
 IosSetBaud.asm &
 IosSetLine.asm
 
-$(TARGETS): $(OBJS)
- @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
+#$(TARGETS): $(OBJS)
+# @$(MAKE) $(MAKEOPT) library=$(TARGETS) library
